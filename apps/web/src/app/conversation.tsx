@@ -16,12 +16,22 @@ export const Conversation = () => {
           flexDirection: 'column',
           width: '100vw',
           height: '100vh',
+          overflow: 'hidden',
         }}
       >
-        <Box style={{ flex: 1 }}>
+        <Box style={{ flex: 1, overflow: 'hidden', overflowY: 'scroll' }}>
           <ConversationList />
         </Box>
-        <Box style={{ height: 50, background: '#000' }}>
+        <Box
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            height: 50,
+            background: '#000',
+            paddingLeft: 20,
+            paddingRight: 20,
+          }}
+        >
           <ConversationInput />
         </Box>
       </Box>

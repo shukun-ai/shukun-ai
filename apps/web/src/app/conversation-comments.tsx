@@ -1,4 +1,4 @@
-import { Box, Divider, Group, Text } from '@mantine/core';
+import { Avatar, Box, Card, Text } from '@mantine/core';
 import { useConversationContext } from './conversation-context';
 import { Comment } from '@ailake/apitype';
 import { useMemo } from 'react';
@@ -19,10 +19,7 @@ export const ConversationComments = ({
       {comments
         .filter((comment) => comment.conversationId === conversationId)
         .map((comment, index) => (
-          <>
-            <ConversationComment key={comment.id} comment={comment} />
-            {index !== comments.length - 1 && <Divider mt={20} mb={20} />}
-          </>
+          <ConversationComment key={comment.id} comment={comment} />
         ))}
     </Box>
   );
@@ -30,19 +27,28 @@ export const ConversationComments = ({
 
 export const ConversationComment = ({ comment }: { comment: Comment }) => {
   return (
-    <Group>
-      <Box style={{ width: 100 }}>
-        <Text ta="right">{comment.sentByRobot ? '小智' : '我'}:</Text>
+    <Box style={{ display: 'flex', overflow: 'hidden', padding: 20 }}>
+      <Box style={{ width: 50 }}>
+        {!comment.sentByRobot && <Avatar color="red" radius="md" />}
+        {comment.sentByRobot && (
+          <Avatar color="blue" radius="md">
+            智
+          </Avatar>
+        )}
       </Box>
-      <Box>
-        {comment.commentText && <Box>{comment.commentText}</Box>}
-        {comment.commentSQL && <Box>{comment.commentSQL}</Box>}
+      <Card withBorder style={{ flex: 1 }}>
+        {comment.commentText && <Text>{comment.commentText}</Text>}
+        {comment.commentSQL && (
+          <Text size="xs" c="dimmed">
+            {comment.commentSQL}
+          </Text>
+        )}
         {comment.commentSQL && (
           <ConversationDataVisualization commentId={comment.id} />
         )}
         {comment.isLoading && <Box>我正在查找数据中...</Box>}
-      </Box>
-    </Group>
+      </Card>
+    </Box>
   );
 };
 

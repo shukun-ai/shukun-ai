@@ -1,4 +1,4 @@
-import { Box, Input } from '@mantine/core';
+import { Box, Button, Input } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useCallback } from 'react';
 import { useConversationContext } from './conversation-context';
@@ -24,14 +24,22 @@ export const ConversationInput = () => {
   }, [dispatch, form]);
 
   return (
-    <Box>
+    <Box style={{ flex: 1 }}>
       <form onSubmit={form.onSubmit(onSubmit)}>
-        <Input
-          type="text"
-          {...form.getInputProps('ask')}
-          style={{ width: '100%' }}
-          disabled={robotIsWorking}
-        />
+        <Box style={{ display: 'flex' }}>
+          <Input
+            type="text"
+            {...form.getInputProps('ask')}
+            style={{
+              width: '100%',
+              marginRight: 20,
+            }}
+            disabled={robotIsWorking}
+          />
+          <Button type="submit" size="sm">
+            发送
+          </Button>
+        </Box>
       </form>
     </Box>
   );
