@@ -1,17 +1,14 @@
-import styled from '@emotion/styled';
+import { Conversation } from './conversation';
+import { ThemeProvider } from './theme-provider';
 
-import NxWelcome from './nx-welcome';
+export type AppProps = {
+  //
+};
 
-const StyledApp = styled.div`
-  // Your style here
-`;
-
-export function App() {
+export const App = () => {
   return (
-    <StyledApp>
-      <NxWelcome title="web" />
-    </StyledApp>
+    <ThemeProvider>
+      <Conversation />
+    </ThemeProvider>
   );
-}
-
-export default App;
+};
