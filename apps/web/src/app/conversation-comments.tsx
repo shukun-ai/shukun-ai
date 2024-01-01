@@ -16,12 +16,14 @@ export const ConversationComments = ({
 
   return (
     <Box>
-      {comments.map((comment, index) => (
-        <>
-          <ConversationComment key={comment.id} comment={comment} />
-          {index !== comments.length - 1 && <Divider mt={20} mb={20} />}
-        </>
-      ))}
+      {comments
+        .filter((comment) => comment.conversationId === conversationId)
+        .map((comment, index) => (
+          <>
+            <ConversationComment key={comment.id} comment={comment} />
+            {index !== comments.length - 1 && <Divider mt={20} mb={20} />}
+          </>
+        ))}
     </Box>
   );
 };

@@ -1,12 +1,9 @@
-import React, { createContext, useCallback, useState, useContext } from 'react';
-import {
-  Comment,
-  Conversation,
-  DataResult,
-  conversations,
-  comments,
-  dataResults,
-} from '@ailake/apitype';
+import React, { createContext, useContext } from 'react';
+import { useObservableState } from 'observable-hooks';
+import { Comment, Conversation, DataResult } from '@ailake/apitype';
+import { conversationRepository } from '../repositories/conversation/conversation-repository';
+import { commentRepository } from '../repositories/comment/comment-repository';
+import { dataResultRepository } from '../repositories/data-result/data-result-repository';
 
 type ConversationContextType = {
   state: {
@@ -16,8 +13,7 @@ type ConversationContextType = {
     dataResults: DataResult[];
   };
   dispatch: {
-    waitRobot: () => void;
-    robotIsDone: () => void;
+    createConversation: (props: { ask: string }) => Promise<void>;
   };
 };
 
@@ -29,21 +25,21 @@ export const ConversationProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [robotIsWorking, setRobotIsWorking] = useState(false);
-
-  const waitRobot = useCallback(() => {
-    setRobotIsWorking(true);
-  }, []);
-
-  const robotIsDone = useCallback(() => {
-    setRobotIsWorking(false);
-  }, []);
+  const robotIsWorking = useObservableState(
+    conversationRepository.robotIsWorking$,
+    false
+  );
+  const conversations = useObservableState(conversationRepository.all$, []);
+  const comments = useObservableState(commentRepository.all$, []);
+  const dataResults = useObservableState(dataResultRepository.all$, []);
 
   return (
     <ConversationContext.Provider
       value={{
         state: { robotIsWorking, conversations, comments, dataResults },
-        dispatch: { waitRobot, robotIsDone },
+        dispatch: {
+          createConversation: conversationRepository.create,
+        },
       }}
     >
       {children}

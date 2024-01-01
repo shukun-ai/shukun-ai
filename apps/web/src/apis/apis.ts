@@ -1,21 +1,15 @@
-// const getMockData = () => {
-//   const data = {
-//     message: 'Hello, world!',
-//     timestamp: new Date().toISOString(),
-//   };
+import {
+  CreateConversationDto,
+  CreateConversationResponse,
+} from '@ailake/apitype';
+import axios from 'axios';
 
-//   // Simulate fetching data from an API
-//   fetch('https://example.com/api/data')
-//     .then((response) => response.json())
-//     .then((jsonData) => {
-//       // Process the fetched JSON data
-//       res.json(jsonData);
-//     })
-//     .catch((error) => {
-//       // Handle any errors that occurred during the fetch
-//       console.error('Error fetching data:', error);
-//       res.status(500).json({ error: 'Failed to fetch data' });
-//     });
-// };
-
-// export { getMockData };
+export const createConversion = async (
+  data: CreateConversationDto
+): Promise<CreateConversationResponse> => {
+  const response = await axios.post<CreateConversationResponse>(
+    'http://localhost:3000/api/create-conversation',
+    data
+  );
+  return response.data;
+};
