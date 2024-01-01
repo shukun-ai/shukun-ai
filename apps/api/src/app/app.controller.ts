@@ -1,6 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { nanoid } from 'nanoid';
-import { AppService } from './app.service';
 import {
   CreateConversationDto,
   Conversation,
@@ -8,10 +7,11 @@ import {
   DataResult,
   CreateConversationResponse,
 } from '@ailake/apitype';
+import { PostgresService } from './postgres.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly postgresService: PostgresService) {}
 
   @Post('create-conversation')
   async createConversation(
@@ -35,8 +35,6 @@ export class AppController {
       createdAt: new Date().toISOString(),
     };
 
-    await sleep(3000);
-
     const replyCommentId = nanoid();
 
     const replyComment: Comment = {
@@ -46,20 +44,23 @@ export class AppController {
       sentByRobot: true,
       commentType: 'data',
       commentText: null,
-      commentSQL: 'SELECT * FROM users WHERE id = 1',
+      commentSQL:
+        'SELECT arrivaltasks.airportcode, COUNT(arrivaltasks.id) AS total_tasks FROM arrivaltasks GROUP BY arrivaltasks.airportcode ORDER BY total_tasks ASC NULLS LAST;',
       createdAt: new Date().toISOString(),
     };
+
+    if (!replyComment.commentSQL) {
+      throw new Error('replyComment.commentSQL is not created');
+    }
+
+    const result = await this.postgresService.run(replyComment.commentSQL);
 
     const dataResult: DataResult = {
       id: nanoid(),
       commentId: replyCommentId,
       belongUserId: 'robot',
-      sql: 'SELECT * FROM users WHERE id = 1',
-      data: {
-        id: 1,
-        name: 'John',
-        age: 20,
-      },
+      sql: replyComment.commentSQL,
+      data: result,
       createdAt: new Date().toISOString(),
     };
 
@@ -71,5 +72,3 @@ export class AppController {
     };
   }
 }
-
-const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
