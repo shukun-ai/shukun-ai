@@ -40,6 +40,7 @@ export const ConversationComment = ({ comment }: { comment: Comment }) => {
         {comment.commentSQL && (
           <ConversationDataVisualization commentId={comment.id} />
         )}
+        {comment.isLoading && <Box>我正在查找数据中...</Box>}
       </Box>
     </Group>
   );

@@ -14,6 +14,7 @@ export type Comment = {
   commentText: string | null;
   commentSQL: string | null;
   createdAt: IsoDateString;
+  isLoading?: boolean;
 };
 
 export type DataResult = {
