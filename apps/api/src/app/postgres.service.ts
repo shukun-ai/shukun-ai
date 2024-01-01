@@ -1,3 +1,4 @@
+import { DataResult } from '@ailake/apitype';
 import {
   Injectable,
   OnApplicationShutdown,
@@ -32,11 +33,19 @@ export class PostgresService implements OnModuleInit, OnApplicationShutdown {
     }
   }
 
-  async run(sql: string): Promise<unknown> {
+  async run(sql: string): Promise<DataResult['data']> {
     const client = await this.getPool().connect();
     const result = await client.query(sql);
     client.release();
-    return result;
+
+    const data: DataResult['data'] = {
+      type: 'Collection',
+      command: result.command,
+      fields: result.fields,
+      rows: result.rows,
+    };
+
+    return data;
   }
 
   private getPool() {

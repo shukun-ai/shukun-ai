@@ -45,7 +45,7 @@ export class AppController {
       commentType: 'data',
       commentText: null,
       commentSQL:
-        'SELECT arrivaltasks.airportcode, COUNT(arrivaltasks.id) AS total_tasks FROM arrivaltasks GROUP BY arrivaltasks.airportcode ORDER BY total_tasks ASC NULLS LAST;',
+        'SELECT arrivaltasks.airportcode, COUNT(arrivaltasks.id) AS total_tasks FROM arrivaltasks GROUP BY arrivaltasks.airportcode ORDER BY total_tasks DESC NULLS LAST;',
       createdAt: new Date().toISOString(),
     };
 

@@ -22,6 +22,16 @@ export type DataResult = {
   commentId: string;
   belongUserId: string;
   sql: string;
-  data: unknown;
+  data: DataCollection;
   createdAt: IsoDateString;
+};
+
+export type DataCollection = {
+  type: 'Collection';
+  command: string;
+  fields: {
+    format: string;
+    name: string;
+  }[];
+  rows: Record<string, unknown>[];
 };
