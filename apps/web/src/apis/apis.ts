@@ -8,7 +8,7 @@ export const createConversion = async (
   data: CreateConversationDto
 ): Promise<CreateConversationResponse> => {
   const response = await axios.post<CreateConversationResponse>(
-    'http://localhost:3000/api/create-conversation',
+    import.meta.env?.VITE_SERVER_API + '/api/create-conversation',
     data
   );
   return response.data;

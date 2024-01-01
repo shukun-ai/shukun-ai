@@ -5,6 +5,7 @@ import {
   OnModuleInit,
 } from '@nestjs/common';
 import { Pool } from 'pg';
+import { environment } from '../environment';
 
 @Injectable()
 export class PostgresService implements OnModuleInit, OnApplicationShutdown {
@@ -14,12 +15,12 @@ export class PostgresService implements OnModuleInit, OnApplicationShutdown {
 
   onModuleInit() {
     this.pool = new Pool({
-      user: 'chase_wu',
-      host: 'localhost',
-      database: 'bi_demo',
-      password: undefined,
-      port: 5432,
-      max: 3,
+      user: environment.PG_USER,
+      host: environment.PG_HOST,
+      database: environment.PG_DATABASE,
+      password: environment.PG_DATABASE,
+      port: environment.PG_PORT,
+      max: environment.PG_MAX,
     });
     this.pool.on('error', (err) => {
       console.error('Unexpected error on idle client', err);

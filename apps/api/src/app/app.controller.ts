@@ -8,10 +8,15 @@ import {
   CreateConversationResponse,
 } from '@ailake/apitype';
 import { PostgresService } from './postgres.service';
+import { LlmService } from './llm.service';
+import { getPrompt } from './prompt';
 
 @Controller()
 export class AppController {
-  constructor(private readonly postgresService: PostgresService) {}
+  constructor(
+    private readonly postgresService: PostgresService,
+    private readonly llmService: LlmService
+  ) {}
 
   @Post('create-conversation')
   async createConversation(
@@ -35,6 +40,8 @@ export class AppController {
       createdAt: new Date().toISOString(),
     };
 
+    const sql = await this.getSql(dto.ask);
+
     const replyCommentId = nanoid();
 
     const replyComment: Comment = {
@@ -44,8 +51,7 @@ export class AppController {
       sentByRobot: true,
       commentType: 'data',
       commentText: null,
-      commentSQL:
-        'SELECT arrivaltasks.airportcode, COUNT(arrivaltasks.id) AS total_tasks FROM arrivaltasks GROUP BY arrivaltasks.airportcode ORDER BY total_tasks DESC NULLS LAST;',
+      commentSQL: sql,
       createdAt: new Date().toISOString(),
     };
 
@@ -70,5 +76,18 @@ export class AppController {
       replyComment,
       dataResult,
     };
+  }
+
+  private async getSql(ask: string) {
+    const USE_LLM = true;
+    const prompt = getPrompt(ask);
+    console.log(prompt);
+
+    if (USE_LLM) {
+      const sql = await this.llmService.run(prompt);
+      return sql;
+    } else {
+      return 'SELECT arrivaltasks.airportcode, COUNT(arrivaltasks.id) AS total_tasks FROM arrivaltasks GROUP BY arrivaltasks.airportcode ORDER BY total_tasks DESC NULLS LAST;';
+    }
   }
 }

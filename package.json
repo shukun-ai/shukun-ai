@@ -1,8 +1,9 @@
 {
   "name": "@ailake/source",
   "version": "0.0.0",
-  "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "start": "nx affected --target=serve"
+  },
   "private": true,
   "dependencies": {
     "@emotion/react": "11.11.1",

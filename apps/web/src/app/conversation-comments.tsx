@@ -1,7 +1,7 @@
-import { Avatar, Box, Card, Text } from '@mantine/core';
+import { Avatar, Box, Card, Group, Loader, Text } from '@mantine/core';
 import { useConversationContext } from './conversation-context';
 import { Comment } from '@ailake/apitype';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { DataVisualization } from './data-visualization';
 
 export type ConversationCommentProps = {
@@ -46,7 +46,16 @@ export const ConversationComment = ({ comment }: { comment: Comment }) => {
         {comment.commentSQL && (
           <ConversationDataVisualization commentId={comment.id} />
         )}
-        {comment.isLoading && <Box>我正在查找数据中...</Box>}
+        {comment.isLoading && (
+          <Box>
+            <Group>
+              <Loader color="orange" size="sm" />
+              <Text>
+                <TimeCounter /> 秒
+              </Text>
+            </Group>
+          </Box>
+        )}
       </Card>
     </Box>
   );
@@ -69,4 +78,20 @@ export const ConversationDataVisualization = ({
   }
 
   return <DataVisualization dataResult={dataResult} />;
+};
+
+const TimeCounter = () => {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCount((prevCount) => prevCount + 1);
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  return count;
 };
