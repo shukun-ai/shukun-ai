@@ -1,8 +1,19 @@
-import React, { createContext, useCallback, useState } from 'react';
+import React, { createContext, useCallback, useState, useContext } from 'react';
+import {
+  Comment,
+  Conversation,
+  DataResult,
+  conversations,
+  comments,
+  dataResults,
+} from '@ailake/apitype';
 
 type ConversationContextType = {
   state: {
     robotIsWorking: boolean;
+    conversations: Conversation[];
+    comments: Comment[];
+    dataResults: DataResult[];
   };
   dispatch: {
     waitRobot: () => void;
@@ -31,11 +42,21 @@ export const ConversationProvider = ({
   return (
     <ConversationContext.Provider
       value={{
-        state: { robotIsWorking },
+        state: { robotIsWorking, conversations, comments, dataResults },
         dispatch: { waitRobot, robotIsDone },
       }}
     >
       {children}
     </ConversationContext.Provider>
   );
+};
+
+export const useConversationContext = () => {
+  const context = useContext(ConversationContext);
+  if (!context) {
+    throw new Error(
+      'useConversationContext must be used within a ConversationProvider'
+    );
+  }
+  return context;
 };
