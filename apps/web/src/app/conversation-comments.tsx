@@ -1,10 +1,21 @@
-import { Avatar, Box, Group, Loader, Paper, Stack, Text } from '@mantine/core';
+import {
+  Alert,
+  Avatar,
+  Box,
+  Button,
+  Collapse,
+  Group,
+  Paper,
+  Stack,
+  Text,
+} from '@mantine/core';
 import { useConversationContext } from './conversation-context';
 import { Comment } from '@ailake/apitype';
 import { useEffect, useMemo, useState } from 'react';
 import { DataVisualization } from './data-visualization';
 import { ShukunLogo } from './shukun-logo';
 import { CircleLoader } from 'react-spinners';
+import { useDisclosure } from '@mantine/hooks';
 
 export type ConversationCommentProps = {
   conversationId: string;
@@ -31,6 +42,8 @@ export const ConversationComments = ({
 };
 
 export const ConversationComment = ({ comment }: { comment: Comment }) => {
+  const [opened, { toggle }] = useDisclosure(false);
+
   return (
     <Box style={{ display: 'flex', overflow: 'hidden', padding: 20 }}>
       <Box style={{ width: 38 }} mr={20}>
@@ -43,10 +56,31 @@ export const ConversationComment = ({ comment }: { comment: Comment }) => {
       </Box>
       <Paper shadow="md" p="md" style={{ flex: 1 }}>
         {comment.commentText && <Text>{comment.commentText}</Text>}
+        {comment.sentByRobot && !comment.isLoading && (
+          <Group spacing={4}>
+            <Button variant="outline" size="xs" color="gray">
+              将本次探索设为常用
+            </Button>
+            <Button
+              variant="white"
+              size="xs"
+              color="gray"
+              onClick={() => {
+                toggle();
+              }}
+            >
+              调试
+            </Button>
+          </Group>
+        )}
         {comment.commentSQL && (
-          <Text size="xs" c="dimmed">
-            {comment.commentSQL}
-          </Text>
+          <Collapse in={opened}>
+            <Alert mt={12} mb={12}>
+              <Text size="sm" color="gray">
+                {comment.commentSQL}
+              </Text>
+            </Alert>
+          </Collapse>
         )}
         {comment.commentSQL && (
           <ConversationDataVisualization commentId={comment.id} />

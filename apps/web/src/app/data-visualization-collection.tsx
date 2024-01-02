@@ -1,5 +1,5 @@
 import { DataCollection, DataResult } from '@ailake/apitype';
-import { Box, Table } from '@mantine/core';
+import { Box, Button, Group, Table } from '@mantine/core';
 import { useMemo } from 'react';
 import ReactECharts from 'echarts-for-react';
 
@@ -16,29 +16,44 @@ export const DataVisualizationCollection = ({
   return (
     <Box>
       {columns.length === 2 && <DataVisualizationChart data={data} />}
+      <DataVisualizationTable data={data} />
+    </Box>
+  );
+};
 
-      <Box style={{ width: '100%', maxHeight: 300, overflow: 'auto' }}>
-        <Table>
-          <thead>
+export const DataVisualizationTable = ({ data }: { data: DataCollection }) => {
+  const columns = useMemo(() => data.fields.map((field) => field.name), [data]);
+
+  return (
+    <Box style={{ width: '100%', maxHeight: 300, overflow: 'auto' }}>
+      <Group spacing={0} position="right">
+        <Button variant="white" size="xs" color="gray">
+          表格导出 Excel
+        </Button>
+        <Button variant="white" size="xs" color="gray">
+          表格导出 PDF
+        </Button>
+      </Group>
+      <Table>
+        <thead>
+          <tr>
+            {columns.map((column) => (
+              <th>{column}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {data.rows.map((row) => (
             <tr>
               {columns.map((column) => (
-                <th>{column}</th>
+                <td>
+                  <FormattedCell value={row[column]} />
+                </td>
               ))}
             </tr>
-          </thead>
-          <tbody>
-            {data.rows.map((row) => (
-              <tr>
-                {columns.map((column) => (
-                  <td>
-                    <FormattedCell value={row[column]} />
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      </Box>
+          ))}
+        </tbody>
+      </Table>
     </Box>
   );
 };
@@ -87,5 +102,17 @@ export const DataVisualizationChart = ({ data }: { data: DataCollection }) => {
     },
   };
 
-  return <ReactECharts option={options} />;
+  return (
+    <Box>
+      <Group spacing={0} position="right">
+        <Button variant="white" size="xs" color="gray">
+          添加到大屏
+        </Button>
+        <Button variant="white" size="xs" color="gray">
+          图表导出 PDF
+        </Button>
+      </Group>
+      <ReactECharts option={options} />
+    </Box>
+  );
 };

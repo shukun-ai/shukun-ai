@@ -5,9 +5,13 @@ import { environment } from '../environment';
 @Injectable()
 export class LlmService {
   async run(prompt: string) {
-    const response = await axios.post<string>(environment.LLM_API, {
-      prompt,
-    });
-    return response.data;
+    try {
+      const response = await axios.post<string>(environment.LLM_API, {
+        prompt,
+      });
+      return response.data;
+    } catch {
+      return 'I don not find results.';
+    }
   }
 }

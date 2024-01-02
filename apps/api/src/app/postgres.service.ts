@@ -36,17 +36,27 @@ export class PostgresService implements OnModuleInit, OnApplicationShutdown {
 
   async run(sql: string): Promise<DataResult['data']> {
     const client = await this.getPool().connect();
-    const result = await client.query(sql);
-    client.release();
 
-    const data: DataResult['data'] = {
-      type: 'Collection',
-      command: result.command,
-      fields: result.fields,
-      rows: result.rows,
-    };
+    try {
+      const result = await client.query(sql);
+      const data: DataResult['data'] = {
+        type: 'Collection',
+        command: result.command,
+        fields: result.fields,
+        rows: result.rows,
+      };
 
-    return data;
+      return data;
+    } catch {
+      return {
+        type: 'Collection',
+        command: 'SELECT',
+        fields: [],
+        rows: [],
+      };
+    } finally {
+      client.release();
+    }
   }
 
   private getPool() {
