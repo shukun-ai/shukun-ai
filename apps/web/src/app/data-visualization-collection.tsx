@@ -79,8 +79,6 @@ export const DataVisualizationChart = ({ data }: { data: DataCollection }) => {
     return data.rows.map((row) => row[data.fields[1].name]);
   }, [data.fields, data.rows]);
 
-  console.log(xData, yData);
-
   const options = {
     grid: { top: 8, right: 8, bottom: 24, left: 36 },
     xAxis: {
