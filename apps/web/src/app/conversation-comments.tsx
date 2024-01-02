@@ -1,9 +1,10 @@
-import { Avatar, Box, Group, Loader, Paper, Text } from '@mantine/core';
+import { Avatar, Box, Group, Loader, Paper, Stack, Text } from '@mantine/core';
 import { useConversationContext } from './conversation-context';
 import { Comment } from '@ailake/apitype';
 import { useEffect, useMemo, useState } from 'react';
 import { DataVisualization } from './data-visualization';
 import { ShukunLogo } from './shukun-logo';
+import { CircleLoader } from 'react-spinners';
 
 export type ConversationCommentProps = {
   conversationId: string;
@@ -52,12 +53,12 @@ export const ConversationComment = ({ comment }: { comment: Comment }) => {
         )}
         {comment.isLoading && (
           <Box>
-            <Group>
-              <Loader color="orange" size="sm" />
-              <Text>
-                <TimeCounter /> 秒
+            <Stack align="center">
+              <CircleLoader size={60} color="rgba(28, 82, 108, 1)" />
+              <Text size="xs" color="gray">
+                我正在计算中，已计算 <TimeCounter /> 秒
               </Text>
-            </Group>
+            </Stack>
           </Box>
         )}
       </Paper>

@@ -11,7 +11,7 @@ export const ConversationList = () => {
   const { conversations } = state;
 
   return (
-    <Box>
+    <Box style={{ maxWidth: 1440 }}>
       {conversations.map((conversation, index) => (
         <Box key={conversation.id}>
           <ConversationComments conversationId={conversation.id} />

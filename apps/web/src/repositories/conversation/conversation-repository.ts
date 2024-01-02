@@ -5,6 +5,7 @@ import {
   addEntities,
   updateEntities,
   deleteEntities,
+  deleteAllEntities,
 } from '@ngneat/elf-entities';
 import { conversationStore } from './conversation-store';
 import { createConversion } from '../../apis/apis';
@@ -25,6 +26,11 @@ export const conversationRepository = {
 
   create: async (props: { ask: string }) => {
     conversationStore.update(setProps({ robotIsWorking: true }));
+
+    conversationStore.update(deleteAllEntities());
+    commentStore.update(deleteAllEntities());
+    dataResultStore.update(deleteAllEntities());
+
     const conversationId = nanoid();
     const conversation: Conversation = {
       id: conversationId,

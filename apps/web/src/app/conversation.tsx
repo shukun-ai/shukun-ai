@@ -25,6 +25,7 @@ export const Conversation = () => {
         <Box style={{ height: 12 }}></Box>
         <Box
           style={{
+            maxWidth: 1440,
             display: 'flex',
             paddingLeft: 20,
             paddingRight: 20,
@@ -37,7 +38,13 @@ export const Conversation = () => {
           </Box>
           <ConversationInput />
         </Box>
-        <Box style={{ flex: 1, overflow: 'hidden', overflowY: 'scroll' }}>
+        <Box
+          style={{
+            flex: 1,
+            overflow: 'hidden',
+            overflowY: 'scroll',
+          }}
+        >
           <ConversationList />
           <ConversationTip />
         </Box>

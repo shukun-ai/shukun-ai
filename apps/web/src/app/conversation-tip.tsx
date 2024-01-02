@@ -16,7 +16,7 @@ export type ConversationTipProps = {
 
 export const ConversationTip = () => {
   return (
-    <Box style={{ padding: 20, paddingLeft: 20 + 38 + 20 }}>
+    <Box style={{ maxWidth: 1440, padding: 20, paddingLeft: 20 + 38 + 20 }}>
       <Paper shadow="md">
         <Title order={5} p={20} pb={8}>
           你可以使用如下提问模板
