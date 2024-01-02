@@ -7,12 +7,14 @@ import { dataResultRepository } from '../repositories/data-result/data-result-re
 
 type ConversationContextType = {
   state: {
+    inputAskMessage: string;
     robotIsWorking: boolean;
     conversations: Conversation[];
     comments: Comment[];
     dataResults: DataResult[];
   };
   dispatch: {
+    updateInputAskMessage: (props: { ask: string }) => void;
     createConversation: (props: { ask: string }) => Promise<void>;
   };
 };
@@ -25,6 +27,10 @@ export const ConversationProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
+  const inputAskMessage = useObservableState(
+    conversationRepository.inputAskMessage$,
+    ''
+  );
   const robotIsWorking = useObservableState(
     conversationRepository.robotIsWorking$,
     false
@@ -36,8 +42,15 @@ export const ConversationProvider = ({
   return (
     <ConversationContext.Provider
       value={{
-        state: { robotIsWorking, conversations, comments, dataResults },
+        state: {
+          inputAskMessage,
+          robotIsWorking,
+          conversations,
+          comments,
+          dataResults,
+        },
         dispatch: {
+          updateInputAskMessage: conversationRepository.updateInputAskMessage,
           createConversation: conversationRepository.create,
         },
       }}

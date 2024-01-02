@@ -1,8 +1,9 @@
-import { Avatar, Box, Card, Group, Loader, Text } from '@mantine/core';
+import { Avatar, Box, Group, Loader, Paper, Text } from '@mantine/core';
 import { useConversationContext } from './conversation-context';
 import { Comment } from '@ailake/apitype';
 import { useEffect, useMemo, useState } from 'react';
 import { DataVisualization } from './data-visualization';
+import { ShukunLogo } from './shukun-logo';
 
 export type ConversationCommentProps = {
   conversationId: string;
@@ -31,15 +32,15 @@ export const ConversationComments = ({
 export const ConversationComment = ({ comment }: { comment: Comment }) => {
   return (
     <Box style={{ display: 'flex', overflow: 'hidden', padding: 20 }}>
-      <Box style={{ width: 50 }}>
-        {!comment.sentByRobot && <Avatar color="red" radius="md" />}
+      <Box style={{ width: 38 }} mr={20}>
+        {!comment.sentByRobot && <Avatar color="red" radius="xs" />}
         {comment.sentByRobot && (
-          <Avatar color="blue" radius="md">
-            智
+          <Avatar radius="xs">
+            <ShukunLogo />
           </Avatar>
         )}
       </Box>
-      <Card withBorder style={{ flex: 1 }}>
+      <Paper shadow="md" p="md" style={{ flex: 1 }}>
         {comment.commentText && <Text>{comment.commentText}</Text>}
         {comment.commentSQL && (
           <Text size="xs" c="dimmed">
@@ -59,7 +60,7 @@ export const ConversationComment = ({ comment }: { comment: Comment }) => {
             </Group>
           </Box>
         )}
-      </Card>
+      </Paper>
     </Box>
   );
 };

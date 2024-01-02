@@ -13,6 +13,10 @@ import { dataResultStore } from '../data-result/data-result-store';
 import { Comment, Conversation } from '@ailake/apitype';
 
 export const conversationRepository = {
+  inputAskMessage$: conversationStore.pipe(
+    select((state) => state.inputAskMessage)
+  ),
+
   robotIsWorking$: conversationStore.pipe(
     select((state) => state.robotIsWorking)
   ),
@@ -69,5 +73,9 @@ export const conversationRepository = {
     } finally {
       conversationStore.update(setProps({ robotIsWorking: false }));
     }
+  },
+
+  updateInputAskMessage: (props: { ask: string }) => {
+    conversationStore.update(setProps({ inputAskMessage: props.ask }));
   },
 };

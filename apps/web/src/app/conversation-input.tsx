@@ -1,6 +1,6 @@
 import { Box, Button, Paper } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useConversationContext } from './conversation-context';
 
 export type ConversationInputProps = {
@@ -9,7 +9,7 @@ export type ConversationInputProps = {
 
 export const ConversationInput = () => {
   const { state, dispatch } = useConversationContext();
-  const { robotIsWorking } = state;
+  const { inputAskMessage, robotIsWorking } = state;
 
   const form = useForm({
     initialValues: {
@@ -18,10 +18,13 @@ export const ConversationInput = () => {
   });
 
   const onSubmit = useCallback(() => {
-    dispatch.createConversation(form.values).finally(() => {
-      // form.setFieldValue('ask', '');
-    });
+    dispatch.createConversation(form.values);
   }, [dispatch, form]);
+
+  useEffect(() => {
+    form.setFieldValue('ask', inputAskMessage);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inputAskMessage]);
 
   return (
     <Paper

@@ -6,7 +6,8 @@ import { Conversation } from '@ailake/apitype';
 export const conversationStore = createStore(
   { name: 'conversation' },
   withProps<{
+    inputAskMessage: string;
     robotIsWorking: boolean;
-  }>({ robotIsWorking: false }),
+  }>({ inputAskMessage: '', robotIsWorking: false }),
   withEntities<Conversation>()
 );
