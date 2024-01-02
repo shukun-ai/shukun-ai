@@ -1,7 +1,8 @@
-import { Box } from '@mantine/core';
+import { Avatar, Box } from '@mantine/core';
 import { ConversationInput } from './conversation-input';
 import { ConversationProvider } from './conversation-context';
 import { ConversationList } from './conversation-list';
+import { ShukunLogo } from './shukun-logo';
 
 export type ConversationProps = {
   //
@@ -17,22 +18,26 @@ export const Conversation = () => {
           width: '100vw',
           height: '100vh',
           overflow: 'hidden',
+          background: '#f2f2f2',
         }}
       >
-        <Box style={{ flex: 1, overflow: 'hidden', overflowY: 'scroll' }}>
-          <ConversationList />
-        </Box>
+        <Box style={{ height: 12 }}></Box>
         <Box
           style={{
             display: 'flex',
-            alignItems: 'center',
-            height: 50,
-            background: '#000',
             paddingLeft: 20,
             paddingRight: 20,
           }}
         >
+          <Box style={{ marginRight: 20 }}>
+            <Avatar>
+              <ShukunLogo />
+            </Avatar>
+          </Box>
           <ConversationInput />
+        </Box>
+        <Box style={{ flex: 1, overflow: 'hidden', overflowY: 'scroll' }}>
+          <ConversationList />
         </Box>
       </Box>
     </ConversationProvider>

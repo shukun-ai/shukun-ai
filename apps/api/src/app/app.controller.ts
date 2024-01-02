@@ -10,6 +10,7 @@ import {
 import { PostgresService } from './postgres.service';
 import { LlmService } from './llm.service';
 import { getPrompt } from './prompt';
+import { environment } from '../environment';
 
 @Controller()
 export class AppController {
@@ -79,11 +80,9 @@ export class AppController {
   }
 
   private async getSql(ask: string) {
-    const USE_LLM = true;
     const prompt = getPrompt(ask);
-    console.log(prompt);
 
-    if (USE_LLM) {
+    if (environment.LLM_ENABLE) {
       const sql = await this.llmService.run(prompt);
       return sql;
     } else {

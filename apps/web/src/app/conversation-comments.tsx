@@ -17,7 +17,10 @@ export const ConversationComments = ({
   return (
     <Box>
       {comments
-        .filter((comment) => comment.conversationId === conversationId)
+        .filter(
+          (comment) =>
+            comment.conversationId === conversationId && comment.sentByRobot
+        )
         .map((comment, index) => (
           <ConversationComment key={comment.id} comment={comment} />
         ))}

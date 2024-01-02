@@ -8,7 +8,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   return (
     <MantineProvider
       theme={{
-        colorScheme: 'dark',
+        colorScheme: 'light',
         colors: {
           blue: [
             '#F4FAFF',

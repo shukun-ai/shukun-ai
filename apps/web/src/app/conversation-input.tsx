@@ -1,4 +1,4 @@
-import { Box, Button, Input } from '@mantine/core';
+import { Box, Button, Paper } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useCallback } from 'react';
 import { useConversationContext } from './conversation-context';
@@ -19,28 +19,38 @@ export const ConversationInput = () => {
 
   const onSubmit = useCallback(() => {
     dispatch.createConversation(form.values).finally(() => {
-      form.setFieldValue('ask', '');
+      // form.setFieldValue('ask', '');
     });
   }, [dispatch, form]);
 
   return (
-    <Box style={{ flex: 1 }}>
+    <Paper
+      style={{
+        flex: 1,
+        background: '#fff',
+        padding: '5px 10px',
+        borderRadius: 0,
+        boxShadow: '0px 2px 2px rgba(0,0,0,0.1)',
+      }}
+    >
       <form onSubmit={form.onSubmit(onSubmit)}>
         <Box style={{ display: 'flex' }}>
-          <Input
+          <input
             type="text"
             {...form.getInputProps('ask')}
             style={{
               width: '100%',
               marginRight: 20,
+              border: 'none',
             }}
             disabled={robotIsWorking}
+            placeholder="问我关于你想查的数据，如前十条任务的机场代码分布是什么？"
           />
-          <Button type="submit" size="sm">
+          <Button type="submit" size="sm" variant="white">
             发送
           </Button>
         </Box>
       </form>
-    </Box>
+    </Paper>
   );
 };
