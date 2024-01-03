@@ -1,9 +1,9 @@
 import React, { createContext, useContext } from 'react';
 import { useObservableState } from 'observable-hooks';
 import { Comment, Conversation, DataResult } from '@ailake/apitype';
-import { conversationRepository } from '../repositories/conversation/conversation-repository';
-import { commentRepository } from '../repositories/comment/comment-repository';
-import { dataResultRepository } from '../repositories/data-result/data-result-repository';
+import { conversationRepository } from '../../../repositories/conversation/conversation-repository';
+import { commentRepository } from '../../../repositories/comment/comment-repository';
+import { dataResultRepository } from '../../../repositories/data-result/data-result-repository';
 
 type ConversationContextType = {
   state: {

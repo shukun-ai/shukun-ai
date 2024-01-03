@@ -1,6 +1,6 @@
-import { DataResult } from '@ailake/apitype';
+import { DataResult } from './data-visualization.type';
 import { Code } from '@mantine/core';
-import { DataVisualizationCollection } from './data-visualization-collection';
+import { DataVisualizationCollection } from './components/data-visualization-collection';
 
 export type DataVisualizationProps = {
   dataResult: DataResult;

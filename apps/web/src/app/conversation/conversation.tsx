@@ -1,9 +1,9 @@
 import { Avatar, Box } from '@mantine/core';
-import { ConversationInput } from './conversation-input';
-import { ConversationProvider } from './conversation-context';
-import { ConversationList } from './conversation-list';
-import { ShukunLogo } from './shukun-logo';
-import { ConversationTip } from './conversation-tip';
+import { ConversationInput } from './components/conversation-input';
+import { ConversationProvider } from './components/conversation-context';
+import { ConversationList } from './components/conversation-list';
+import { ConversationTip } from './components/conversation-tip';
+import { ShukunLogo } from '@ailake/shared-ui';
 
 export type ConversationProps = {
   //

@@ -1,4 +1,4 @@
-import { DataCollection, DataResult } from '@ailake/apitype';
+import { DataCollection, DataResult } from '../data-visualization.type';
 import { Box, Button, Group, Table } from '@mantine/core';
 import { useMemo } from 'react';
 import ReactECharts from 'echarts-for-react';

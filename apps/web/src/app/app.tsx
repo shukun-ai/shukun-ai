@@ -1,4 +1,4 @@
-import { Conversation } from './conversation';
+import { Conversation } from './conversation/conversation';
 import { ThemeProvider } from './theme-provider';
 
 export type AppProps = {

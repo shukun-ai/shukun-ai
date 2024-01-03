@@ -12,8 +12,7 @@ import {
 import { useConversationContext } from './conversation-context';
 import { Comment } from '@ailake/apitype';
 import { useEffect, useMemo, useState } from 'react';
-import { DataVisualization } from './data-visualization';
-import { ShukunLogo } from './shukun-logo';
+import { DataVisualization, ShukunLogo } from '@ailake/shared-ui';
 import { CircleLoader } from 'react-spinners';
 import { useDisclosure } from '@mantine/hooks';
 

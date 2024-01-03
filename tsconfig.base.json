@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@ailake/apitype": ["apps/apitype/src/index.ts"]
+      "@ailake/apitype": ["apps/apitype/src/index.ts"],
+      "@ailake/shared-ui": ["apps/shared-ui/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
