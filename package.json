@@ -2,7 +2,11 @@
   "name": "@ailake/source",
   "version": "0.0.0",
   "scripts": {
-    "start": "nx run-many --target=serve"
+    "start": "nx run-many --target=serve",
+    "build": "nx run-many --target=build --all --configuration=production",
+    "lint": "nx run-many --target=lint --all",
+    "test": "nx run-many --target=test --all",
+    "prepare": "is-ci || husky install"
   },
   "private": true,
   "dependencies": {
@@ -91,6 +95,7 @@
     "url-loader": "^4.1.1",
     "vite": "^5.0.0",
     "vite-plugin-dts": "~2.3.0",
-    "vitest": "~0.34.6"
+    "vitest": "~0.34.6",
+    "husky": "^8.0.0"
   }
 }

@@ -1,0 +1,20 @@
+name: Unit Test and Build
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.17.0'
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run test
+      - run: npm run build
