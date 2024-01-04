@@ -12,7 +12,7 @@ import {
   Group,
   ActionIcon,
 } from '@mantine/core';
-import { IconSun, IconMoonStars } from '@tabler/icons-react';
+import { IconSun } from '@tabler/icons-react';
 import { FC } from 'react';
 
 import { ShukunLogo } from '@ailake/shared-ui';
