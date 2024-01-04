@@ -19,24 +19,31 @@ import { ShukunLogo } from '@ailake/shared-ui';
 
 export type DefaultLayoutProps = {
   //
-  children: ReactNode
+  children: ReactNode;
 };
 
 export const DefaultLayout: FC<DefaultLayoutProps> = ({ children }) => {
-
   const theme = useMantineTheme();
   const [opened, setOpened] = useState(false);
   return (
     <AppShell
       styles={{
         main: {
-          background: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0],
+          background:
+            theme.colorScheme === 'dark'
+              ? theme.colors.dark[8]
+              : theme.colors.gray[0],
         },
       }}
       navbarOffsetBreakpoint="sm"
       asideOffsetBreakpoint="sm"
       navbar={
-        <Navbar p="md" hiddenBreakpoint="sm" hidden={!opened} width={{ sm: 200, lg: 300 }}>
+        <Navbar
+          p="md"
+          hiddenBreakpoint="sm"
+          hidden={!opened}
+          width={{ sm: 200, lg: 300 }}
+        >
           <Navbar.Section>Home</Navbar.Section>
           <Navbar.Section>Reports</Navbar.Section>
           <Navbar.Section>Table Schemas</Navbar.Section>
@@ -60,7 +67,9 @@ export const DefaultLayout: FC<DefaultLayoutProps> = ({ children }) => {
       header={
         <Header height={{ base: 50, md: 70 }} p="md">
           <Group sx={{ height: '100%' }} px={20} position="apart">
-            <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+            <div
+              style={{ display: 'flex', alignItems: 'center', height: '100%' }}
+            >
               <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
                 <Burger
                   opened={opened}
@@ -72,11 +81,8 @@ export const DefaultLayout: FC<DefaultLayoutProps> = ({ children }) => {
               </MediaQuery>
 
               <ShukunLogo />
-              <Text ml='xl'>
-                shukun
-              </Text>
+              <Text ml="xl">shukun</Text>
             </div>
-
 
             <ActionIcon variant="default" size={30}>
               <IconSun size="1rem" />
