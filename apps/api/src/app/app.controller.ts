@@ -11,6 +11,7 @@ import { PostgresService } from './postgres.service';
 import { LlmService } from './llm.service';
 import { getPrompt } from './prompt';
 import { environment } from '../environment';
+import { getSchemaDefinition } from './schema';
 
 @Controller()
 export class AppController {
@@ -80,7 +81,7 @@ export class AppController {
   }
 
   private async getSql(ask: string) {
-    const prompt = getPrompt(ask);
+    const prompt = getPrompt(ask, getSchemaDefinition());
 
     if (environment.LLM_ENABLE) {
       const sql = await this.llmService.run(prompt);
