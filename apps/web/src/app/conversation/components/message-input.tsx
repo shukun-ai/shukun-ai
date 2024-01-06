@@ -10,7 +10,7 @@ type MessageInputProps = {
 export const MessageInput: FC<MessageInputProps> = ({ loading, ...rest }) => {
   const theme = useMantineTheme();
   return (
-    <Group position='center'>
+    <Group position="center">
       <TextInput
         {...rest}
         disabled={loading}
@@ -22,16 +22,16 @@ export const MessageInput: FC<MessageInputProps> = ({ loading, ...rest }) => {
             border: 0, // 移除边框
             boxShadow: theme.shadows.sm, // 轻微的阴影
             '&:focus': { boxShadow: `${theme.shadows.md} !important` }, // 聚焦时更明显的阴影
-          }
+          },
         }}
       />
-      <ActionIcon color="red" variant="filled" size='lg' type='submit'>
+      <ActionIcon color="red" variant="filled" size="lg" type="submit">
         <IconSend size="1.3rem" />
       </ActionIcon>
 
-      <ActionIcon variant="filled" size='lg'>
+      <ActionIcon variant="filled" size="lg">
         <IconQuestionMark size="1.3rem" />
       </ActionIcon>
     </Group>
   );
-}
+};

@@ -15,6 +15,6 @@ export const Conversation = () => {
         conversationList={<ConversationList />}
         conversationInput={<ConversationInput />}
       />
-    </ConversationProvider >
+    </ConversationProvider>
   );
 };
