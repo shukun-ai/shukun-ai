@@ -1,5 +1,5 @@
-import { ColumnDefinition, TableDefinition } from './schema';
-import { buildColumn, buildReferences } from './schema-to-prompt';
+import { ColumnDefinition } from './schema';
+import { buildColumn } from './schema-to-prompt';
 
 describe('buildColumn', () => {
   it('should build the column string correctly', () => {
@@ -15,7 +15,7 @@ describe('buildColumn', () => {
       comment: 'This is a test column',
     };
 
-    const expectedColumnString = 'id text "The Chinese label is id."';
+    const expectedColumnString = 'id text "This is a test column."';
     const result = buildColumn(column);
 
     expect(result).toEqual(expectedColumnString);
@@ -40,44 +40,9 @@ describe('buildColumn', () => {
     };
 
     const expectedColumnString =
-      'arrival_task_id text "The Chinese label is arrival_task_id."';
+      'arrival_task_id text "This is a foreign Id. This can be joined with table_id column in the table_arrival_tasks table and select flight_number column."';
     const result = buildColumn(column);
 
     expect(result).toEqual(expectedColumnString);
-  });
-});
-
-describe('buildReferences', () => {
-  it('should build the references string correctly', () => {
-    const tables: TableDefinition[] = [
-      {
-        tableName: 'arrival_packages',
-        tableAlias: ['arrival_packages'],
-        columns: [
-          {
-            columnName: 'arrival_task_id',
-            columnAlias: ['arrival_task_id'],
-            columnType: 'varchar',
-            precision: 24,
-            notNullable: false,
-            isPrimary: false,
-            isUnique: false,
-            isIndexed: false,
-            comment: 'This is a foreign Id',
-            reference: {
-              tableName: 'arrival_tasks',
-              columnName: 'id',
-              displayColumnName: 'flight_number',
-            },
-          },
-        ],
-      },
-    ];
-
-    const expectedReferencesString =
-      '- table_arrival_packages.arrival_task_id can be joined with table_arrival_tasks.id';
-    const result = buildReferences(tables);
-
-    expect(result).toEqual(expectedReferencesString);
   });
 });

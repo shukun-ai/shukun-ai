@@ -5,10 +5,7 @@ export const buildSchema = (schema: { tables: TableDefinition[] }): string => {
 };
 
 export const buildTables = (tables: TableDefinition[]): string => {
-  return [
-    tables.map((table) => buildTable(table)).join('\n'),
-    buildReferences(tables),
-  ].join('\n');
+  return [tables.map((table) => buildTable(table)).join('\n')].join('\n');
 };
 
 const buildTable = (table: TableDefinition): string => {
@@ -33,39 +30,30 @@ const buildEnumItems = (
     .join(',');
 };
 
-export const buildReferences = (tables: TableDefinition[]): string => {
-  return tables
-    .map((table) => {
-      return table.columns
-        .map((column) => {
-          if (column.reference) {
-            return `- ${getTableName(table.tableName)}.${getColumnName(
-              column.columnName
-            )} can be joined with ${getTableName(
-              column.reference.tableName
-            )}.${getColumnName(column.reference.columnName)}`;
-          }
-        })
-        .filter((text) => text)
-        .join('\n');
-    })
-    .join('\n');
-};
-
 export const buildColumn = (column: ColumnDefinition): string => {
   let columnString = `${getColumnName(column.columnName)} ${buildType(column)}`;
 
   const description: string[] = [];
 
-  if (column.columnAlias) {
-    description.push(`The Chinese label is ${column.columnAlias.join(',')}.`);
+  if (column.comment) {
+    description.push(`${column.comment}.`);
+  }
+
+  if (column.reference) {
+    description.push(
+      `This can be joined with ${getTableName(
+        column.reference.columnName
+      )} column in the ${getTableName(
+        column.reference.tableName
+      )} table and select ${column.reference.displayColumnName} column.`
+    );
   }
 
   if (column.enums) {
     description.push(
       `This can only be one of the following values: [${buildEnumItems(
         column.enums
-      )}]`
+      )}].`
     );
   }
 
