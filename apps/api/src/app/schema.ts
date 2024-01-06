@@ -63,6 +63,11 @@ const tables: TableDefinition[] = [
         columnName: 'arrival_task_id',
         columnAlias: ['任务ID'],
         columnType: 'varchar',
+        reference: {
+          tableName: 'arrival_tasks',
+          columnName: 'id',
+          displayColumnName: 'flight_number',
+        },
       },
       {
         columnName: 'updated_at',
@@ -164,6 +169,11 @@ const tables: TableDefinition[] = [
         columnName: 'vehicle_id',
         columnAlias: ['车辆ID'],
         columnType: 'varchar',
+        reference: {
+          tableName: 'vehicles',
+          columnName: 'id',
+          displayColumnName: 'title',
+        },
       },
     ],
   },

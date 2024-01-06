@@ -5,55 +5,72 @@ export const buildSchema = (schema: { tables: TableDefinition[] }): string => {
 };
 
 export const buildTables = (tables: TableDefinition[]): string => {
-  return tables.map((table) => buildTable(table)).join('\n');
+  return [
+    tables.map((table) => buildTable(table)).join('\n'),
+    buildReferences(tables),
+  ].join('\n');
 };
 
 const buildTable = (table: TableDefinition): string => {
   return [
-    `CREATE TABLE ${table.tableName} (`,
-    buildColumns(table.columns, table.tableName),
+    `CREATE TABLE ${getTableName(table.tableName)} (`,
+    buildColumns(table.columns),
     ');',
-    `- Alias of ${table.tableName} is ${table.tableAlias.join(',')}`,
   ].join('\n');
 };
 
-const buildColumns = (
-  columns: ColumnDefinition[],
-  tableName: string
-): string => {
-  return columns
-    .map((column) => `  ${buildColumn(column, tableName)}`)
-    .join(',\n');
+const buildColumns = (columns: ColumnDefinition[]): string => {
+  return columns.map((column) => `  ${buildColumn(column)}`).join(',\n');
 };
 
-export const buildColumn = (
-  column: ColumnDefinition,
-  tableName: string
+const buildEnumItems = (
+  enums: NonNullable<ColumnDefinition['enums']>
 ): string => {
-  let columnString = `${column.columnName} ${buildType(column)}`;
+  return enums
+    .map((enumItem) => {
+      return `'${enumItem.key}'`;
+    })
+    .join(',');
+};
 
-  if (column.isPrimary) {
-    columnString += ' PRIMARY KEY';
-  }
+export const buildReferences = (tables: TableDefinition[]): string => {
+  return tables
+    .map((table) => {
+      return table.columns
+        .map((column) => {
+          if (column.reference) {
+            return `- ${getTableName(table.tableName)}.${getColumnName(
+              column.columnName
+            )} can be joined with ${getTableName(
+              column.reference.tableName
+            )}.${getColumnName(column.reference.columnName)}`;
+          }
+        })
+        .filter((text) => text)
+        .join('\n');
+    })
+    .join('\n');
+};
+
+export const buildColumn = (column: ColumnDefinition): string => {
+  let columnString = `${getColumnName(column.columnName)} ${buildType(column)}`;
 
   const description: string[] = [];
 
   if (column.columnAlias) {
-    description.push(`Alias: ${column.columnAlias.join(',')}`);
+    description.push(`The Chinese label is ${column.columnAlias.join(',')}.`);
   }
 
-  if (column.comment) {
-    description.push(`Description: ${column.comment}`);
-  }
-
-  if (column.reference) {
+  if (column.enums) {
     description.push(
-      `${tableName}.${column.columnName} can be joined with ${column.reference.tableName}.${column.reference.columnName}`
+      `This can only be one of the following values: [${buildEnumItems(
+        column.enums
+      )}]`
     );
   }
 
   if (description.length > 0) {
-    columnString += ` "${description.join(', ')}"`;
+    columnString += ` "${description.join(' ')}"`;
   }
 
   return columnString;
@@ -62,20 +79,24 @@ export const buildColumn = (
 export const buildType = (column: ColumnDefinition) => {
   switch (column.columnType) {
     case 'varchar':
-      return `varchar(${column.precision ? column.precision : 20})`;
+      return 'text';
     case 'boolean':
       return 'bool';
     case 'enum':
-      return `ENUM(${
-        column.enums
-          ? column.enums.map((e) => `${e.key}: ${e.label}`).join(',')
-          : ''
-      })`;
+      return 'text';
     case 'integer':
-      return 'int';
+      return 'numeric';
     case 'float':
-      return 'float8';
+      return 'numeric';
     case 'timestamp':
-      return 'timestamptz';
+      return 'timestamp';
   }
+};
+
+const getTableName = (tableName: string) => {
+  return `table_${tableName}`;
+};
+
+const getColumnName = (columnName: string) => {
+  return columnName;
 };
