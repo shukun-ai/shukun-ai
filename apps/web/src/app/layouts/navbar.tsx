@@ -1,9 +1,10 @@
 import { FC, useState } from 'react';
 import { IconWorldSearch, IconReportAnalytics, IconTableShare, IconArtboard } from '@tabler/icons-react';
-import { NavLink, Navbar, useMantineTheme } from '@mantine/core';
+import { NavLink, Navbar, ScrollArea, useMantineTheme } from '@mantine/core';
 
 export const AppNavbar: FC = () => {
   const theme = useMantineTheme();
+  console.log(theme.breakpoints);
   const [active, setActive] = useState(0);
   const data = [
     { icon: IconWorldSearch, label: '探索', iconColor: theme.colors.pink[5] },
@@ -13,7 +14,7 @@ export const AppNavbar: FC = () => {
       iconColor: theme.colors.teal[5],
     },
     { icon: IconTableShare, label: '建模', iconColor: theme.colors.violet[5] },
-    { icon: IconArtboard, label: '大屏', iconColor: theme.colors.blue[5] }
+    { icon: IconArtboard, label: '大屏', iconColor: theme.colors.blue[5] },
   ];
 
   const items = data.map((item, index) => (
@@ -30,9 +31,12 @@ export const AppNavbar: FC = () => {
   return (
     <Navbar
       pt={20}
-      w={100}
+      width={{ sm: 100, xs: 100 }}
     >
-      {items}
+      <Navbar.Section grow component={ScrollArea} mx="-xs" px="xs">
+        {items}
+      </Navbar.Section>
+      {/* <Navbar.Section>-</Navbar.Section> */}
     </Navbar>
   )
 }

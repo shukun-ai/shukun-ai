@@ -10,7 +10,7 @@ import { ShukunLogo } from '@ailake/shared-ui';
 
 export const AppHeader: FC = () => {
   return (
-    <Header height={{ base: 50, md: 70 }} p="md">
+    <Header height={{ base: 50, md: 70 }}>
       <Group sx={{ height: '100%' }} px={20} position="apart">
         <div
           style={{ display: 'flex', alignItems: 'center', height: '100%' }}

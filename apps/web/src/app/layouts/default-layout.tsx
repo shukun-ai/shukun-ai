@@ -24,8 +24,7 @@ export const DefaultLayout: FC<DefaultLayoutProps> = ({ children }) => {
               : theme.colors.gray[0],
         },
       }}
-      navbarOffsetBreakpoint="sm"
-      asideOffsetBreakpoint="sm"
+      navbarOffsetBreakpoint={100}
       navbar={<AppNavbar />}
       header={<AppHeader />}
     >

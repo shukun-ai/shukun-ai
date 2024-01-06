@@ -1,7 +1,8 @@
-import { Box, Button, Paper, createStyles } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useCallback, useEffect } from 'react';
 import { useConversationContext } from './conversation-context';
+import { MessageInput } from './message-input';
+import { Affix } from '@mantine/core';
 
 export type ConversationInputProps = {
   //
@@ -26,47 +27,15 @@ export const ConversationInput = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputAskMessage]);
 
-  const { classes } = useStyles();
-
   return (
-    <Paper className={classes.paper}>
-      <form onSubmit={form.onSubmit(onSubmit)}>
-        <Box style={{ display: 'flex' }}>
-          <input
-            type="text"
-            {...form.getInputProps('ask')}
-            className={classes.input}
-            disabled={robotIsWorking}
-            placeholder="问我关于你想查的数据，如前十条任务的机场代码分布是什么？"
-          />
-          <Button
-            type="submit"
-            size="sm"
-            variant="white"
-            loading={robotIsWorking}
-          >
-            探索
-          </Button>
-        </Box>
-      </form>
-    </Paper>
+    <form onSubmit={form.onSubmit(onSubmit)}>
+      <Affix position={{ bottom: 20, right: 20 }}>
+        <MessageInput
+          placeholder="问我关于你想查的数据，如前十条任务的机场代码分布是什么？"
+          {...form.getInputProps('ask')}
+          loading={robotIsWorking}
+        />
+      </Affix>
+    </form>
   );
 };
-
-const useStyles = createStyles((theme) => ({
-  paper: {
-    flex: 1,
-    background: '#fff',
-    padding: '5px 10px',
-    borderRadius: 0,
-    boxShadow: '0px 2px 2px rgba(0,0,0,0.1)',
-  },
-  input: {
-    width: '100%',
-    marginRight: 20,
-    border: 'none',
-    '&:focus': {
-      outline: 'none',
-    },
-  },
-}));
