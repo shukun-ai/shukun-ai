@@ -2,7 +2,6 @@ import { useForm } from '@mantine/form';
 import { useCallback, useEffect } from 'react';
 import { useConversationContext } from './conversation-context';
 import { MessageInput } from './message-input';
-import { Affix } from '@mantine/core';
 
 export type ConversationInputProps = {
   //
@@ -28,14 +27,12 @@ export const ConversationInput = () => {
   }, [inputAskMessage]);
 
   return (
-    <form onSubmit={form.onSubmit(onSubmit)}>
-      <Affix position={{ bottom: 20, right: 20 }}>
-        <MessageInput
-          placeholder="问我关于你想查的数据，如前十条任务的机场代码分布是什么？"
-          {...form.getInputProps('ask')}
-          loading={robotIsWorking}
-        />
-      </Affix>
+    <form onSubmit={form.onSubmit(onSubmit)} style={{ width: '100%' }}>
+      <MessageInput
+        placeholder="问我关于你想查的数据，如前十条任务的机场代码分布是什么？"
+        {...form.getInputProps('ask')}
+        loading={robotIsWorking}
+      />
     </form>
   );
 };

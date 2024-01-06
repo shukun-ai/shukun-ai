@@ -11,10 +11,9 @@ import { environment } from '../environment';
 export class PostgresService implements OnModuleInit, OnApplicationShutdown {
   pool?: Pool;
 
-  constructor() { }
+  constructor() {}
 
   onModuleInit() {
-
     this.pool = new Pool({
       user: environment.PG_USER,
       host: environment.PG_HOST,

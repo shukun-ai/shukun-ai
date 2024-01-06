@@ -1,6 +1,5 @@
 import {
   Alert,
-  Avatar,
   Box,
   Button,
   Collapse,
@@ -12,7 +11,7 @@ import {
 import { useConversationContext } from './conversation-context';
 import { Comment } from '@ailake/apitype';
 import { useEffect, useMemo, useState } from 'react';
-import { DataVisualization, ShukunLogo } from '@ailake/shared-ui';
+import { DataVisualization } from '@ailake/shared-ui';
 import { CircleLoader } from 'react-spinners';
 import { useDisclosure } from '@mantine/hooks';
 
@@ -45,14 +44,14 @@ export const ConversationComment = ({ comment }: { comment: Comment }) => {
 
   return (
     <Box style={{ display: 'flex', overflow: 'hidden', padding: 20 }}>
-      <Box style={{ width: 38 }} mr={20}>
+      {/* <Box style={{ width: 38 }} mr={20}>
         {!comment.sentByRobot && <Avatar color="red" radius="xs" />}
         {comment.sentByRobot && (
           <Avatar radius="xs">
             <ShukunLogo />
           </Avatar>
         )}
-      </Box>
+      </Box> */}
       <Paper shadow="md" p="md" style={{ flex: 1 }}>
         {comment.commentText && <Text>{comment.commentText}</Text>}
         {comment.sentByRobot && !comment.isLoading && (
