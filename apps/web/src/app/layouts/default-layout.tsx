@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 import {
   AppShell,
   useMantineTheme,
@@ -14,7 +14,6 @@ export type DefaultLayoutProps = {
 
 export const DefaultLayout: FC<DefaultLayoutProps> = ({ children }) => {
   const theme = useMantineTheme();
-  const [navbarVisible, setNavbarVisible] = useState(false);
   return (
     <AppShell
       styles={{
@@ -27,8 +26,8 @@ export const DefaultLayout: FC<DefaultLayoutProps> = ({ children }) => {
       }}
       navbarOffsetBreakpoint="sm"
       asideOffsetBreakpoint="sm"
-      navbar={<AppNavbar hidden={!navbarVisible} />}
-      header={<AppHeader onBurgerClicked={(open: boolean) => setNavbarVisible(open)} />}
+      navbar={<AppNavbar />}
+      header={<AppHeader />}
     >
       {children}
     </AppShell>
