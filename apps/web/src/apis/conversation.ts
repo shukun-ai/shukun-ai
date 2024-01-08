@@ -1,14 +1,15 @@
 import {
   CreateConversationDto,
   CreateConversationResponse,
+  conversationPath,
 } from '@ailake/apitype';
-import axios from 'axios';
+import { getAxios } from './axios';
 
 export const createConversation = async (
   data: CreateConversationDto
 ): Promise<CreateConversationResponse> => {
-  const response = await axios.post<CreateConversationResponse>(
-    import.meta.env?.VITE_SERVER_API + '/api/create-conversation',
+  const response = await getAxios().post<CreateConversationResponse>(
+    conversationPath.createConversation,
     data
   );
   return response.data;

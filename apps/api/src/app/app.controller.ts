@@ -6,6 +6,7 @@ import {
   Comment,
   DataResult,
   CreateConversationResponse,
+  conversationPath,
 } from '@ailake/apitype';
 import { PostgresService } from './postgres.service';
 import { LlmService } from './llm.service';
@@ -20,7 +21,7 @@ export class AppController {
     private readonly llmService: LlmService
   ) {}
 
-  @Post('create-conversation')
+  @Post(conversationPath.createConversation)
   async createConversation(
     @Body() dto: CreateConversationDto
   ): Promise<CreateConversationResponse> {
@@ -87,8 +88,7 @@ export class AppController {
       const sql = await this.llmService.run(prompt);
       return sql;
     } else {
-      // return 'SELECT arrivaltasks.airportcode, COUNT(arrivaltasks.id) AS total_tasks FROM arrivaltasks GROUP BY arrivaltasks.airportcode ORDER BY total_tasks DESC NULLS LAST;';
-      return `SELECT a.airportCode, COUNT(*) AS COUNT FROM arrivalTasks a JOIN arrivalPackages p ON a.id = p.arrivalTaskId WHERE a.status IN ('finished','synced') GROUP BY a.airportCode ORDER BY COUNT DESC NULLS LAST LIMIT 10;`;
+      return `SELECT a.airport_code, COUNT(*) AS count FROM table_arrival_tasks a JOIN table_arrival_packages p ON a.id = p.arrival_task_id WHERE a.status IN ('finished','synced') GROUP BY a.airport_code ORDER BY count DESC NULLS LAST LIMIT 10;`;
     }
   }
 }
