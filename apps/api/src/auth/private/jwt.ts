@@ -1,7 +1,7 @@
 import { sign, verify } from 'jsonwebtoken';
 
 const privateKey =
-  process.env?.['AUTH_PRIVATE_KEY'] ?? 'Please_set_privateKey_in_.env_first';
+  process.env?.['AUTH_PRIVATE_KEY'] || 'Please_set_privateKey_in_.env_first';
 
 type JwtPayload = {
   username: string;
