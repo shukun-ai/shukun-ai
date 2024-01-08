@@ -4,7 +4,7 @@ import {
 } from '@ailake/apitype';
 import axios from 'axios';
 
-export const createConversion = async (
+export const createConversation = async (
   data: CreateConversationDto
 ): Promise<CreateConversationResponse> => {
   const response = await axios.post<CreateConversationResponse>(

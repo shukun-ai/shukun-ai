@@ -8,7 +8,7 @@ import {
   deleteAllEntities,
 } from '@ngneat/elf-entities';
 import { conversationStore } from './conversation-store';
-import { createConversion } from '../../apis/apis';
+import { createConversation } from '../../apis/conversation';
 import { commentStore } from '../comment/comment-store';
 import { dataResultStore } from '../data-result/data-result-store';
 import { Comment, Conversation } from '@ailake/apitype';
@@ -64,7 +64,7 @@ export const conversationRepository = {
     commentStore.update(addEntities(replyComment));
 
     try {
-      const data = await createConversion({
+      const data = await createConversation({
         ...props,
         askCommentId,
         conversationId,
