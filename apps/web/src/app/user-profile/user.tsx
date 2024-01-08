@@ -3,9 +3,9 @@ import { Group, Avatar, Text, Box } from '@mantine/core';
 
 export const User = () => {
   return (
-    <Box pb='sm'>
+    <Box pb="sm">
       <Group>
-        <Avatar radius="xl" >dc</Avatar>
+        <Avatar radius="xl">dc</Avatar>
         <Box sx={{ flex: 1 }}>
           <Text size="sm" weight={500}>
             davy chen
@@ -17,4 +17,4 @@ export const User = () => {
       </Group>
     </Box>
   );
-}
+};

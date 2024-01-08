@@ -1,6 +1,17 @@
 import { FC, useState } from 'react';
-import { IconWorldSearch, IconReportAnalytics, IconTableShare, IconArtboard } from '@tabler/icons-react';
-import { NavLink, Navbar, ScrollArea, createStyles, useMantineTheme } from '@mantine/core';
+import {
+  IconWorldSearch,
+  IconReportAnalytics,
+  IconTableShare,
+  IconArtboard,
+} from '@tabler/icons-react';
+import {
+  NavLink,
+  Navbar,
+  ScrollArea,
+  createStyles,
+  useMantineTheme,
+} from '@mantine/core';
 import { ShukunLogo } from '@ailake/shared-ui';
 import { User } from '../user-profile/user';
 
@@ -31,11 +42,8 @@ export const AppNavbar: FC = () => {
   ));
 
   return (
-    <Navbar
-      pt={20}
-      width={{ sm: 280, xs: 100 }}
-    >
-      <Navbar.Section mt="xs" mb='xs' className={classes.logoSection}>
+    <Navbar pt={20} width={{ sm: 280, xs: 100 }}>
+      <Navbar.Section mt="xs" mb="xs" className={classes.logoSection}>
         <ShukunLogo />
       </Navbar.Section>
       <Navbar.Section grow component={ScrollArea} mx="-xs" px="xs">
@@ -45,8 +53,8 @@ export const AppNavbar: FC = () => {
         <User />
       </Navbar.Section>
     </Navbar>
-  )
-}
+  );
+};
 
 const useStyles = createStyles((theme) => ({
   logoSection: {

@@ -1,8 +1,5 @@
 import { ReactNode } from 'react';
-import {
-  AppShell,
-  useMantineTheme,
-} from '@mantine/core';
+import { AppShell, useMantineTheme } from '@mantine/core';
 import { FC } from 'react';
 import { AppNavbar } from './navbar';
 
