@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { useState } from 'react';
 import {
   IconWorldSearch,
   IconReportAnalytics,
@@ -11,13 +11,13 @@ import {
   ScrollArea,
   createStyles,
   useMantineTheme,
+  Image
 } from '@mantine/core';
-import { ShukunLogo } from '@ailake/shared-ui';
 import { User } from '../user-profile/user';
+import logo from '../../assets/light-logo-en.png'
 
-export const AppNavbar: FC = () => {
+export const AppNavbar = () => {
   const theme = useMantineTheme();
-  console.log(theme.breakpoints);
   const [active, setActive] = useState(0);
   const data = [
     { icon: IconWorldSearch, label: '探索', iconColor: theme.colors.pink[5] },
@@ -44,7 +44,7 @@ export const AppNavbar: FC = () => {
   return (
     <Navbar pt={20} width={{ sm: 280, xs: 100 }}>
       <Navbar.Section mt="xs" mb="xs" className={classes.logoSection}>
-        <ShukunLogo />
+        <Image src={logo} alt="shukun" maw={180} />
       </Navbar.Section>
       <Navbar.Section grow component={ScrollArea} mx="-xs" px="xs">
         {items}

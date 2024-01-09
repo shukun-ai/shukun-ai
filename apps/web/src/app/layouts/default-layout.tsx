@@ -1,14 +1,12 @@
 import { ReactNode } from 'react';
 import { AppShell, useMantineTheme } from '@mantine/core';
-import { FC } from 'react';
 import { AppNavbar } from './navbar';
 
 export type DefaultLayoutProps = {
-  //
   children: ReactNode;
 };
 
-export const DefaultLayout: FC<DefaultLayoutProps> = ({ children }) => {
+export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
   const theme = useMantineTheme();
   return (
     <AppShell
