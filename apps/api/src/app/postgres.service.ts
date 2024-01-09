@@ -11,14 +11,14 @@ import { environment } from '../environment';
 export class PostgresService implements OnModuleInit, OnApplicationShutdown {
   pool?: Pool;
 
-  constructor() {}
+  constructor() { }
 
   onModuleInit() {
     this.pool = new Pool({
       user: environment.PG_USER,
       host: environment.PG_HOST,
       database: environment.PG_DATABASE,
-      password: environment.PG_DATABASE,
+      password: environment.PG_PASSWORD,
       port: environment.PG_PORT,
       max: environment.PG_MAX,
     });

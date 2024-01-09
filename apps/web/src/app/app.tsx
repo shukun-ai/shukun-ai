@@ -1,6 +1,6 @@
-import { Conversation } from './conversation/conversation';
 import { ThemeProvider } from './theme-provider';
-import { DefaultLayout } from './layouts/default-layout';
+import { BrowserRouter } from "react-router-dom";
+import AppRouter from "./router";
 
 export type AppProps = {
   //
@@ -9,9 +9,9 @@ export type AppProps = {
 export const App = () => {
   return (
     <ThemeProvider>
-      <DefaultLayout>
-        <Conversation />
-      </DefaultLayout>
+      <BrowserRouter>
+        <AppRouter />
+      </BrowserRouter>
     </ThemeProvider>
   );
 };

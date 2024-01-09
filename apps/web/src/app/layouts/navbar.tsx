@@ -3,7 +3,6 @@ import {
   IconWorldSearch,
   IconReportAnalytics,
   IconTableShare,
-  IconArtboard,
 } from '@tabler/icons-react';
 import {
   NavLink,
@@ -13,32 +12,43 @@ import {
   useMantineTheme,
   Image
 } from '@mantine/core';
+import { NavLink as RouterNavLink } from 'react-router-dom';
 import { User } from '../user-profile/user';
 import logo from '../../assets/light-logo-en.png'
 
 export const AppNavbar = () => {
   const theme = useMantineTheme();
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState('');
   const data = [
-    { icon: IconWorldSearch, label: '探索', iconColor: theme.colors.pink[5] },
+    { icon: IconWorldSearch, label: '探索', iconColor: theme.colors.pink[5], path: '/' },
     {
       icon: IconReportAnalytics,
       label: '报表',
       iconColor: theme.colors.teal[5],
+      path: '/reports',
     },
-    { icon: IconTableShare, label: '建模', iconColor: theme.colors.violet[5] },
-    { icon: IconArtboard, label: '大屏', iconColor: theme.colors.blue[5] },
+    { icon: IconTableShare, label: '建模', iconColor: theme.colors.violet[5], path: '/table-schema' },
   ];
   const { classes } = useStyles();
 
   const items = data.map((item, index) => (
-    <NavLink
+    <RouterNavLink
       key={item.label}
-      active={index === active}
-      label={item.label}
-      icon={<item.icon size="1rem" stroke={1.5} color={item.iconColor} />}
-      onClick={() => setActive(index)}
-    />
+      to={item.path}
+      className={({ isActive, isPending }) => {
+        if (isActive) {
+          setActive(item.label);
+        }
+        return classes.navMenu
+      }}
+    >
+      <NavLink
+        active={item.label === active}
+        label={item.label}
+        variant="filled"
+        icon={<item.icon size="1rem" stroke={1.5} color={item.iconColor} />}
+      />
+    </RouterNavLink >
   ));
 
   return (
@@ -62,4 +72,7 @@ const useStyles = createStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  navMenu: {
+    textDecoration: 'none',
+  }
 }));

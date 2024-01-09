@@ -1,12 +1,8 @@
-import { ReactNode } from 'react';
 import { AppShell, useMantineTheme } from '@mantine/core';
 import { AppNavbar } from './navbar';
+import { Outlet } from 'react-router-dom';
 
-export type DefaultLayoutProps = {
-  children: ReactNode;
-};
-
-export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
+export const DefaultLayout = () => {
   const theme = useMantineTheme();
   return (
     <AppShell
@@ -21,7 +17,7 @@ export const DefaultLayout = ({ children }: DefaultLayoutProps) => {
       navbarOffsetBreakpoint={100}
       navbar={<AppNavbar />}
     >
-      {children}
+      <Outlet />
     </AppShell>
   );
 };
