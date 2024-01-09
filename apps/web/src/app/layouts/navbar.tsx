@@ -10,24 +10,34 @@ import {
   ScrollArea,
   createStyles,
   useMantineTheme,
-  Image
+  Image,
 } from '@mantine/core';
 import { NavLink as RouterNavLink } from 'react-router-dom';
 import { User } from '../user-profile/user';
-import logo from '../../assets/light-logo-en.png'
+import logo from '../../assets/light-logo-en.png';
 
 export const AppNavbar = () => {
   const theme = useMantineTheme();
   const [active, setActive] = useState('');
   const data = [
-    { icon: IconWorldSearch, label: '探索', iconColor: theme.colors.pink[5], path: '/' },
+    {
+      icon: IconWorldSearch,
+      label: '探索',
+      iconColor: theme.colors.pink[5],
+      path: '/',
+    },
     {
       icon: IconReportAnalytics,
       label: '报表',
       iconColor: theme.colors.teal[5],
       path: '/reports',
     },
-    { icon: IconTableShare, label: '建模', iconColor: theme.colors.violet[5], path: '/table-schema' },
+    {
+      icon: IconTableShare,
+      label: '建模',
+      iconColor: theme.colors.violet[5],
+      path: '/table-schema',
+    },
   ];
   const { classes } = useStyles();
 
@@ -39,7 +49,7 @@ export const AppNavbar = () => {
         if (isActive) {
           setActive(item.label);
         }
-        return classes.navMenu
+        return classes.navMenu;
       }}
     >
       <NavLink
@@ -48,7 +58,7 @@ export const AppNavbar = () => {
         variant="filled"
         icon={<item.icon size="1rem" stroke={1.5} color={item.iconColor} />}
       />
-    </RouterNavLink >
+    </RouterNavLink>
   ));
 
   return (
@@ -74,5 +84,5 @@ const useStyles = createStyles((theme) => ({
   },
   navMenu: {
     textDecoration: 'none',
-  }
+  },
 }));
