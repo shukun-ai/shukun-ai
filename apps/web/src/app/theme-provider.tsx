@@ -21,8 +21,8 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
         },
         colors: {
           blue: [
-            '#F4FAFF',
             '#DDF1FF',
+            '#F4FAFF',
             '#ADDBFF',
             '#6FB6FF',
             '#3990FF',
