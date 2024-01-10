@@ -3,7 +3,6 @@ import * as ReactDOM from 'react-dom/client';
 import { devTools } from '@ngneat/elf-devtools';
 
 import { App } from './app/app';
-
 devTools();
 
 const root = ReactDOM.createRoot(
