@@ -26,11 +26,6 @@ export class SchemaModel extends Model<
   SchemaAttributesCreation
 > {}
 
-// export class SchemaModel extends Model<
-//   InferAttributes<SchemaModel>,
-//   InferCreationAttributes<SchemaModel>
-// > {}
-
 SchemaModel.init(
   {
     id: { type: DataTypes.UUIDV4, primaryKey: true },
