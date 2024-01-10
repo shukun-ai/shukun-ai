@@ -1,20 +1,19 @@
-type UniqueSchemaName = string;
-type UniqueTableName = string;
-type UniqueColumnName = string;
+export type UniqueSchemaName = string;
+export type UniqueTableName = string;
+export type UniqueColumnName = string;
 
 export type SchemaDomain = {
   name: UniqueSchemaName;
   type: string;
   url: string;
   secretKey: string;
-  tables: Record<
-    UniqueTableName,
-    {
-      tableName: UniqueTableName;
-      tableDescription?: string;
-      columns: Record<UniqueColumnName, SchemaDomainColumn>;
-    }
-  >;
+  tables: Record<UniqueTableName, SchemaDomainTable>;
+};
+
+export type SchemaDomainTable = {
+  tableName: UniqueTableName;
+  tableDescription?: string;
+  columns: Record<UniqueColumnName, SchemaDomainColumn>;
 };
 
 export type SchemaDomainColumn = {
