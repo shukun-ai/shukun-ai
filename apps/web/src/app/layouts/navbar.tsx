@@ -36,7 +36,7 @@ export const AppNavbar = () => {
       icon: IconTableShare,
       label: '建模',
       iconColor: theme.colors.violet[5],
-      path: '/table-schema',
+      path: '/databases',
     },
   ];
   const { classes } = useStyles();
