@@ -3,6 +3,7 @@ export type UniqueTableName = string;
 export type UniqueColumnName = string;
 
 export type SchemaDomain = {
+  id: string;
   name: UniqueSchemaName;
   type: string;
   url: string;

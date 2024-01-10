@@ -1,4 +1,8 @@
-import { SchemaDomainTable, UniqueTableName } from '../domain/schema';
+import {
+  SchemaDomain,
+  SchemaDomainTable,
+  UniqueTableName,
+} from '../domain/schema';
 
 export const schemaPath = {
   createSchema: '/create-schema',
@@ -15,10 +19,13 @@ export type CreateSchemaDto = {
   secretKey: string;
 };
 
-export type CreateSchemaResponse = null;
+export type CreateSchemaResponse = {
+  id: string;
+};
 
 export type ModifySchemaDto = {
-  name: string;
+  id: string;
+  name?: string;
   type?: string;
   url?: string;
   secretKey?: string;
@@ -27,24 +34,21 @@ export type ModifySchemaDto = {
 export type ModifySchemaResponse = null;
 
 export type RemoveSchemaDto = {
-  name: string;
+  id: string;
 };
 
 export type RemoveSchemaResponse = null;
 
 export type FindSchemaDto = {
-  name?: string;
+  filter?: {
+    name?: string;
+  };
 };
 
-export type FindSchemaResponse = {
-  name: string; // unique
-  type: string;
-  url: string;
-  secretKey: string;
-}[];
+export type FindSchemaResponse = SchemaDomain[];
 
 export type PushTablesDto = {
-  schemaName: string;
+  schemaId: string;
   tables: Record<UniqueTableName, SchemaDomainTable>;
 };
 

@@ -11,7 +11,7 @@ export class TableService {
       {
         tables: dto.tables,
       },
-      { where: { name: dto.schemaName } }
+      { where: { id: dto.schemaId } }
     );
     return null;
   }
