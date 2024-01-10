@@ -1,5 +1,5 @@
 export const authPath = {
-  createJwt: '/auth/create-jwt',
+  createJwt: '/create-jwt',
 };
 
 export type CreateJwtDto = {
