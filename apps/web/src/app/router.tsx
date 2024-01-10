@@ -13,11 +13,11 @@ export const AppRouter = () => {
       children: [
         { path: '', element: <Conversation /> },
         { path: 'reports', element: <Reports /> },
-        { path: 'Databases', element: <Databases /> },
+        { path: 'databases', element: <Databases /> },
       ],
     },
     { path: 'login', element: <LoginPage /> },
   ]);
 
   return element;
-}
+};
