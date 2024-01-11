@@ -44,7 +44,11 @@ export const ConversationComment = ({ comment }: { comment: Comment }) => {
   const [opened, { toggle }] = useDisclosure(false);
 
   return (
-    <Box style={{ display: 'flex', overflow: 'hidden', padding: 20 }}>
+    <Box
+      style={{
+        display: 'flex',
+      }}
+    >
       <Box style={{ width: 38 }} mr={20}>
         {!comment.sentByRobot && <Avatar color="red" radius="xs" />}
         {comment.sentByRobot && (

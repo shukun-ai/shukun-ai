@@ -18,7 +18,13 @@ export type ConversationTipProps = {
 export const ConversationTip = () => {
   const { t } = useTranslation();
   return (
-    <Box style={{ maxWidth: 1440, padding: 20, paddingLeft: 20 + 38 + 20 }}>
+    <Box
+      style={{
+        maxWidth: 1440,
+        paddingLeft: 20 + 38,
+        marginBottom: 20,
+      }}
+    >
       <Paper shadow="md">
         <Title order={5} p={20} pb={8}>
           {t('conversation.tipTitle')}

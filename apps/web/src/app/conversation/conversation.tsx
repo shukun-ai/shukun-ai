@@ -16,10 +16,6 @@ export const Conversation = () => {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          width: '100vw',
-          height: '100vh',
-          overflow: 'hidden',
-          background: '#f2f2f2',
         }}
       >
         <Box style={{ height: 12 }}></Box>
@@ -27,8 +23,7 @@ export const Conversation = () => {
           style={{
             maxWidth: 1440,
             display: 'flex',
-            paddingLeft: 20,
-            paddingRight: 20,
+            marginBottom: 20,
           }}
         >
           <Box style={{ marginRight: 20 }}>
@@ -38,14 +33,10 @@ export const Conversation = () => {
           </Box>
           <ConversationInput />
         </Box>
-        <Box
-          style={{
-            flex: 1,
-            overflow: 'hidden',
-            overflowY: 'scroll',
-          }}
-        >
+        <Box style={{ marginBottom: 20 }}>
           <ConversationList />
+        </Box>
+        <Box>
           <ConversationTip />
         </Box>
       </Box>

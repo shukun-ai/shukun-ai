@@ -25,13 +25,10 @@ export const DataVisualizationTable = ({ data }: { data: DataCollection }) => {
   const columns = useMemo(() => data.fields.map((field) => field.name), [data]);
 
   return (
-    <Box style={{ width: '100%', maxHeight: 300, overflow: 'auto' }}>
+    <Box style={{ width: '100%' }}>
       <Group spacing={0} position="right">
         <Button variant="white" size="xs" color="gray">
           表格导出 Excel
-        </Button>
-        <Button variant="white" size="xs" color="gray">
-          表格导出 PDF
         </Button>
       </Group>
       <Table>
@@ -103,9 +100,6 @@ export const DataVisualizationChart = ({ data }: { data: DataCollection }) => {
   return (
     <Box>
       <Group spacing={0} position="right">
-        <Button variant="white" size="xs" color="gray">
-          添加到大屏
-        </Button>
         <Button variant="white" size="xs" color="gray">
           图表导出 PDF
         </Button>
