@@ -25,7 +25,7 @@ export const ConversationTip = () => {
         marginBottom: 20,
       }}
     >
-      <Paper shadow="md">
+      <Paper>
         <Title order={5} p={20} pb={8}>
           {t('conversation.tipTitle')}
         </Title>

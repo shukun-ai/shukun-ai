@@ -1,21 +1,27 @@
 import {
+  ActionIcon,
   Alert,
   Avatar,
   Box,
   Button,
   Collapse,
   Group,
-  Paper,
   Stack,
   Text,
 } from '@mantine/core';
 import { useConversationContext } from './conversation-context';
 import { Comment } from '@ailake/apitype';
 import { useEffect, useMemo, useState } from 'react';
-import { DataVisualization, ShukunLogo } from '@ailake/shared-ui';
+import { DataVisualization } from '@ailake/shared-ui';
 import { CircleLoader } from 'react-spinners';
 import { useDisclosure } from '@mantine/hooks';
 import { useTranslation } from 'react-i18next';
+import {
+  IconStarFilled,
+  IconThumbDown,
+  IconThumbUp,
+  IconTool,
+} from '@tabler/icons-react';
 
 export type ConversationCommentProps = {
   conversationId: string;
@@ -54,16 +60,21 @@ export const ConversationComment = ({ comment }: { comment: Comment }) => {
       <Box style={{ width: 38 }} mr={20}>
         {!comment.sentByRobot && <Avatar color="red" radius="xs" />}
         {comment.sentByRobot && (
-          <Avatar radius="xs">
-            <ShukunLogo />
+          <Avatar radius="lg" color="gray">
+            AI
           </Avatar>
         )}
       </Box>
-      <Paper shadow="md" p="md" style={{ flex: 1 }}>
+      <Box style={{ flex: 1 }}>
         {comment.commentText && <Text>{comment.commentText}</Text>}
         {comment.sentByRobot && !comment.isLoading && (
           <Group spacing={4}>
-            <Button variant="outline" size="xs" color="gray">
+            <Button
+              radius="sm"
+              size="xs"
+              color="gray"
+              leftIcon={<IconStarFilled size="0.8rem" />}
+            >
               {t('conversation.saveFavorite')}
             </Button>
             <Button
@@ -73,9 +84,16 @@ export const ConversationComment = ({ comment }: { comment: Comment }) => {
               onClick={() => {
                 toggle();
               }}
+              leftIcon={<IconTool size="0.8rem" />}
             >
               {t('conversation.debug')}
             </Button>
+            <ActionIcon variant="white" size="xs" color="gray">
+              <IconThumbUp size="0.8rem" />
+            </ActionIcon>
+            <ActionIcon variant="white" size="xs" color="gray">
+              <IconThumbDown size="0.8rem" />
+            </ActionIcon>
           </Group>
         )}
         {comment.commentSQL && (
@@ -95,12 +113,12 @@ export const ConversationComment = ({ comment }: { comment: Comment }) => {
             <Stack align="center">
               <CircleLoader size={60} color="rgba(28, 82, 108, 1)" />
               <Text size="xs" color="gray">
-                我正在计算中，已计算 <TimeCounter />s
+                {t('conversation.robotLoading')} <TimeCounter />s
               </Text>
             </Stack>
           </Box>
         )}
-      </Paper>
+      </Box>
     </Box>
   );
 };

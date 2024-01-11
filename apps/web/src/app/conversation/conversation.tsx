@@ -3,7 +3,6 @@ import { ConversationInput } from './components/conversation-input';
 import { ConversationProvider } from './components/conversation-context';
 import { ConversationList } from './components/conversation-list';
 import { ConversationTip } from './components/conversation-tip';
-import { ShukunLogo } from '@ailake/shared-ui';
 
 export type ConversationProps = {
   //
@@ -27,8 +26,8 @@ export const Conversation = () => {
           }}
         >
           <Box style={{ marginRight: 20 }}>
-            <Avatar>
-              <ShukunLogo />
+            <Avatar radius="lg" color="blue">
+              DC
             </Avatar>
           </Box>
           <ConversationInput />
