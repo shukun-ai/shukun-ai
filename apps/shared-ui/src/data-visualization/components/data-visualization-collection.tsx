@@ -2,6 +2,7 @@ import { DataCollection, DataResult } from '../data-visualization.type';
 import { Box, Button, Group, Table } from '@mantine/core';
 import { useMemo } from 'react';
 import ReactECharts from 'echarts-for-react';
+import { useTranslation } from 'react-i18next';
 
 export type DataVisualizationCollectionProps = {
   dataResult: DataResult;
@@ -22,13 +23,15 @@ export const DataVisualizationCollection = ({
 };
 
 export const DataVisualizationTable = ({ data }: { data: DataCollection }) => {
+  const { t } = useTranslation();
+
   const columns = useMemo(() => data.fields.map((field) => field.name), [data]);
 
   return (
     <Box style={{ width: '100%' }}>
       <Group spacing={0} position="right">
         <Button variant="white" size="xs" color="gray">
-          表格导出 Excel
+          {t('conversation.exportTableExcel')}
         </Button>
       </Group>
       <Table>
@@ -68,6 +71,8 @@ export const FormattedCell = ({ value }: { value: unknown }) => {
 };
 
 export const DataVisualizationChart = ({ data }: { data: DataCollection }) => {
+  const { t } = useTranslation();
+
   const xData = useMemo(() => {
     return data.rows.map((row) => row[data.fields[0].name]);
   }, [data.fields, data.rows]);
@@ -101,7 +106,7 @@ export const DataVisualizationChart = ({ data }: { data: DataCollection }) => {
     <Box>
       <Group spacing={0} position="right">
         <Button variant="white" size="xs" color="gray">
-          图表导出 PDF
+          {t('conversation.exportChartPdf')}
         </Button>
       </Group>
       <ReactECharts option={options} />

@@ -47,7 +47,7 @@ export const ConversationInput = () => {
             variant="white"
             loading={robotIsWorking}
           >
-            探索
+            {t('conversation.explore')}
           </Button>
         </Box>
       </form>

@@ -15,6 +15,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { DataVisualization, ShukunLogo } from '@ailake/shared-ui';
 import { CircleLoader } from 'react-spinners';
 import { useDisclosure } from '@mantine/hooks';
+import { useTranslation } from 'react-i18next';
 
 export type ConversationCommentProps = {
   conversationId: string;
@@ -41,6 +42,7 @@ export const ConversationComments = ({
 };
 
 export const ConversationComment = ({ comment }: { comment: Comment }) => {
+  const { t } = useTranslation();
   const [opened, { toggle }] = useDisclosure(false);
 
   return (
@@ -62,7 +64,7 @@ export const ConversationComment = ({ comment }: { comment: Comment }) => {
         {comment.sentByRobot && !comment.isLoading && (
           <Group spacing={4}>
             <Button variant="outline" size="xs" color="gray">
-              将本次探索设为常用
+              {t('conversation.saveFavorite')}
             </Button>
             <Button
               variant="white"
@@ -72,7 +74,7 @@ export const ConversationComment = ({ comment }: { comment: Comment }) => {
                 toggle();
               }}
             >
-              调试
+              {t('conversation.debug')}
             </Button>
           </Group>
         )}
@@ -93,7 +95,7 @@ export const ConversationComment = ({ comment }: { comment: Comment }) => {
             <Stack align="center">
               <CircleLoader size={60} color="rgba(28, 82, 108, 1)" />
               <Text size="xs" color="gray">
-                我正在计算中，已计算 <TimeCounter /> 秒
+                我正在计算中，已计算 <TimeCounter />s
               </Text>
             </Stack>
           </Box>
