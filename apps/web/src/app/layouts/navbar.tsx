@@ -11,11 +11,12 @@ import {
   createStyles,
   useMantineTheme,
   Text,
+  MantineProvider,
 } from '@mantine/core';
 import { NavLink as RouterNavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { User } from '../user-profile/user';
-import logo from '../../assets/light-logo-en.png';
+import logo from '../../assets/dark-logo-en@4x.png';
 
 export const AppNavbar = () => {
   const { t } = useTranslation();
@@ -25,19 +26,19 @@ export const AppNavbar = () => {
     {
       icon: IconWorldSearch,
       label: t('navbar.explore'),
-      iconColor: theme.colors.blue[5],
+      iconColor: theme.colors.gray[1],
       path: '/',
     },
     {
       icon: IconReportAnalytics,
       label: t('navbar.reports'),
-      iconColor: theme.colors.blue[5],
+      iconColor: theme.colors.gray[1],
       path: '/reports',
     },
     {
       icon: IconTableShare,
       label: t('navbar.schema'),
-      iconColor: theme.colors.blue[5],
+      iconColor: theme.colors.gray[1],
       path: '/databases',
     },
   ];
@@ -65,26 +66,28 @@ export const AppNavbar = () => {
   ));
 
   return (
-    <Navbar width={{ sm: 280, xs: 100 }}>
-      <Navbar.Section
-        id="11"
-        mt="xs"
-        mb="xs"
-        className={classes.logoSection}
-        pb="md"
-      >
-        <img src={logo} alt="SHUKUN AI" style={{ width: 120 }} />
-        <Text fw="bold" pb={2}>
-          AI Explore
-        </Text>
-      </Navbar.Section>
-      <Navbar.Section grow component={ScrollArea} mx="-xs" px="xs">
-        {items}
-      </Navbar.Section>
-      <Navbar.Section pl={10} pr={10}>
-        <User />
-      </Navbar.Section>
-    </Navbar>
+    <MantineProvider theme={{ colorScheme: 'dark' }}>
+      <Navbar withBorder={false} width={{ sm: 280, xs: 100 }}>
+        <Navbar.Section
+          id="11"
+          mt="xs"
+          mb="xs"
+          className={classes.logoSection}
+          pb="md"
+        >
+          <img src={logo} alt="SHUKUN AI" style={{ width: 120 }} />
+          <Text c="#fff" fw="bold" pb={2}>
+            AI Seek
+          </Text>
+        </Navbar.Section>
+        <Navbar.Section grow component={ScrollArea} mx="-xs" px="xs">
+          {items}
+        </Navbar.Section>
+        <Navbar.Section pl={10} pr={10}>
+          <User />
+        </Navbar.Section>
+      </Navbar>
+    </MantineProvider>
   );
 };
 

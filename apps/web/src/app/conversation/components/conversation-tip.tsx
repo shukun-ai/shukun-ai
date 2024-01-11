@@ -20,8 +20,7 @@ export const ConversationTip = () => {
   return (
     <Box
       style={{
-        maxWidth: 1440,
-        paddingLeft: 20 + 38,
+        paddingLeft: 38,
         marginBottom: 20,
       }}
     >

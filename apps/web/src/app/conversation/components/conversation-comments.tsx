@@ -22,6 +22,7 @@ import {
   IconThumbUp,
   IconTool,
 } from '@tabler/icons-react';
+import logo from '../../../assets/dark-logo@4x.png';
 
 export type ConversationCommentProps = {
   conversationId: string;
@@ -60,8 +61,8 @@ export const ConversationComment = ({ comment }: { comment: Comment }) => {
       <Box style={{ width: 38 }} mr={20}>
         {!comment.sentByRobot && <Avatar color="red" radius="xs" />}
         {comment.sentByRobot && (
-          <Avatar radius="lg" color="gray">
-            AI
+          <Avatar radius="lg" color="blue">
+            <img src={logo} alt="SHUKUN AI" style={{ width: 38, height: 38 }} />
           </Avatar>
         )}
       </Box>
