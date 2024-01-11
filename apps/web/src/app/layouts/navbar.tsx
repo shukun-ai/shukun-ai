@@ -13,28 +13,30 @@ import {
   Image,
 } from '@mantine/core';
 import { NavLink as RouterNavLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { User } from '../user-profile/user';
 import logo from '../../assets/light-logo-en.png';
 
 export const AppNavbar = () => {
+  const { t } = useTranslation();
   const theme = useMantineTheme();
   const [active, setActive] = useState('');
   const data = [
     {
       icon: IconWorldSearch,
-      label: '探索',
+      label: t('navbar.explore'),
       iconColor: theme.colors.pink[5],
       path: '/',
     },
     {
       icon: IconReportAnalytics,
-      label: '报表',
+      label: t('navbar.reports'),
       iconColor: theme.colors.teal[5],
       path: '/reports',
     },
     {
       icon: IconTableShare,
-      label: '建模',
+      label: t('navbar.schema'),
       iconColor: theme.colors.violet[5],
       path: '/databases',
     },

@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { useConversationContext } from './conversation-context';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   Card,
@@ -15,11 +16,12 @@ export type ConversationTipProps = {
 };
 
 export const ConversationTip = () => {
+  const { t } = useTranslation();
   return (
     <Box style={{ maxWidth: 1440, padding: 20, paddingLeft: 20 + 38 + 20 }}>
       <Paper shadow="md">
         <Title order={5} p={20} pb={8}>
-          你可以使用如下提问模板
+          {t('conversation.tipTitle')}
         </Title>
         <Card>
           {askTemplates.map((template) => (

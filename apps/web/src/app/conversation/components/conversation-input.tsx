@@ -1,6 +1,7 @@
 import { Box, Button, Paper, createStyles } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useCallback, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useConversationContext } from './conversation-context';
 
 export type ConversationInputProps = {
@@ -8,6 +9,7 @@ export type ConversationInputProps = {
 };
 
 export const ConversationInput = () => {
+  const { t } = useTranslation();
   const { state, dispatch } = useConversationContext();
   const { inputAskMessage, robotIsWorking } = state;
 
@@ -37,7 +39,7 @@ export const ConversationInput = () => {
             {...form.getInputProps('ask')}
             className={classes.input}
             disabled={robotIsWorking}
-            placeholder="问我关于你想查的数据，如前十条任务的机场代码分布是什么？"
+            placeholder={t('conversation.placeholder')}
           />
           <Button
             type="submit"
