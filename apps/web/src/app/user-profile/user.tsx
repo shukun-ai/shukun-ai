@@ -5,13 +5,12 @@ export const User = () => {
   return (
     <Box pb="sm">
       <Group>
-        <Avatar radius="xl">dc</Avatar>
+        <Avatar radius="lg" color="blue">
+          DC
+        </Avatar>
         <Box sx={{ flex: 1 }}>
-          <Text size="sm" weight={500}>
+          <Text size="sm" weight={600}>
             davy chen
-          </Text>
-          <Text color="dimmed" size="xs">
-            davy@gmail.com
           </Text>
         </Box>
       </Group>
