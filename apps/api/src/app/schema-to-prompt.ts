@@ -5,7 +5,10 @@ export const buildSchema = (schema: { tables: TableDefinition[] }): string => {
 };
 
 export const buildTables = (tables: TableDefinition[]): string => {
-  return [tables.map((table) => buildTable(table)).join('\n')].join('\n');
+  return [
+    tables.map((table) => buildTable(table)).join('\n'),
+    buildReferences(tables),
+  ].join('\n');
 };
 
 const buildTable = (table: TableDefinition): string => {
@@ -17,7 +20,7 @@ const buildTable = (table: TableDefinition): string => {
 };
 
 const buildColumns = (columns: ColumnDefinition[]): string => {
-  return columns.map((column) => `  ${buildColumn(column)}`).join(',\n');
+  return columns.map((column) => `  ${buildColumn(column)}`).join('\n');
 };
 
 const buildEnumItems = (
@@ -36,17 +39,7 @@ export const buildColumn = (column: ColumnDefinition): string => {
   const description: string[] = [];
 
   if (column.comment) {
-    description.push(`${column.comment}.`);
-  }
-
-  if (column.reference) {
-    description.push(
-      `This can be joined with ${getTableName(
-        column.reference.columnName
-      )} column in the ${getTableName(
-        column.reference.tableName
-      )} table and select ${column.reference.displayColumnName} column.`
-    );
+    description.push(`${column.comment},`);
   }
 
   if (column.enums) {
@@ -58,7 +51,9 @@ export const buildColumn = (column: ColumnDefinition): string => {
   }
 
   if (description.length > 0) {
-    columnString += ` "${description.join(' ')}"`;
+    columnString += `, -- ${description.join(' ')}`;
+  } else {
+    columnString += ',';
   }
 
   return columnString;
@@ -87,4 +82,23 @@ const getTableName = (tableName: string) => {
 
 const getColumnName = (columnName: string) => {
   return columnName;
+};
+
+const buildReferences = (tables: TableDefinition[]): string => {
+  return tables
+    .map((table) => {
+      return table.columns
+        .map((column) => {
+          if (column.reference) {
+            return `-- ${getTableName(table.tableName)}.${getColumnName(
+              column.columnName
+            )} can be joined with ${getTableName(
+              column.reference.tableName
+            )}.${getColumnName(column.reference.columnName)}`;
+          }
+        })
+        .filter((text) => text)
+        .join('\n');
+    })
+    .join('\n');
 };

@@ -88,7 +88,10 @@ export class AppController {
       const sql = await this.llmService.run(prompt);
       return sql;
     } else {
-      return `SELECT a.airport_code, COUNT(*) AS count FROM table_arrival_tasks a JOIN table_arrival_packages p ON a.id = p.arrival_task_id WHERE a.status IN ('finished','synced') GROUP BY a.airport_code ORDER BY count DESC NULLS LAST LIMIT 10;`;
+      return (
+        environment.LLM_MOCK_SQL ??
+        `SELECT table_arrival_tasks.id, table_arrival_tasks.flight_number, table_arrival_tasks.airport_code, table_arrival_tasks.actual_at, table_arrival_tasks.created_at, table_arrival_tasks.estimated_at, table_arrival_tasks.source_departure_at, table_arrival_tasks.status FROM table_arrival_tasks WHERE table_arrival_tasks.status ='synced' AND table_arrival_tasks.source_departure_at IS NOT NULL AND table_arrival_tasks.estimated_at IS NULL ORDER BY table_arrival_tasks.created_at DESC LIMIT 10;`
+      );
     }
   }
 }

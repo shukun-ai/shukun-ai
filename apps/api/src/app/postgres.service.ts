@@ -118,7 +118,6 @@ const getFieldType = (
   dataTypeID: number,
   types: PgResultSchema['_types']
 ): DataResult['data']['fields'][number]['type'] => {
-  console.log(types._types.builtins, dataTypeID);
   const columnType = Object.entries(types._types.builtins).find(
     ([, value]) => value === dataTypeID
   );
@@ -128,8 +127,6 @@ const getFieldType = (
   }
 
   const [columnTypeName] = columnType;
-
-  console.log(columnTypeName);
 
   switch (columnTypeName) {
     case 'CHAR':
