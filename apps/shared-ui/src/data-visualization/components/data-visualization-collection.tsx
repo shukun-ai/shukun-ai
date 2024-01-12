@@ -1,8 +1,12 @@
 import { DataCollection, DataResult } from '../data-visualization.type';
-import { Box, Button, Group, Table } from '@mantine/core';
-import { useMemo } from 'react';
+import { Box, Button, Group } from '@mantine/core';
+import { useEffect, useMemo, useState } from 'react';
 import ReactECharts from 'echarts-for-react';
 import { useTranslation } from 'react-i18next';
+import { ColDef } from 'ag-grid-community';
+import { AgGridReact } from 'ag-grid-react';
+import { createFormatter } from './formatter';
+import { toSentenceCase } from 'js-convert-case';
 
 export type DataVisualizationCollectionProps = {
   dataResult: DataResult;
@@ -25,7 +29,26 @@ export const DataVisualizationCollection = ({
 export const DataVisualizationTable = ({ data }: { data: DataCollection }) => {
   const { t } = useTranslation();
 
-  const columns = useMemo(() => data.fields.map((field) => field.name), [data]);
+  const [rowData, setRowData] = useState<Record<string, unknown>[]>([]);
+
+  const [colDefs, setColDefs] = useState<ColDef<Record<string, unknown>>[]>();
+
+  useEffect(() => {
+    setRowData(data.rows);
+  }, [data.rows]);
+
+  useEffect(() => {
+    const colDefs: ColDef<Record<string, unknown>>[] = data.fields.map(
+      (field) => {
+        return {
+          headerName: toSentenceCase(field.name),
+          field: field.name,
+          valueFormatter: createFormatter(field),
+        };
+      }
+    );
+    setColDefs(colDefs);
+  }, [data.fields]);
 
   return (
     <Box style={{ width: '100%' }}>
@@ -34,26 +57,9 @@ export const DataVisualizationTable = ({ data }: { data: DataCollection }) => {
           {t('conversation.exportTableExcel')}
         </Button>
       </Group>
-      <Table>
-        <thead>
-          <tr>
-            {columns.map((column) => (
-              <th>{column}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {data.rows.map((row) => (
-            <tr>
-              {columns.map((column) => (
-                <td>
-                  <FormattedCell value={row[column]} />
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </Table>
+      <Box className="ag-theme-quartz" style={{ width: '100%', height: 500 }}>
+        <AgGridReact rowData={rowData} columnDefs={colDefs} />
+      </Box>
     </Box>
   );
 };
