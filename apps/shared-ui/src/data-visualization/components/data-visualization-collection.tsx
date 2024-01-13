@@ -1,12 +1,13 @@
 import { DataCollection, DataResult } from '../data-visualization.type';
 import { Box, Button, Group } from '@mantine/core';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import ReactECharts from 'echarts-for-react';
 import { useTranslation } from 'react-i18next';
 import { ColDef } from 'ag-grid-community';
 import { AgGridReact } from 'ag-grid-react';
 import { createFormatter } from './formatter';
 import { toSentenceCase } from 'js-convert-case';
+import Color from 'color';
 
 export type DataVisualizationCollectionProps = {
   dataResult: DataResult;
@@ -27,11 +28,17 @@ export const DataVisualizationCollection = ({
 };
 
 export const DataVisualizationTable = ({ data }: { data: DataCollection }) => {
+  const gridRef = useRef<AgGridReact<Record<string, unknown>>>(null);
+
   const { t } = useTranslation();
 
   const [rowData, setRowData] = useState<Record<string, unknown>[]>([]);
 
   const [colDefs, setColDefs] = useState<ColDef<Record<string, unknown>>[]>();
+
+  const onExport = useCallback(() => {
+    gridRef.current?.api.exportDataAsCsv();
+  }, []);
 
   useEffect(() => {
     setRowData(data.rows);
@@ -53,12 +60,12 @@ export const DataVisualizationTable = ({ data }: { data: DataCollection }) => {
   return (
     <Box style={{ width: '100%' }}>
       <Group spacing={0} position="right">
-        <Button variant="white" size="xs" color="gray">
+        <Button variant="white" size="xs" color="gray" onClick={onExport}>
           {t('conversation.exportTableExcel')}
         </Button>
       </Group>
       <Box className="ag-theme-quartz" style={{ width: '100%', height: 500 }}>
-        <AgGridReact rowData={rowData} columnDefs={colDefs} />
+        <AgGridReact ref={gridRef} rowData={rowData} columnDefs={colDefs} />
       </Box>
     </Box>
   );
@@ -77,6 +84,8 @@ export const FormattedCell = ({ value }: { value: unknown }) => {
 };
 
 export const DataVisualizationChart = ({ data }: { data: DataCollection }) => {
+  const echartRef = useRef<ReactECharts>(null);
+
   const { t } = useTranslation();
 
   const xData = useMemo(() => {
@@ -86,6 +95,20 @@ export const DataVisualizationChart = ({ data }: { data: DataCollection }) => {
   const yData = useMemo(() => {
     return data.rows.map((row) => row[data.fields[1].name]);
   }, [data.fields, data.rows]);
+
+  const onExport = useCallback(() => {
+    if (!echartRef.current) {
+      return;
+    }
+    const echartInstance = echartRef.current.getEchartsInstance();
+    const base64 = echartInstance.getDataURL();
+    const link = document.createElement('a');
+    link.download = 'Chart';
+    link.href = base64;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }, []);
 
   const options = {
     grid: { top: 8, right: 8, bottom: 24, left: 36 },
@@ -101,6 +124,19 @@ export const DataVisualizationChart = ({ data }: { data: DataCollection }) => {
         data: yData,
         type: 'bar',
         smooth: true,
+        itemStyle: {
+          normal: {
+            color: (params: { dataIndex: number }) => {
+              const baseColor = '#2870BD';
+              const colorList = new Array(10).fill(0).map((_, index) => {
+                return Color(baseColor)
+                  .lighten(index / 10)
+                  .hex();
+              });
+              return colorList[params.dataIndex % colorList.length];
+            },
+          },
+        },
       },
     ],
     tooltip: {
@@ -111,11 +147,11 @@ export const DataVisualizationChart = ({ data }: { data: DataCollection }) => {
   return (
     <Box>
       <Group spacing={0} position="right">
-        <Button variant="white" size="xs" color="gray">
-          {t('conversation.exportChartPdf')}
+        <Button variant="white" size="xs" color="gray" onClick={onExport}>
+          {t('conversation.exportChartImage')}
         </Button>
       </Group>
-      <ReactECharts option={options} />
+      <ReactECharts ref={echartRef} option={options} />
     </Box>
   );
 };

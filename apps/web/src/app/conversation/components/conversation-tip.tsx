@@ -10,6 +10,7 @@ import {
   UnstyledButton,
   createStyles,
 } from '@mantine/core';
+import { AskTemplate, useAskTemplates } from './use-ask-templates';
 
 export type ConversationTipProps = {
   //
@@ -17,6 +18,8 @@ export type ConversationTipProps = {
 
 export const ConversationTip = () => {
   const { t } = useTranslation();
+  const askTemplates = useAskTemplates();
+
   return (
     <Box
       style={{
@@ -69,27 +72,3 @@ const useStyles = createStyles((theme) => ({
     },
   },
 }));
-
-type AskTemplate = {
-  question: string;
-};
-
-const askTemplates: AskTemplate[] = [
-  {
-    question: '前十条任务的机场代码分布是什么？',
-  },
-  {
-    question: '最近一个月被任务绑定次数最多的车辆？',
-  },
-  {
-    question:
-      '有前站起飞时间但没有预到时间的任务按航司进行分组，航司是航班号的前两位',
-  },
-  {
-    question:
-      '列出最新十条任务按航班日期由近到远排序，必须有前站起飞时间但没有预到时间，且任务状态为已同步，列出所有任务字段',
-  },
-  {
-    question: '2023年10月的所有任务按航司进行分组，航司是航班号的前两位',
-  },
-];

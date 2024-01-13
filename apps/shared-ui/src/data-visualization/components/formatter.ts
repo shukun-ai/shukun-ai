@@ -4,6 +4,9 @@ import { DataCollectionField } from '../data-visualization.type';
 
 export const createFormatter = (field: DataCollectionField) => {
   return (params: ValueFormatterParams) => {
+    if (params.value === null || params.value === undefined) {
+      return '';
+    }
     if (field.type === 'date') {
       return format(new Date(params.value), 'yyyy-MM-dd');
     }
