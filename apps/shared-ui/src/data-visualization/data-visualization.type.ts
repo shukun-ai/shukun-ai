@@ -12,9 +12,22 @@ export type DataResult = {
 export type DataCollection = {
   type: 'Collection';
   command: string;
-  fields: {
-    format: string;
-    name: string;
-  }[];
+  fields: DataCollectionField[];
   rows: Record<string, unknown>[];
+};
+
+export type DataCollectionField = {
+  type:
+    | 'text'
+    | 'int'
+    | 'float'
+    | 'bool'
+    | 'date'
+    | 'time'
+    | 'dateTime'
+    | 'money'
+    | 'byte'
+    | 'code'
+    | 'polygon';
+  name: string;
 };

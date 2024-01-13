@@ -1,7 +1,8 @@
 import { ValueFormatterParams } from 'ag-grid-community';
 import { format } from 'date-fns';
+import { DataCollectionField } from '../data-visualization.type';
 
-export const createFormatter = (field: Field) => {
+export const createFormatter = (field: DataCollectionField) => {
   return (params: ValueFormatterParams) => {
     if (field.type === 'date') {
       return format(new Date(params.value), 'yyyy-MM-dd');
@@ -14,20 +15,4 @@ export const createFormatter = (field: Field) => {
     }
     return params.value;
   };
-};
-
-type Field = {
-  type:
-    | 'text'
-    | 'int'
-    | 'float'
-    | 'bool'
-    | 'date'
-    | 'time'
-    | 'dateTime'
-    | 'money'
-    | 'byte'
-    | 'code'
-    | 'polygon';
-  name: string;
 };
