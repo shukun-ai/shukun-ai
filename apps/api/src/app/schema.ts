@@ -48,7 +48,7 @@ const tables: TableDefinition[] = [
         columnType: 'varchar',
         isPrimary: true,
         notNullable: true,
-        comment: '业务袋的唯一ID',
+        comment: '每个业务袋的唯一ID',
       },
       {
         columnName: 'created_at',
@@ -89,7 +89,7 @@ const tables: TableDefinition[] = [
         columnName: 'id',
         columnAlias: ['任务ID'],
         columnType: 'varchar',
-        comment: '任务的唯一ID',
+        comment: '每个任务的唯一ID',
       },
       {
         columnName: 'flight_number',
@@ -101,7 +101,7 @@ const tables: TableDefinition[] = [
         columnName: 'airport_code',
         columnAlias: ['机场', '机场代码'],
         columnType: 'varchar',
-        comment: '机场代码',
+        comment: '任务的机场代码',
       },
       {
         columnName: 'actual_at',
@@ -190,7 +190,7 @@ const tables: TableDefinition[] = [
           columnName: 'id',
           displayColumnName: 'title',
         },
-        comment: '任务被哪辆车接单',
+        comment: '任务关联的车辆ID',
       },
     ],
   },
@@ -202,7 +202,7 @@ const tables: TableDefinition[] = [
         columnName: 'id',
         columnAlias: ['车辆ID'],
         columnType: 'varchar',
-        comment: '车辆的唯一ID',
+        comment: '每个车辆的唯一ID',
       },
       {
         columnName: 'title',
