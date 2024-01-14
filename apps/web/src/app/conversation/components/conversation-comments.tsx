@@ -1,20 +1,28 @@
 import {
+  ActionIcon,
   Alert,
   Avatar,
   Box,
   Button,
   Collapse,
   Group,
-  Paper,
   Stack,
   Text,
 } from '@mantine/core';
 import { useConversationContext } from './conversation-context';
 import { Comment } from '@ailake/apitype';
 import { useEffect, useMemo, useState } from 'react';
-import { DataVisualization, ShukunLogo } from '@ailake/shared-ui';
+import { DataVisualization } from '@ailake/shared-ui';
 import { CircleLoader } from 'react-spinners';
 import { useDisclosure } from '@mantine/hooks';
+import { useTranslation } from 'react-i18next';
+import {
+  IconStarFilled,
+  IconThumbDown,
+  IconThumbUp,
+  IconTool,
+} from '@tabler/icons-react';
+import logo from '../../../assets/dark-logo@4x.png';
 
 export type ConversationCommentProps = {
   conversationId: string;
@@ -41,24 +49,34 @@ export const ConversationComments = ({
 };
 
 export const ConversationComment = ({ comment }: { comment: Comment }) => {
+  const { t } = useTranslation();
   const [opened, { toggle }] = useDisclosure(false);
 
   return (
-    <Box style={{ display: 'flex', overflow: 'hidden', padding: 20 }}>
+    <Box
+      style={{
+        display: 'flex',
+      }}
+    >
       <Box style={{ width: 38 }} mr={20}>
         {!comment.sentByRobot && <Avatar color="red" radius="xs" />}
         {comment.sentByRobot && (
-          <Avatar radius="xs">
-            <ShukunLogo />
+          <Avatar radius="lg" color="blue">
+            <img src={logo} alt="SHUKUN AI" style={{ width: 38, height: 38 }} />
           </Avatar>
         )}
       </Box>
-      <Paper shadow="md" p="md" style={{ flex: 1 }}>
+      <Box style={{ flex: 1 }}>
         {comment.commentText && <Text>{comment.commentText}</Text>}
         {comment.sentByRobot && !comment.isLoading && (
           <Group spacing={4}>
-            <Button variant="outline" size="xs" color="gray">
-              将本次探索设为常用
+            <Button
+              radius="sm"
+              size="xs"
+              color="gray"
+              leftIcon={<IconStarFilled size="0.8rem" />}
+            >
+              {t('conversation.saveFavorite')}
             </Button>
             <Button
               variant="white"
@@ -67,9 +85,16 @@ export const ConversationComment = ({ comment }: { comment: Comment }) => {
               onClick={() => {
                 toggle();
               }}
+              leftIcon={<IconTool size="0.8rem" />}
             >
-              调试
+              {t('conversation.debug')}
             </Button>
+            <ActionIcon variant="white" size="xs" color="gray">
+              <IconThumbUp size="0.8rem" />
+            </ActionIcon>
+            <ActionIcon variant="white" size="xs" color="gray">
+              <IconThumbDown size="0.8rem" />
+            </ActionIcon>
           </Group>
         )}
         {comment.commentSQL && (
@@ -89,12 +114,12 @@ export const ConversationComment = ({ comment }: { comment: Comment }) => {
             <Stack align="center">
               <CircleLoader size={60} color="rgba(28, 82, 108, 1)" />
               <Text size="xs" color="gray">
-                我正在计算中，已计算 <TimeCounter /> 秒
+                {t('conversation.robotLoading')} <TimeCounter />s
               </Text>
             </Stack>
           </Box>
         )}
-      </Paper>
+      </Box>
     </Box>
   );
 };

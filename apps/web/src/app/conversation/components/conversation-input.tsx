@@ -47,7 +47,7 @@ export const ConversationInput = () => {
             variant="white"
             loading={robotIsWorking}
           >
-            探索
+            {t('conversation.explore')}
           </Button>
         </Box>
       </form>
@@ -58,10 +58,9 @@ export const ConversationInput = () => {
 const useStyles = createStyles((theme) => ({
   paper: {
     flex: 1,
-    background: '#fff',
     padding: '5px 10px',
-    borderRadius: 0,
-    boxShadow: '0px 2px 2px rgba(0,0,0,0.1)',
+    borderRadius: 6,
+    border: 'solid 1px #bbb',
   },
   input: {
     width: '100%',

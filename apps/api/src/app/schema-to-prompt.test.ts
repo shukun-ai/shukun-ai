@@ -15,7 +15,7 @@ describe('buildColumn', () => {
       comment: 'This is a test column',
     };
 
-    const expectedColumnString = 'id text "This is a test column."';
+    const expectedColumnString = 'id text, -- This is a test column,';
     const result = buildColumn(column);
 
     expect(result).toEqual(expectedColumnString);
@@ -40,7 +40,7 @@ describe('buildColumn', () => {
     };
 
     const expectedColumnString =
-      'arrival_task_id text "This is a foreign Id. This can be joined with table_id column in the table_arrival_tasks table and select flight_number column."';
+      'arrival_task_id text, -- This is a foreign Id,';
     const result = buildColumn(column);
 
     expect(result).toEqual(expectedColumnString);

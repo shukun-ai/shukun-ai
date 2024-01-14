@@ -30,7 +30,18 @@ export type DataCollection = {
   type: 'Collection';
   command: string;
   fields: {
-    format: string;
+    type:
+      | 'text'
+      | 'int'
+      | 'float'
+      | 'bool'
+      | 'date'
+      | 'time'
+      | 'dateTime'
+      | 'money'
+      | 'byte'
+      | 'code'
+      | 'polygon';
     name: string;
   }[];
   rows: Record<string, unknown>[];
