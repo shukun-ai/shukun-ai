@@ -27,5 +27,10 @@ export default {
       question5:
         'All tasks in October 2023 are grouped by airline, which is the first two string of the flight number',
     },
+    sharedUi: {
+      languageSwitch: {
+        tip: "We will automatically set Language by your browser's language, if you want to switch language, you can choose other language, we will remember.",
+      },
+    },
   },
 };

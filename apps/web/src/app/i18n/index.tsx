@@ -16,6 +16,7 @@ i18n
     },
     detection: {
       convertDetectedLanguage: (lng) => lng.replace('-', '_'),
+      order: ['localStorage', 'navigator'],
     },
   });
 

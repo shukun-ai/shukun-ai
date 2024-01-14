@@ -1,5 +1,6 @@
 import { Group, Avatar, Text, Box } from '@mantine/core';
 import mockFace from '../../assets/mock-face.png';
+import { LanguageSwitch } from '@ailake/shared-ui';
 
 export const User = () => {
   return (
@@ -21,6 +22,9 @@ export const User = () => {
           <Text color="#fff" size="sm" weight={600}>
             davy chen
           </Text>
+        </Box>
+        <Box>
+          <LanguageSwitch />
         </Box>
       </Group>
     </Box>
