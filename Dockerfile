@@ -1,6 +1,7 @@
 FROM node:18-slim AS base
 WORKDIR /usr/src/app
 COPY . .
+ENV VITE_SERVER_API=
 RUN npm install
 RUN npx nx reset cache
 RUN npm run lint
