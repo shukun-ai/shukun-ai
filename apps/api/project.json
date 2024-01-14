@@ -47,6 +47,17 @@
       "options": {
         "jestConfig": "apps/api/jest.config.ts"
       }
+    },
+    "package": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "ncc build dist/apps/api/main.js -o dist/installation/api/ -m"
+          }
+        ]
+      },
+      "dependsOn": ["build"]
     }
   },
   "tags": []

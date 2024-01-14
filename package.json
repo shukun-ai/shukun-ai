@@ -4,6 +4,7 @@
   "scripts": {
     "start": "nx run-many --target=serve",
     "build": "nx run-many --target=build --all --configuration=production",
+    "package": "nx run-many --target=package --all --configuration=production",
     "lint": "nx run-many --target=lint --all",
     "test": "nx run-many --target=test --all",
     "prepare": "is-ci || husky install"
@@ -87,6 +88,7 @@
     "@types/react-dom": "18.2.14",
     "@typescript-eslint/eslint-plugin": "^6.9.1",
     "@typescript-eslint/parser": "^6.9.1",
+    "@vercel/ncc": "^0.38.1",
     "@vitejs/plugin-react": "^4.2.0",
     "@vitest/coverage-v8": "~0.34.6",
     "@vitest/ui": "~0.34.6",
