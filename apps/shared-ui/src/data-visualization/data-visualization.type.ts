@@ -28,6 +28,7 @@ export type DataCollectionField = {
     | 'money'
     | 'byte'
     | 'code'
-    | 'polygon';
+    | 'polygon'
+    | 'interval';
   name: string;
 };

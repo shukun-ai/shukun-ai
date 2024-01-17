@@ -160,6 +160,8 @@ const getFieldType = (
       return 'code';
     case 'POLYGON':
       return 'polygon';
+    case 'INTERVAL':
+      return 'interval';
     default:
       return 'text';
   }

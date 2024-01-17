@@ -77,7 +77,7 @@ export const buildType = (column: ColumnDefinition) => {
 };
 
 const getTableName = (tableName: string) => {
-  return `table_${tableName}`;
+  return `${tableName}`;
 };
 
 const getColumnName = (columnName: string) => {
