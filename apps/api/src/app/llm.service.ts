@@ -19,7 +19,7 @@ export class LlmService {
         {
           model: 'sql',
           prompt,
-          max_tokens: 300,
+          max_tokens: 500,
           temperature: 0,
         }
       );
