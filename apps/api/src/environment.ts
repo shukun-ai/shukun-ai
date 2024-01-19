@@ -1,11 +1,7 @@
 export const environment = {
-  LLM_ENABLE: process.env?.['LLM_ENABLE'] ? true : false,
   LLM_API: process.env?.['LLM_API'] ?? '',
-  LLM_API_TYPE: process.env?.['LLM_API_TYPE'] ?? 'HuggingFace',
-  LLM_MOCK_SQL: process.env?.['LLM_MOCK_SQL'] ?? '',
-  EMBEDDING_ENABLE: process.env?.['EMBEDDING_ENABLE'] ? true : false,
+  LLM_API_KEY: process.env?.['LLM_API_KEY'] ?? '',
   EMBEDDING_API: process.env?.['EMBEDDING_API'] ?? '',
-  EMBEDDING_RESULTS_COUNT: parseInt(process.env?.['PG_PORT'] ?? '30'),
   PG_USER: process.env?.['PG_USER'] ?? '',
   PG_HOST: process.env?.['PG_HOST'] ?? '',
   PG_DATABASE: process.env?.['PG_DATABASE'] ?? '',
