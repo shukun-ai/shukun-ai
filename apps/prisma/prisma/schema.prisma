@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+    // output into a separate subdirectory so multiple schemas can be used in a monorepo
+    // this make the import path `@prisma/client/one` instead of `@prisma/client`
+    // Customize to make the most sense for your project
+    output   = "../../../node_modules/@prisma/client/basic"
+}
+
+datasource db {
+    // using sqlite for the ease of use
+    // feel free to use any other supported database
+    // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#fields
+    provider = "postgresql"
+    url      = env("APP_DATABASE_URL")
+}
+
+model User {
+    userId    String   @id @default(uuid())
+    username  String   @unique
+    password  String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    Talk      Talk[]
+}
+
+model Schema {
+    schemaId  String     @id @default(uuid())
+    name      String     @unique
+    dbType    String
+    dbUrl     String     @unique
+    createdAt DateTime   @default(now())
+    updatedAt DateTime   @updatedAt
+    Template  Template[]
+}
+
+model Template {
+    templateId    String   @id @default(uuid())
+    name          String   @unique
+    taskTemplate  String
+    sqlTemplate   String
+    sqlParameters Json
+    schemaId      String
+    schema        Schema   @relation(fields: [schemaId], references: [schemaId])
+    createdAt     DateTime @default(now())
+    updatedAt     DateTime @updatedAt
+}
+
+model Talk {
+    talkId    String   @id @default(uuid())
+    talkTitle String
+    userId    String
+    user      User     @relation(fields: [userId], references: [userId])
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+}
+
+model Sentence {
+    sentenceId String   @id @default(uuid())
+    role       String // system, user, assistant
+    type       String // text, image, video, audio, sql
+    text       String?
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
+}
