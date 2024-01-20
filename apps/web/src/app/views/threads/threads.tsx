@@ -4,8 +4,9 @@ import { TemplateListOutput, ThreadRetrieveOutput } from '@ailake/apitype';
 import { useQuery } from '@tanstack/react-query';
 import { listTemplate } from '../../../apis/template';
 import { useState } from 'react';
-import { threadMock } from './threads.mock';
 import { Box } from '@mantine/core';
+import { useCreateThread } from './create-thread.hook';
+import { useCreateMessage } from './create-message.hook';
 
 export type ThreadProps = {
   //
@@ -17,38 +18,26 @@ export const Thread = () => {
     queryFn: () => listTemplate({}),
   });
 
-  const [, setThread] = useState<ThreadRetrieveOutput | null>(null);
-  const [waitingUserInput] = useState<boolean>(false);
+  const [thread, setThread] = useState<ThreadRetrieveOutput | null>(null);
+  const [waitingUserInput, setWaitingUserInput] = useState<boolean>(false);
   const [waitingAssistant] = useState<boolean>(false);
+
+  const { onCreateThread } = useCreateThread({ setThread });
+  const { onCreateMessage } = useCreateMessage({
+    thread,
+    setThread,
+    setWaitingUserInput,
+  });
 
   return (
     <ThreadProvider
       value={{
-        thread: threadMock,
+        thread: thread,
         templates: data ?? [],
         waitingUserInput,
         waitingAssistant,
-        createThread: async (payload) => {
-          setThread({
-            threadId: 'th1',
-            title: payload.templateName,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-            messages: [
-              {
-                messageId: 'm1',
-                role: 'user',
-                createdAt: new Date().toISOString(),
-                updatedAt: new Date().toISOString(),
-                metadata: {
-                  type: 'userTemplate',
-                  text: payload.templateName,
-                },
-              },
-            ],
-          });
-        },
-        createMessage: async () => {},
+        createThread: async (payload) => onCreateThread(payload),
+        createMessage: async (payload) => onCreateMessage(payload),
       }}
     >
       <Box style={{ width: 1200 }}>

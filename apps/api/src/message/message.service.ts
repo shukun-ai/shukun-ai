@@ -3,6 +3,7 @@ import { PrismaService } from '@ailake/prisma-client-basic';
 import {
   CreateRequest,
   CreateResponse,
+  ListRequest,
   ListResponse,
   RetrieveRequest,
   RetrieveResponse,
@@ -31,8 +32,15 @@ export class MessageService {
     };
   }
 
-  async list(): Promise<ListResponse> {
-    const messages = await this.prismaService.message.findMany();
+  async list(props: ListRequest): Promise<ListResponse> {
+    const messages = await this.prismaService.message.findMany({
+      where: {
+        threadId: props.threadId,
+      },
+      orderBy: {
+        createdAt: 'asc',
+      },
+    });
 
     return messages.map((message) => ({
       ...message,

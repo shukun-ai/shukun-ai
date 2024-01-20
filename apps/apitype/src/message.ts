@@ -7,9 +7,18 @@ export type MessageCreateInput = {
 };
 
 export type MessageCreateOutput = {
-  messageId: string;
-  createdAt: string;
-  updatedAt: string;
-  role: 'system' | 'user' | 'assistant';
-  metadata: ThreadMessageMetadata;
+  userMessage: {
+    messageId: string;
+    createdAt: string;
+    updatedAt: string;
+    role: 'system' | 'user' | 'assistant';
+    metadata: ThreadMessageMetadata;
+  };
+  assistantMessage: {
+    messageId: string;
+    createdAt: string;
+    updatedAt: string;
+    role: 'system' | 'user' | 'assistant';
+    metadata: ThreadMessageMetadata;
+  };
 };

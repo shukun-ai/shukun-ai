@@ -73,11 +73,13 @@ export type ThreadMessageUserTemplate = {
 export type ThreadMessageAssistantText = {
   type: 'assistantText';
   text: string;
+  inputKey: string;
 };
 
 export type ThreadMessageUserInput = {
   type: 'userInput';
   text: string;
+  inputKey: string;
 };
 
 export type ThreadMessageAssistantDbQuery = {

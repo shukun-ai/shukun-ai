@@ -37,14 +37,14 @@ export const UserInput = () => {
               type="text"
               {...form.getInputProps('ask')}
               className={classes.input}
-              disabled={!waitingUserInput}
+              disabled={waitingUserInput}
               placeholder={t('conversation.placeholder')}
             />
             <Button
               type="submit"
               size="sm"
               variant="white"
-              loading={!waitingUserInput}
+              loading={waitingUserInput}
             >
               {t('conversation.explore')}
             </Button>

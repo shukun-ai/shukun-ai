@@ -6,10 +6,11 @@ import { ThreadController } from './thread.controller';
 import { MessageController } from './message.controller';
 import { ThreadModule } from '../thread/thread.module';
 import { MessageModule } from '../message/message.module';
+import { ThreadTemplateService } from './thread-template.service';
 
 @Module({
   imports: [TemplateModule, ThreadModule, MessageModule],
   controllers: [TemplateController, ThreadController, MessageController],
-  providers: [],
+  providers: [ThreadTemplateService],
 })
 export class ApiModule {}

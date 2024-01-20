@@ -14,7 +14,7 @@ export type RetrieveResponse = {
 };
 
 export type ListRequest = {
-  //
+  threadId: string;
 };
 
 export type ListResponse = {

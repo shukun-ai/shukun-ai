@@ -5,10 +5,11 @@ export const apiPath = {
     create: 'templates/create',
     update: 'templates/update',
   },
-  thread: {
+  threads: {
+    retrieve: 'thread/retrieve',
     create: 'thread/create',
   },
-  message: {
+  messages: {
     create: 'message/create',
   },
 };

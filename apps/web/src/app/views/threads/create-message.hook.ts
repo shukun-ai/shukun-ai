@@ -1,29 +1,62 @@
-import { ThreadRetrieveOutput } from '@ailake/apitype';
-import { useCallback } from 'react';
+import { MessageCreateInput, ThreadRetrieveOutput } from '@ailake/apitype';
+import { useMutation } from '@tanstack/react-query';
+import { Dispatch, SetStateAction, useCallback } from 'react';
+import { createMessage } from '../../../apis/message';
 
 export const useCreateMessage = (props: {
   thread: ThreadRetrieveOutput | null;
+  setThread: Dispatch<SetStateAction<ThreadRetrieveOutput | null>>;
   setWaitingUserInput: React.Dispatch<React.SetStateAction<boolean>>;
-  setWaitingAssistant: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const { thread } = props;
+  const { thread, setThread, setWaitingUserInput } = props;
 
-  const createMessage = useCallback(
-    (payload: { text: string }) => {
+  const { mutateAsync } = useMutation({
+    mutationFn: (input: MessageCreateInput) => {
+      return createMessage(input);
+    },
+  });
+
+  const onCreateMessage = useCallback(
+    async (payload: { text: string }) => {
       if (!thread) {
-        throw new Error('The thread is not created, create thread first.');
+        throw new Error('Thread is not set');
       }
 
-      // const lastMessage = thread.messages[thread.messages.length - 1];
+      setWaitingUserInput(true);
 
-      //   switch (lastMessage.metadata.type) {
-      //     case 'userTemplate':
-      //       break;
-      //     case 'assistantText':
-      //   }
+      const lastMessage = thread.messages[thread.messages.length - 1];
+
+      if (lastMessage.metadata.type !== 'assistantText') {
+        throw new Error('Last message is not assistantText');
+      }
+
+      const messages = await mutateAsync({
+        threadId: thread.threadId,
+        role: 'user',
+        metadata: {
+          type: 'userInput',
+          text: payload.text,
+          inputKey: lastMessage.metadata.inputKey,
+        },
+      });
+
+      setThread((thread) => {
+        if (!thread) {
+          return thread;
+        }
+
+        return {
+          ...thread,
+          messages: [
+            ...thread.messages,
+            messages.userMessage,
+            messages.assistantMessage,
+          ],
+        };
+      });
     },
-    [thread]
+    [mutateAsync, setThread, setWaitingUserInput, thread]
   );
 
-  return { createMessage };
+  return { onCreateMessage };
 };
