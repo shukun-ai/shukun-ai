@@ -3,7 +3,8 @@ export default {
     navbar: {
       explore: 'Explore',
       reports: 'Reports',
-      schema: 'Schema',
+      schema: 'Schema Configurations',
+      template: 'Assistant Templates',
     },
     conversation: {
       placeholder:

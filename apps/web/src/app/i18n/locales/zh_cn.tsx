@@ -3,7 +3,8 @@ export default {
     navbar: {
       explore: '探索',
       reports: '报告',
-      schema: '建模',
+      schema: '数据库配置',
+      template: '智能助手',
     },
     conversation: {
       placeholder: '问我关于你想查的数据，如前十条任务的机场代码分布是什么？',

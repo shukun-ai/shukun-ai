@@ -30,16 +30,16 @@ export const AppNavbar = () => {
       path: '/',
     },
     {
-      icon: IconReportAnalytics,
-      label: t('navbar.reports'),
-      iconColor: theme.colors.gray[1],
-      path: '/reports',
-    },
-    {
       icon: IconTableShare,
       label: t('navbar.schema'),
       iconColor: theme.colors.gray[1],
       path: '/databases',
+    },
+    {
+      icon: IconReportAnalytics,
+      label: t('navbar.template'),
+      iconColor: theme.colors.gray[1],
+      path: '/templates',
     },
   ];
   const { classes } = useStyles();

@@ -3,6 +3,7 @@ import { Box, Group, List } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
 import { listTemplate } from '../../../apis/template';
 import { format } from 'date-fns';
+import { NavLink } from 'react-router-dom';
 
 export type TemplatesListProps = {
   //
@@ -24,7 +25,9 @@ export const TemplatesList = () => {
         {data.map((template) => (
           <List.Item>
             <Group>
-              <Box>{template.name}</Box>
+              <NavLink to={`/templates/${template.templateId}`}>
+                {template.name}
+              </NavLink>
               <Box>{format(new Date(template.createdAt), 'yyyy-MM-dd')}</Box>
             </Group>
           </List.Item>
