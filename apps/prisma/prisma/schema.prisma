@@ -18,37 +18,35 @@ datasource db {
 }
 
 model User {
-    userId    String     @id @default(uuid())
-    username  String     @unique
+    userId    String   @id @default(uuid())
+    username  String   @unique
     password  String
-    createdAt DateTime   @default(now())
-    updatedAt DateTime   @updatedAt
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
     Threads   Thread[]
-    Templates Template[]
+
+    @@map("users")
 }
 
 model Schema {
-    schemaId  String     @id @default(uuid())
-    name      String     @unique
+    schemaId  String   @id @default(uuid())
+    name      String   @unique
     dbType    String
-    dbUrl     String     @unique
-    createdAt DateTime   @default(now())
-    updatedAt DateTime   @updatedAt
-    Template  Template[]
+    dbUrl     String   @unique
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("schemas")
 }
 
 model Template {
-    templateId    String   @id @default(uuid())
-    name          String   @unique
-    taskTemplate  String
-    sqlTemplate   String
-    sqlParameters Json
-    schemaId      String
-    schema        Schema   @relation(fields: [schemaId], references: [schemaId])
-    userId        String
-    user          User     @relation(fields: [userId], references: [userId])
-    createdAt     DateTime @default(now())
-    updatedAt     DateTime @updatedAt
+    templateId String   @id @default(uuid())
+    name       String   @unique
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
+    steps      Json
+
+    @@map("templates")
 }
 
 model Thread {
@@ -59,6 +57,8 @@ model Thread {
     createdAt   DateTime  @default(now())
     updatedAt   DateTime  @updatedAt
     Messages    Message[]
+
+    @@map("threads")
 }
 
 model Message {
@@ -70,4 +70,6 @@ model Message {
     thread    Thread   @relation(fields: [threadId], references: [threadId])
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+
+    @@map("messages")
 }

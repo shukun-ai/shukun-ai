@@ -1,68 +1,43 @@
-import { Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { TemplateService } from '../template/template.service';
 import {
   TemplateRetrieveOutput,
   TemplateListOutput,
   apiPath,
+  TemplateRetrieveInput,
+  TemplateCreateInput,
+  TemplateCreateOutput,
+  TemplateUpdateInput,
+  TemplateUpdateOutput,
 } from '@ailake/apitype';
-import { getTemplatePromptTask } from './template-prompt';
-import { getTemplateSql } from './template-sql';
 
 @Controller()
 export class TemplateController {
   constructor(private readonly templateService: TemplateService) {}
 
   @Post(apiPath.templates.retrieve)
-  async retrieve(): // props: TemplateRetrieveInput
-  Promise<TemplateRetrieveOutput> {
-    return {
-      templateId: 't1',
-      name: '实付佣金计算表',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      steps: [
-        {
-          stepId: 's1',
-          name: 'name',
-          metadata: {
-            type: 'text',
-            tip: '请输入姓名？',
-            optional: false,
-            maxLength: 100,
-          },
-        },
-        {
-          stepId: 's2',
-          name: 'dbQuery',
-          metadata: {
-            type: 'dbQuery',
-            promptTask: getTemplatePromptTask(),
-            sql: getTemplateSql(),
-            tables: [
-              {
-                schemaName: '销售数据库',
-                tableName: '净利润表',
-              },
-              {
-                schemaName: '销售数据库',
-                tableName: '账龄表',
-              },
-            ],
-          },
-        },
-      ],
-    };
+  async retrieve(
+    @Body() props: TemplateRetrieveInput
+  ): Promise<TemplateRetrieveOutput> {
+    return await this.templateService.retrieve(props);
   }
 
   @Post(apiPath.templates.list)
   async list(): Promise<TemplateListOutput> {
-    return [
-      {
-        templateId: 't1',
-        name: '实付佣金计算表',
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      },
-    ];
+    return await this.templateService.list();
+  }
+
+  @Post(apiPath.templates.create)
+  async create(
+    @Body() props: TemplateCreateInput
+  ): Promise<TemplateCreateOutput> {
+    return await this.templateService.create(props);
+  }
+
+  @Post(apiPath.templates.update)
+  async update(
+    @Body() props: TemplateUpdateInput
+  ): Promise<TemplateUpdateOutput> {
+    return await this.templateService.update(props);
   }
 }

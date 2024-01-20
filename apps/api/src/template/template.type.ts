@@ -1,11 +1,4 @@
-export type SqlParameter = {
-  name: string;
-  label: string;
-  type: 'text' | 'singleSelect';
-  options?: string[];
-  maxLength: number;
-  optional: boolean;
-};
+import { TemplateStep } from '@ailake/apitype';
 
 export type RetrieveRequest = {
   templateId: string;
@@ -14,12 +7,9 @@ export type RetrieveRequest = {
 export type RetrieveResponse = {
   templateId: string;
   name: string;
-  taskTemplate: string;
-  sqlTemplate: string;
-  sqlParameters: SqlParameter[];
-  schemaId: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
+  steps: TemplateStep[];
 };
 
 export type ListRequest = {
@@ -29,14 +19,13 @@ export type ListRequest = {
 export type ListResponse = {
   templateId: string;
   name: string;
+  createdAt: string;
+  updatedAt: string;
 }[];
 
 export type CreateRequest = {
   name: string;
-  taskTemplate: string;
-  sqlTemplate: string;
-  sqlParameters: SqlParameter[];
-  schemaId: string;
+  steps: TemplateStep[];
 };
 
 export type CreateResponse = {
@@ -45,11 +34,8 @@ export type CreateResponse = {
 
 export type UpdateRequest = {
   templateId: string;
-  name: string;
-  taskTemplate: string;
-  sqlTemplate: string;
-  sqlParameters: SqlParameter[];
-  schemaId: string;
+  name?: string;
+  steps?: TemplateStep[];
 };
 
 export type UpdateResponse = {

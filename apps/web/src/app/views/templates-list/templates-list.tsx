@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { listTemplate } from '../../../apis/template';
 import { format } from 'date-fns';
 import { NavLink } from 'react-router-dom';
+import { CreateButton } from './components/create-button';
 
 export type TemplatesListProps = {
   //
@@ -21,6 +22,9 @@ export const TemplatesList = () => {
 
   return (
     <Box>
+      <Box>
+        <CreateButton />
+      </Box>
       <List>
         {data.map((template) => (
           <List.Item>
