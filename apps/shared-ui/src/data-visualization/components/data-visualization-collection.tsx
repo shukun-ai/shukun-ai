@@ -1,4 +1,4 @@
-import { DataCollection, DataResult } from '../data-visualization.type';
+import { DataCollection } from '../data-visualization.type';
 import { Box, Button, Group } from '@mantine/core';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import ReactECharts from 'echarts-for-react';
@@ -10,7 +10,6 @@ import { toSentenceCase } from 'js-convert-case';
 import Color from 'color';
 
 export type DataVisualizationCollectionProps = {
-  dataResult: DataResult;
   data: DataCollection;
 };
 

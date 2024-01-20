@@ -26,7 +26,7 @@ export class TemplateController {
           name: 'name',
           metadata: {
             type: 'text',
-            tip: '请输入姓名',
+            tip: '请输入姓名？',
             optional: false,
             maxLength: 100,
           },

@@ -16,7 +16,8 @@ export default {
       exportChartPdf: 'Export to pdf',
       exportChartImage: 'Export to Image',
       exportTableExcel: 'Export to excel',
-      robotLoading: 'I am working, take',
+      robotLoading: 'Your Assistant is working, takes',
+      robotSeconds: 'seconds',
       question1:
         'What is the distribution of airport codes for the first ten tasks?',
       question2:

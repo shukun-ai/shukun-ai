@@ -1,12 +1,5 @@
-import { IsoDateString } from '../shared.type';
-
 export type DataResult = {
-  id: string;
-  commentId: string;
-  belongUserId: string;
-  sql: string;
   data: DataCollection;
-  createdAt: IsoDateString;
 };
 
 export type DataCollection = {

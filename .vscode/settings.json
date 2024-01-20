@@ -1,3 +1,5 @@
 {
-    "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "typescript.preferences.importModuleSpecifier": "project-relative",
+  "javascript.preferences.importModuleSpecifier": "project-relative"
 }
