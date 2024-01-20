@@ -2,6 +2,7 @@ export default {
   translation: {
     navbar: {
       explore: 'Explore',
+      thread: 'Assistant',
       reports: 'Reports',
       schema: 'Schema Configurations',
       template: 'Assistant Templates',

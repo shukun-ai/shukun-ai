@@ -2,6 +2,7 @@ export default {
   translation: {
     navbar: {
       explore: '探索',
+      thread: '询问助理',
       reports: '报告',
       schema: '数据库配置',
       template: '智能助手',
