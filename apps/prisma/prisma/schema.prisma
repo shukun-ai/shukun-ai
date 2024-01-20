@@ -18,12 +18,13 @@ datasource db {
 }
 
 model User {
-    userId    String   @id @default(uuid())
-    username  String   @unique
+    userId    String     @id @default(uuid())
+    username  String     @unique
     password  String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-    Talk      Talk[]
+    createdAt DateTime   @default(now())
+    updatedAt DateTime   @updatedAt
+    Threads   Thread[]
+    Templates Template[]
 }
 
 model Schema {
@@ -44,24 +45,29 @@ model Template {
     sqlParameters Json
     schemaId      String
     schema        Schema   @relation(fields: [schemaId], references: [schemaId])
+    userId        String
+    user          User     @relation(fields: [userId], references: [userId])
     createdAt     DateTime @default(now())
     updatedAt     DateTime @updatedAt
 }
 
-model Talk {
-    talkId    String   @id @default(uuid())
-    talkTitle String
-    userId    String
-    user      User     @relation(fields: [userId], references: [userId])
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+model Thread {
+    threadId    String    @id @default(uuid())
+    threadTitle String
+    userId      String
+    user        User      @relation(fields: [userId], references: [userId])
+    createdAt   DateTime  @default(now())
+    updatedAt   DateTime  @updatedAt
+    Messages    Message[]
 }
 
-model Sentence {
-    sentenceId String   @id @default(uuid())
-    role       String // system, user, assistant
-    type       String // text, image, video, audio, sql
-    text       String?
-    createdAt  DateTime @default(now())
-    updatedAt  DateTime @updatedAt
+model Message {
+    messageId String   @id @default(uuid())
+    role      String // system, user, assistant
+    type      String // text, image, video, audio, sql
+    text      String?
+    threadId  String
+    thread    Thread   @relation(fields: [threadId], references: [threadId])
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
