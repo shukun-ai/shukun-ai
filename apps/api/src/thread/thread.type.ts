@@ -4,8 +4,7 @@ export type RetrieveRequest = {
 
 export type RetrieveResponse = {
   threadId: string;
-  threadTitle: string;
-  userId: string;
+  title: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -16,12 +15,15 @@ export type ListRequest = {
 
 export type ListResponse = {
   threadId: string;
-  threadTitle: string;
+  title: string;
+  createdAt: string;
+  updatedAt: string;
 }[];
 
 export type CreateRequest = {
-  threadTitle: string;
+  title: string;
   userId: string;
+  templateId: string;
 };
 
 export type CreateResponse = {
@@ -30,7 +32,7 @@ export type CreateResponse = {
 
 export type UpdateRequest = {
   threadId: string;
-  threadTitle?: string;
+  title?: string;
 };
 
 export type UpdateResponse = {

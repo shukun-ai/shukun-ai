@@ -2,23 +2,14 @@ import { ThreadMessageMetadata } from './thread';
 
 export type MessageCreateInput = {
   threadId: string;
-  role: 'user' | 'assistant';
+  role: 'user';
   metadata: ThreadMessageMetadata;
 };
 
 export type MessageCreateOutput = {
-  yourMessage: {
-    messageId: string;
-    createdAt: string;
-    updatedAt: string;
-    role: 'user';
-    metadata: ThreadMessageMetadata;
-  };
-  assistantMessage: {
-    messageId: string;
-    createdAt: string;
-    updatedAt: string;
-    role: 'assistant';
-    metadata: ThreadMessageMetadata;
-  }[];
+  messageId: string;
+  createdAt: string;
+  updatedAt: string;
+  role: 'system' | 'user' | 'assistant';
+  metadata: ThreadMessageMetadata;
 };

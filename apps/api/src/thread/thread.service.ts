@@ -21,7 +21,7 @@ export class ThreadService {
       },
       select: {
         threadId: true,
-        threadTitle: true,
+        title: true,
         userId: true,
         createdAt: true,
         updatedAt: true,
@@ -39,18 +39,25 @@ export class ThreadService {
     const threads = await this.prismaService.thread.findMany({
       select: {
         threadId: true,
-        threadTitle: true,
+        title: true,
+        createdAt: true,
+        updatedAt: true,
       },
     });
 
-    return threads;
+    return threads.map((thread) => ({
+      ...thread,
+      createdAt: thread.createdAt.toISOString(),
+      updatedAt: thread.updatedAt.toISOString(),
+    }));
   }
 
   async create(props: CreateRequest): Promise<CreateResponse> {
     const thread = await this.prismaService.thread.create({
       data: {
-        threadTitle: props.threadTitle,
+        title: props.title,
         userId: props.userId,
+        templateId: props.templateId,
       },
       select: {
         threadId: true,
@@ -68,7 +75,7 @@ export class ThreadService {
         threadId: props.threadId,
       },
       data: {
-        threadTitle: props.threadTitle,
+        title: props.title,
       },
       select: {
         threadId: true,

@@ -55,7 +55,7 @@ export type ThreadMessage = {
   messageId: string;
   createdAt: string;
   updatedAt: string;
-  role: 'user' | 'assistant';
+  role: 'system' | 'user' | 'assistant';
   metadata: ThreadMessageMetadata;
 };
 

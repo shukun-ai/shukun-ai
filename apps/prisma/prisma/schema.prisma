@@ -14,7 +14,8 @@ datasource db {
     // feel free to use any other supported database
     // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#fields
     provider = "postgresql"
-    url      = env("APP_DATABASE_URL")
+    // url      = env("APP_DATABASE_URL")
+    url      = "postgresql://chase_wu@localhost:5432/shukun_ai"
 }
 
 model User {
@@ -45,18 +46,21 @@ model Template {
     createdAt  DateTime @default(now())
     updatedAt  DateTime @updatedAt
     steps      Json
+    Thread     Thread[]
 
     @@map("templates")
 }
 
 model Thread {
-    threadId    String    @id @default(uuid())
-    threadTitle String
-    userId      String
-    user        User      @relation(fields: [userId], references: [userId])
-    createdAt   DateTime  @default(now())
-    updatedAt   DateTime  @updatedAt
-    Messages    Message[]
+    threadId   String    @id @default(uuid())
+    title      String
+    createdAt  DateTime  @default(now())
+    updatedAt  DateTime  @updatedAt
+    Messages   Message[]
+    userId     String
+    user       User      @relation(fields: [userId], references: [userId])
+    templateId String
+    template   Template  @relation(fields: [templateId], references: [templateId])
 
     @@map("threads")
 }
@@ -64,12 +68,11 @@ model Thread {
 model Message {
     messageId String   @id @default(uuid())
     role      String // system, user, assistant
-    type      String // text, image, video, audio, sql
-    text      String?
-    threadId  String
-    thread    Thread   @relation(fields: [threadId], references: [threadId])
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+    metadata  Json
+    threadId  String
+    thread    Thread   @relation(fields: [threadId], references: [threadId])
 
     @@map("messages")
 }

@@ -8,3 +8,4 @@ export * from './domain/schema';
 export * from './dto/schema';
 export * from './template';
 export * from './thread';
+export * from './message';
