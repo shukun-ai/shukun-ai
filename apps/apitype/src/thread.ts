@@ -24,11 +24,15 @@ export type ThreadListOutput = {
 }[];
 
 export type ThreadCreateInput = {
-  //
+  templateId: string;
 };
 
 export type ThreadCreateOutput = {
-  //
+  threadId: string;
+  title: string;
+  createdAt: string;
+  updatedAt: string;
+  messages: ThreadMessage[];
 };
 
 export type ThreadUpdateInput = {
@@ -52,12 +56,14 @@ export type ThreadMessage = {
   createdAt: string;
   updatedAt: string;
   role: 'user' | 'assistant';
-  metadata:
-    | ThreadMessageUserTemplate
-    | ThreadMessageAssistantText
-    | ThreadMessageUserInput
-    | ThreadMessageAssistantDbQuery;
+  metadata: ThreadMessageMetadata;
 };
+
+export type ThreadMessageMetadata =
+  | ThreadMessageUserTemplate
+  | ThreadMessageAssistantText
+  | ThreadMessageUserInput
+  | ThreadMessageAssistantDbQuery;
 
 export type ThreadMessageUserTemplate = {
   type: 'userTemplate';
