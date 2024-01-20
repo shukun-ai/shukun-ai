@@ -1,19 +1,12 @@
 import { TemplateStepMetadataDbQuery } from '@ailake/apitype';
-import {
-  Box,
-  Button,
-  Card,
-  Group,
-  MultiSelect,
-  Textarea,
-  Title,
-} from '@mantine/core';
+import { Box, Button, Card, Group, Textarea, Title } from '@mantine/core';
 
 export type StepDbQueryProps = {
   metadata: TemplateStepMetadataDbQuery;
+  onChange: (metadata: TemplateStepMetadataDbQuery) => void;
 };
 
-export const StepDbQuery = ({ metadata }: StepDbQueryProps) => {
+export const StepDbQuery = ({ metadata, onChange }: StepDbQueryProps) => {
   return (
     <Box>
       <Card withBorder>
@@ -23,18 +16,14 @@ export const StepDbQuery = ({ metadata }: StepDbQueryProps) => {
         <Textarea
           label="任务"
           value={metadata.promptTask}
+          onChange={(event) => {
+            onChange({
+              ...metadata,
+              promptTask: event.currentTarget.value,
+            });
+          }}
           minRows={10}
           autosize
-        />
-        <MultiSelect
-          data={metadata.tables.map((table) => ({
-            label: `${table.schemaName}.${table.tableName}`,
-            value: `${table.schemaName}.${table.tableName}`,
-          }))}
-          limit={20}
-          value={['销售数据库.净利润表', '销售数据库.账龄表']}
-          searchable
-          label="选择数据表"
         />
         <Group position="apart" pt="md">
           <Box></Box>
