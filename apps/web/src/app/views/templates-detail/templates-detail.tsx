@@ -31,8 +31,6 @@ export const TemplatesDetail = () => {
 
   if (!data) return 'No data';
 
-  console.log(data);
-
   return (
     <Box>
       <Detail template={data} />

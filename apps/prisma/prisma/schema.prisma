@@ -14,8 +14,7 @@ datasource db {
     // feel free to use any other supported database
     // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#fields
     provider = "postgresql"
-    // url      = env("APP_DATABASE_URL")
-    url      = "postgresql://chase_wu@localhost:5432/shukun_ai"
+    url      = env("APP_DATABASE_URL")
 }
 
 model User {

@@ -24,6 +24,7 @@ export const threadMock: ThreadRetrieveOutput = {
       metadata: {
         type: 'assistantText',
         text: '请输入姓名？',
+        inputKey: 'saleName',
       },
     },
     {
@@ -34,6 +35,7 @@ export const threadMock: ThreadRetrieveOutput = {
       metadata: {
         type: 'userInput',
         text: '张旭',
+        inputKey: 'saleName',
       },
     },
     {
