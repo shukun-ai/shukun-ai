@@ -2,22 +2,28 @@ import { Injectable } from '@nestjs/common';
 import { TemplateService } from '../template/template.service';
 import { ThreadService } from '../thread/thread.service';
 import { MessageService } from '../message/message.service';
-import { TemplateStep, ThreadMessageMetadata } from '@ailake/apitype';
+import {
+  TemplateStep,
+  TemplateStepMetadataDbQuery,
+  ThreadMessageMetadata,
+} from '@ailake/apitype';
+import { PostgresService } from '../db-query/postgres.service';
 
 @Injectable()
 export class ThreadTemplateService {
   constructor(
     private readonly templateService: TemplateService,
     private readonly threadService: ThreadService,
-    private readonly messageService: MessageService
+    private readonly messageService: MessageService,
+    private readonly postgresService: PostgresService
   ) {}
 
   async createNextMessage(props: Props): Promise<Output> {
-    const userInputKeys: string[] = [];
+    const userInputKeys: Record<string, unknown> = {};
 
     props.messages.forEach((message) => {
       if (message.metadata.type === 'userInput') {
-        userInputKeys.push(message.metadata.inputKey);
+        userInputKeys[message.metadata.inputKey] = message.metadata.text;
       }
     });
 
@@ -25,44 +31,58 @@ export class ThreadTemplateService {
       .filter((step) => step.metadata.type === 'text')
       .map((step) => step.name);
 
-    if (userInputKeys.length === inputs.length) {
-      return await this.createAssistantRun(props);
+    if (Object.keys(userInputKeys).length === inputs.length) {
+      return await this.createAssistantRun(props, userInputKeys);
     } else {
       return await this.createAssistantInput(props, inputs, userInputKeys);
     }
   }
 
-  async createAssistantRun(props: Props): Promise<Output> {
+  private async createAssistantRun(
+    props: Props,
+    userInputKeys: Record<string, unknown>
+  ): Promise<Output> {
+    const step = props.template.steps[props.template.steps.length - 1];
+
+    const { sql } = step.metadata as TemplateStepMetadataDbQuery;
+    console.log('sql', step, sql);
+
+    const data = await this.postgresService.run(sql);
+
     return {
       role: 'assistant',
       metadata: {
         type: 'assistantDbQuery',
-        data: {
-          type: 'Collection',
-          command: '',
-          fields: [],
-          rows: [],
-        },
-        sqlParameters: {},
-        sql: '',
+        data: data,
+        sqlParameters: userInputKeys,
+        sql,
       },
     };
   }
 
-  async createAssistantInput(
+  private async createAssistantInput(
     props: Props,
     stepInputs: string[],
-    userInputKeys: string[]
+    userInputKeys: Record<string, unknown>
   ): Promise<Output> {
-    const nextKey = stepInputs[userInputKeys.length];
+    console.log(stepInputs, userInputKeys);
+    const nextKey = stepInputs.find((stepInput) => !userInputKeys[stepInput]);
+
+    if (!nextKey) {
+      throw new Error('Did not find nextKey');
+    }
 
     const step = props.template.steps.find((step) => step.name === nextKey);
+
+    if (!step) {
+      throw new Error('Did not find step');
+    }
 
     return {
       role: 'assistant',
       metadata: {
         type: 'assistantText',
-        text: step?.metadata.type === 'text' ? step.metadata.tip : '',
+        text: step.metadata.type === 'text' ? step.metadata.tip : '',
         inputKey: nextKey,
       },
     };

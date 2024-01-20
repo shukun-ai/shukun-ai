@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 import { ColDef } from 'ag-grid-community';
 import { AgGridReact } from 'ag-grid-react';
 import { createFormatter } from './formatter';
-import { toSentenceCase } from 'js-convert-case';
 import Color from 'color';
 
 export type DataVisualizationCollectionProps = {
@@ -47,7 +46,7 @@ export const DataVisualizationTable = ({ data }: { data: DataCollection }) => {
     const colDefs: ColDef<Record<string, unknown>>[] = data.fields.map(
       (field) => {
         return {
-          headerName: toSentenceCase(field.name),
+          headerName: field.name,
           field: field.name,
           valueFormatter: createFormatter(field),
         };
