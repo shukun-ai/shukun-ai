@@ -6,3 +6,4 @@ export * from './dto/auth';
 export * from './dto/conversation';
 export * from './domain/schema';
 export * from './dto/schema';
+export * from './template';
