@@ -24,7 +24,7 @@ export const InitialMessage = () => {
     <DialogCard avatarRole="assistant">
       <Paper
         style={{
-          background: 'blue',
+          background: '#1F2D5C',
           padding: 20,
           borderRadius: 6,
           color: '#fff',
@@ -34,9 +34,9 @@ export const InitialMessage = () => {
           您可以点击下列问题助手，快速开始一个查询：
         </Text>
         {templates.map((template) => (
-          <Box key={template.templateId}>
+          <Box key={template.templateId} mb={8}>
             <Button
-              variant="light"
+              variant="white"
               radius="lg"
               onClick={() => onclick(template)}
             >

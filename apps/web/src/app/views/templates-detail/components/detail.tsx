@@ -4,7 +4,7 @@ import {
   TemplateUpdateInput,
   update,
 } from '@ailake/apitype';
-import { Box, Button, Group, Title } from '@mantine/core';
+import { Box, Button, Flex, Title } from '@mantine/core';
 import { Step } from './step';
 import { useForm } from '@mantine/form';
 import { updateTemplate } from '../../../../apis/template';
@@ -28,13 +28,15 @@ export const Detail = ({ template }: DetailProps) => {
   return (
     <form>
       <Box style={{ maxWidth: 1440 }}>
-        <Group>
-          <Title order={3} mb="md">
-            {form.values.name}
-          </Title>
+        <Flex justify="space-between">
+          <Box>
+            <Title order={3}>配置助理</Title>
+            <Title order={6} mb="md">
+              {form.values.name}
+            </Title>
+          </Box>
           <Button
-            size="xs"
-            variant="light"
+            variant="gradient"
             loading={isPending}
             onClick={async () => {
               await mutateAsync({
@@ -42,10 +44,12 @@ export const Detail = ({ template }: DetailProps) => {
                 ...form.values,
               });
             }}
+            radius="md"
           >
-            保存
+            保存并使用该助理
           </Button>
-        </Group>
+        </Flex>
+
         {form.values.steps.map((step, index) => (
           <Box mb="md">
             <Step

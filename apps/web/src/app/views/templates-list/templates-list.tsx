@@ -1,9 +1,19 @@
 import { TemplateListOutput } from '@ailake/apitype';
-import { Box, Group, List } from '@mantine/core';
+import {
+  Avatar,
+  Badge,
+  Box,
+  Card,
+  Grid,
+  Group,
+  Text,
+  Title,
+  UnstyledButton,
+} from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
 import { listTemplate } from '../../../apis/template';
 import { format } from 'date-fns';
-import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { CreateButton } from './components/create-button';
 
 export type TemplatesListProps = {
@@ -11,6 +21,8 @@ export type TemplatesListProps = {
 };
 
 export const TemplatesList = () => {
+  const navigate = useNavigate();
+
   const { isPending, error, data } = useQuery<TemplateListOutput>({
     queryKey: ['listTemplate'],
     queryFn: () => listTemplate({}),
@@ -22,21 +34,48 @@ export const TemplatesList = () => {
 
   return (
     <Box>
-      <Box>
+      <Title order={3} mb={20}>
+        助理设置
+      </Title>
+      <Grid>
         <CreateButton />
-      </Box>
-      <List>
         {data.map((template) => (
-          <List.Item>
-            <Group>
-              <NavLink to={`/templates/${template.templateId}`}>
-                {template.name}
-              </NavLink>
-              <Box>{format(new Date(template.createdAt), 'yyyy-MM-dd')}</Box>
-            </Group>
-          </List.Item>
+          <Grid.Col span={3}>
+            <UnstyledButton
+              onClick={() => {
+                navigate(`/templates/${template.templateId}`);
+              }}
+              style={{ width: '100%' }}
+            >
+              <Card
+                withBorder
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  height: 150,
+                }}
+                radius="md"
+              >
+                <Group>
+                  <Avatar color="#0D74CE">TE</Avatar>
+                  <Box>
+                    <Title order={5}>{template.name}</Title>
+                    <Text size="xs">
+                      {format(new Date(template.createdAt), 'yyyy-MM-dd')}
+                    </Text>
+                  </Box>
+                </Group>
+                <Box style={{ flex: 1 }}></Box>
+                <Box>
+                  <Badge radius="sm" variant="outline" color="gray">
+                    助理模式
+                  </Badge>
+                </Box>
+              </Card>
+            </UnstyledButton>
+          </Grid.Col>
         ))}
-      </List>
+      </Grid>
     </Box>
   );
 };
