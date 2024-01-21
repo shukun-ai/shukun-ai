@@ -21,6 +21,7 @@ export class AzureOpenAiService {
             content: prompt,
           },
         ],
+        max_tokens: 2000,
         temperature: 0,
         top_p: 1,
         frequency_penalty: 0,
