@@ -8,9 +8,16 @@ import { ThreadModule } from '../thread/thread.module';
 import { MessageModule } from '../message/message.module';
 import { ThreadTemplateService } from './thread-template.service';
 import { DbQueryModule } from '../db-query/db-query.module';
+import { SqlGeneratorModule } from '../sql-generator/sql-generator.module';
 
 @Module({
-  imports: [TemplateModule, ThreadModule, MessageModule, DbQueryModule],
+  imports: [
+    TemplateModule,
+    ThreadModule,
+    MessageModule,
+    DbQueryModule,
+    SqlGeneratorModule,
+  ],
   controllers: [TemplateController, ThreadController, MessageController],
   providers: [ThreadTemplateService],
 })

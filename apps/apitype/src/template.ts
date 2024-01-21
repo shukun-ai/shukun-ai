@@ -70,3 +70,11 @@ export type TemplateStepMetadataDbQuery = {
     tableName: string;
   }[];
 };
+
+export type TemplateGenerateInput = {
+  promptTask: string;
+};
+
+export type TemplateGenerateOutput = {
+  sql: string;
+};

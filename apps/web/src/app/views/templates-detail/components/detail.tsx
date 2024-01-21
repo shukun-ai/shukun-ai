@@ -14,7 +14,7 @@ export const Detail = ({ template }: DetailProps) => {
 
   return (
     <form>
-      <Box style={{ maxWidth: 800 }}>
+      <Box style={{ maxWidth: 1440 }}>
         <Group>
           <Title order={3} mb="md">
             {form.values.name}

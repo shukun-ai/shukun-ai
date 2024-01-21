@@ -14,7 +14,7 @@ export class LlmService {
       const sql = await this.openAiService.ask(prompt);
       return sql;
     } catch {
-      return 'I don not find results open ai.';
+      return 'I don not find results ai, I am app llm.service.';
     }
   }
 }

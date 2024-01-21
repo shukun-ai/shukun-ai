@@ -1,6 +1,8 @@
 import {
   TemplateCreateInput,
   TemplateCreateOutput,
+  TemplateGenerateInput,
+  TemplateGenerateOutput,
   TemplateListInput,
   TemplateListOutput,
   TemplateRetrieveInput,
@@ -34,6 +36,16 @@ export const createTemplate = async (
 ): Promise<TemplateCreateOutput> => {
   const response = await getAxios().post<TemplateCreateOutput>(
     apiPath.templates.create,
+    input
+  );
+  return response.data;
+};
+
+export const generateTemplate = async (
+  input: TemplateGenerateInput
+): Promise<TemplateGenerateOutput> => {
+  const response = await getAxios().post<TemplateGenerateOutput>(
+    apiPath.templates.generate,
     input
   );
   return response.data;

@@ -1,5 +1,11 @@
-import { TemplateStepMetadataDbQuery } from '@ailake/apitype';
+import {
+  TemplateGenerateInput,
+  TemplateStepMetadataDbQuery,
+} from '@ailake/apitype';
 import { Box, Button, Card, Group, Textarea, Title } from '@mantine/core';
+import { useMutation } from '@tanstack/react-query';
+import { generateTemplate } from '../../../../apis/template';
+import { Prism } from '@mantine/prism';
 
 export type StepDbQueryProps = {
   metadata: TemplateStepMetadataDbQuery;
@@ -7,6 +13,12 @@ export type StepDbQueryProps = {
 };
 
 export const StepDbQuery = ({ metadata, onChange }: StepDbQueryProps) => {
+  const { isPending, mutateAsync } = useMutation({
+    mutationFn: (props: TemplateGenerateInput) => {
+      return generateTemplate(props);
+    },
+  });
+
   return (
     <Box>
       <Card withBorder>
@@ -27,15 +39,23 @@ export const StepDbQuery = ({ metadata, onChange }: StepDbQueryProps) => {
         />
         <Group position="apart" pt="md">
           <Box></Box>
-          <Button variant="outline">生成 SQL</Button>
+          <Button
+            variant="outline"
+            loading={isPending}
+            onClick={async () => {
+              const data = await mutateAsync({
+                promptTask: metadata.promptTask,
+              });
+              onChange({
+                ...metadata,
+                sql: data.sql,
+              });
+            }}
+          >
+            生成 SQL
+          </Button>
         </Group>
-        <Textarea
-          label="SQL"
-          value={metadata.sql}
-          minRows={1}
-          autosize
-          readOnly
-        />
+        <Prism language="sql">{metadata.sql}</Prism>
       </Card>
     </Box>
   );

@@ -4,6 +4,7 @@ export const apiPath = {
     list: 'templates/list',
     create: 'templates/create',
     update: 'templates/update',
+    generate: 'templates/generate', // TODO beta api
   },
   threads: {
     retrieve: 'thread/retrieve',
