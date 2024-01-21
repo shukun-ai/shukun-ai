@@ -9,12 +9,12 @@ import {
   conversationPath,
 } from '@ailake/apitype';
 import { PostgresService } from './postgres.service';
-import { LlmService } from './llm.service';
 import { getPrompt } from './prompt';
 import { environment } from '../environment';
 import { getAllSchema, getPartialSchema } from './schema';
 import { EmbeddingService } from './embedding.service';
 import { getEmbeddingQuery } from './get-embedding-query';
+import { LlmService } from '../llm/llm.service';
 
 @Controller()
 export class AppController {

@@ -71,7 +71,7 @@ export const StepDbQuery = ({ metadata, onChange }: StepDbQueryProps) => {
             >
               让助理分析他的任务
             </Button>
-            <Button variant="subtle" onClick={toggle}>
+            <Button variant="subtle" loading={isPending} onClick={toggle}>
               查看助理的分析过程
             </Button>
           </Group>

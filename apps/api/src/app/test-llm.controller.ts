@@ -1,9 +1,9 @@
 import { Controller, Post } from '@nestjs/common';
 
 import { PostgresService } from './postgres.service';
-import { LlmService } from './llm.service';
 import { getPrompt } from './prompt';
 import { getSchemaDefinition } from './schema';
+import { LlmService } from '../llm/llm.service';
 
 @Controller()
 export class TestLlmController {
