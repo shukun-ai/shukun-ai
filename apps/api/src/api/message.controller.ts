@@ -33,7 +33,7 @@ export class MessageController {
     });
 
     const template = await this.templateService.retrieve({
-      templateId: thread.threadId,
+      templateId: thread.templateId,
     });
 
     const messages = await this.messageService.list({

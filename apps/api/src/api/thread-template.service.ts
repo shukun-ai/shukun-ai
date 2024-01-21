@@ -6,6 +6,7 @@ import {
   TemplateStep,
   TemplateStepMetadataDbQuery,
   ThreadMessageMetadata,
+  replacePlaceholders,
 } from '@ailake/apitype';
 import { PostgresService } from '../db-query/postgres.service';
 
@@ -45,9 +46,10 @@ export class ThreadTemplateService {
     const step = props.template.steps[props.template.steps.length - 1];
 
     const { sql } = step.metadata as TemplateStepMetadataDbQuery;
-    console.log('sql', step, sql);
 
-    const data = await this.postgresService.run(sql);
+    const parsedSql = replacePlaceholders(sql, userInputKeys);
+
+    const data = await this.postgresService.run(parsedSql);
 
     return {
       role: 'assistant',

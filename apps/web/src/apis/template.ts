@@ -7,6 +7,8 @@ import {
   TemplateListOutput,
   TemplateRetrieveInput,
   TemplateRetrieveOutput,
+  TemplateUpdateInput,
+  TemplateUpdateOutput,
   apiPath,
 } from '@ailake/apitype';
 import { getAxios } from './axios';
@@ -36,6 +38,16 @@ export const createTemplate = async (
 ): Promise<TemplateCreateOutput> => {
   const response = await getAxios().post<TemplateCreateOutput>(
     apiPath.templates.create,
+    input
+  );
+  return response.data;
+};
+
+export const updateTemplate = async (
+  input: TemplateUpdateInput
+): Promise<TemplateUpdateOutput> => {
+  const response = await getAxios().post<TemplateUpdateOutput>(
+    apiPath.templates.update,
     input
   );
   return response.data;

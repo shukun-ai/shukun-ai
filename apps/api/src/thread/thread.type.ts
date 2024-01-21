@@ -7,6 +7,7 @@ export type RetrieveResponse = {
   title: string;
   createdAt: string;
   updatedAt: string;
+  templateId: string;
 };
 
 export type ListRequest = {

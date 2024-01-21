@@ -22,7 +22,14 @@ export const InitialMessage = () => {
 
   return (
     <DialogCard avatarRole="assistant">
-      <Paper>
+      <Paper
+        style={{
+          background: 'blue',
+          padding: 20,
+          borderRadius: 6,
+          color: '#fff',
+        }}
+      >
         <Text size="sm" mb={20}>
           您可以点击下列问题助手，快速开始一个查询：
         </Text>

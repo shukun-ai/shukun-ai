@@ -25,6 +25,7 @@ export class ThreadService {
         userId: true,
         createdAt: true,
         updatedAt: true,
+        templateId: true,
       },
     });
 

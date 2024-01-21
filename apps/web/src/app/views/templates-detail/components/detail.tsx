@@ -1,13 +1,26 @@
-import { TemplateRetrieveOutput, TemplateStep, update } from '@ailake/apitype';
+import {
+  TemplateRetrieveOutput,
+  TemplateStep,
+  TemplateUpdateInput,
+  update,
+} from '@ailake/apitype';
 import { Box, Button, Group, Title } from '@mantine/core';
 import { Step } from './step';
 import { useForm } from '@mantine/form';
+import { updateTemplate } from '../../../../apis/template';
+import { useMutation } from '@tanstack/react-query';
 
 export type DetailProps = {
   template: TemplateRetrieveOutput;
 };
 
 export const Detail = ({ template }: DetailProps) => {
+  const { isPending, mutateAsync } = useMutation({
+    mutationFn: (props: TemplateUpdateInput) => {
+      return updateTemplate(props);
+    },
+  });
+
   const form = useForm<{ name: string; steps: TemplateStep[] }>({
     initialValues: template,
   });
@@ -22,8 +35,12 @@ export const Detail = ({ template }: DetailProps) => {
           <Button
             size="xs"
             variant="light"
-            onClick={() => {
-              console.log('nihao', form.values);
+            loading={isPending}
+            onClick={async () => {
+              await mutateAsync({
+                templateId: template.templateId,
+                ...form.values,
+              });
             }}
           >
             保存

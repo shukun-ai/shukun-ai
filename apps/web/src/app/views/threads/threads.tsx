@@ -40,7 +40,7 @@ export const Thread = () => {
         createMessage: async (payload) => onCreateMessage(payload),
       }}
     >
-      <Box style={{ width: 1200 }}>
+      <Box style={{ maxWidth: 1200 }}>
         <BaseThread />
       </Box>
     </ThreadProvider>
