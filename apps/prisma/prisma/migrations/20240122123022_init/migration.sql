@@ -15,6 +15,7 @@ CREATE TABLE "schemas" (
     "name" TEXT NOT NULL,
     "dbType" TEXT NOT NULL,
     "dbUrl" TEXT NOT NULL,
+    "tables" JSONB NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -35,10 +36,11 @@ CREATE TABLE "templates" (
 -- CreateTable
 CREATE TABLE "threads" (
     "threadId" TEXT NOT NULL,
-    "threadTitle" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "userId" TEXT NOT NULL,
+    "templateId" TEXT NOT NULL,
 
     CONSTRAINT "threads_pkey" PRIMARY KEY ("threadId")
 );
@@ -47,11 +49,10 @@ CREATE TABLE "threads" (
 CREATE TABLE "messages" (
     "messageId" TEXT NOT NULL,
     "role" TEXT NOT NULL,
-    "type" TEXT NOT NULL,
-    "text" TEXT,
-    "threadId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
+    "metadata" JSONB NOT NULL,
+    "threadId" TEXT NOT NULL,
 
     CONSTRAINT "messages_pkey" PRIMARY KEY ("messageId")
 );
@@ -70,6 +71,9 @@ CREATE UNIQUE INDEX "templates_name_key" ON "templates"("name");
 
 -- AddForeignKey
 ALTER TABLE "threads" ADD CONSTRAINT "threads_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("userId") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "threads" ADD CONSTRAINT "threads_templateId_fkey" FOREIGN KEY ("templateId") REFERENCES "templates"("templateId") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "messages" ADD CONSTRAINT "messages_threadId_fkey" FOREIGN KEY ("threadId") REFERENCES "threads"("threadId") ON DELETE RESTRICT ON UPDATE CASCADE;

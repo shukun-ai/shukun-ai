@@ -18,3 +18,9 @@ npm run db:migrate
 npm run db:seed
 npm start
 ```
+
+### Use Database studio to view and manage data
+
+```bash
+npm run db:studio
+```
