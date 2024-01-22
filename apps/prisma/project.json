@@ -3,25 +3,6 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/prisma/src",
   "projectType": "library",
-  "targets": {
-    "prisma": {
-      "command": "prisma",
-      "options": {
-        "cwd": "apps/prisma"
-      }
-    },
-    "generate-types": {
-      "command": "prisma generate",
-      "options": {
-        "cwd": "apps/prisma"
-      }
-    },
-    "migrate": {
-      "command": "prisma migrate dev",
-      "options": {
-        "cwd": "apps/prisma"
-      }
-    }
-  },
+  "targets": {},
   "tags": []
 }

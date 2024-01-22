@@ -40,7 +40,7 @@ export const AppNavbar = () => {
       icon: IconTableShare,
       label: t('navbar.schema'),
       iconColor: theme.colors.gray[1],
-      path: '/databases',
+      path: '/schemas',
     },
     {
       icon: IconReportAnalytics,

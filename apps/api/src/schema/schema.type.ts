@@ -1,40 +1,58 @@
-export type SchemaDefinition = {
+import { TableDefinition } from '../app/schema';
+
+export type RetrieveRequest = {
+  schemaId: string;
+};
+
+export type RetrieveResponse = {
+  schemaId: string;
+  name: string;
+  tables: TableDefinition[];
+  dbType: string;
+  dbUrl: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type ListRequest = {
+  //
+};
+
+export type ListResponse = {
+  schemaId: string;
+  name: string;
+  dbType: string;
+  createdAt: string;
+  updatedAt: string;
+}[];
+
+export type CreateRequest = {
+  name: string;
   tables: TableDefinition[];
   dbType: string;
   dbUrl: string;
 };
 
-export type TableDefinition = {
-  tableName: string;
-  tableAlias: string[];
-  columns: ColumnDefinition[];
+export type CreateResponse = {
+  schemaId: string;
 };
 
-export type ColumnDefinition = {
-  columnName: string;
-  columnAlias: string[];
-  columnType:
-    | 'varchar'
-    | 'integer'
-    | 'float'
-    | 'boolean'
-    | 'timestamp'
-    | 'enum';
-  precision?: number;
-  scale?: number;
-  enums?: {
-    key: string;
-    label: string;
-  }[];
-  columnDefault?: unknown;
-  notNullable?: boolean;
-  isPrimary?: boolean;
-  isUnique?: boolean;
-  isIndexed?: boolean;
-  comment?: string;
-  reference?: {
-    tableName: string;
-    columnName: string;
-    displayColumnName: string;
-  };
+export type UpdateRequest = {
+  schemaId: string;
+  name?: string;
+  tables?: TableDefinition[];
+  dbType?: string;
+  dbUrl?: string;
+};
+
+export type UpdateResponse = {
+  schemaId: string;
+};
+
+export type RemoveRequest = {
+  schemaId: string;
+};
+
+export type RemoveResponse = {
+  schemaId: string;
 };

@@ -4,6 +4,7 @@ COPY . .
 ENV VITE_SERVER_API=
 RUN npm install
 RUN npx nx reset cache
+RUN npm run db:generate
 RUN npm run lint
 RUN npm run test
 RUN npm run build
