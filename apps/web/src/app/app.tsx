@@ -1,6 +1,8 @@
 import { ThemeProvider } from './theme-provider';
 import { BrowserRouter } from 'react-router-dom';
 import { AppRouter } from './router';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClient } from './query-client';
 import './i18n';
 
 export type AppProps = {
@@ -9,10 +11,12 @@ export type AppProps = {
 
 export const App = () => {
   return (
-    <ThemeProvider>
-      <BrowserRouter>
-        <AppRouter />
-      </BrowserRouter>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
+        <BrowserRouter>
+          <AppRouter />
+        </BrowserRouter>
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 };

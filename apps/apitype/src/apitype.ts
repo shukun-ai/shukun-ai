@@ -7,10 +7,17 @@ export const apiPath = {
     generate: 'templates/generate', // TODO beta api
   },
   threads: {
-    retrieve: 'thread/retrieve',
-    create: 'thread/create',
+    retrieve: 'threads/retrieve',
+    create: 'threads/create',
   },
   messages: {
-    create: 'message/create',
+    create: 'messages/create',
+  },
+  schema: {
+    retrieve: 'schemas/retrieve',
+    list: 'schemas/list',
+    create: 'schemas/create',
+    update: 'schemas/update',
+    remove: 'schemas/remove',
   },
 };
