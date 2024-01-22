@@ -6,8 +6,6 @@ import {
   Title,
   UnstyledButton,
 } from '@mantine/core';
-import { useMutation } from '@tanstack/react-query';
-import { createTemplate } from '../../../../apis/template';
 import { IconCubePlus } from '@tabler/icons-react';
 
 export type CreateButtonProps = {
@@ -15,15 +13,6 @@ export type CreateButtonProps = {
 };
 
 export const CreateButton = () => {
-  const { isPending, mutate } = useMutation({
-    mutationFn: () => {
-      return createTemplate({
-        name: 'new template',
-        steps: [],
-      });
-    },
-  });
-
   return (
     <Grid.Col span={3}>
       <UnstyledButton onClick={() => {}} style={{ width: '100%' }}>
