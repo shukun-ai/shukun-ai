@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { SchemaService } from './schema.service';
-import { TableService } from './table.service';
+import { PrismaClientBasicModule } from '@ailake/prisma-client-basic';
 
 @Module({
-  imports: [],
+  imports: [PrismaClientBasicModule],
   controllers: [],
-  providers: [SchemaService, TableService],
-  exports: [SchemaService, TableService],
+  providers: [SchemaService],
+  exports: [SchemaService],
 })
 export class SchemaModule {}

@@ -2,8 +2,10 @@ export default {
   translation: {
     navbar: {
       explore: '探索',
+      thread: '询问助理',
       reports: '报告',
-      schema: '建模',
+      schema: '数据库配置',
+      template: '智能助理',
     },
     conversation: {
       placeholder: '问我关于你想查的数据，如前十条任务的机场代码分布是什么？',
@@ -14,7 +16,8 @@ export default {
       exportChartPdf: '图表导出 PDF',
       exportChartImage: '图表导出为图片',
       exportTableExcel: '表格导出 Excel',
-      robotLoading: '我正在计算中，已计算',
+      robotLoading: '您的助理正在计算中，已用',
+      robotSeconds: '秒',
       question1: '前十条任务的机场代码分布是什么？',
       question2: '最近一个月被任务绑定次数最多的车辆？',
       question3:

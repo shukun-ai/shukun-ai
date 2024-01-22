@@ -1,13 +1,24 @@
 import { Module } from '@nestjs/common';
 
-import { ApiAuthController } from './api-auth.controller';
-import { AuthModule } from '../auth/auth.module';
-import { SchemaModule } from '../schema/schema.module';
-import { ApiSchemaController } from './api-schema.controller';
+import { TemplateModule } from '../template/template.module';
+import { TemplateController } from './template.controller';
+import { ThreadController } from './thread.controller';
+import { MessageController } from './message.controller';
+import { ThreadModule } from '../thread/thread.module';
+import { MessageModule } from '../message/message.module';
+import { ThreadTemplateService } from './thread-template.service';
+import { DbQueryModule } from '../db-query/db-query.module';
+import { SqlGeneratorModule } from '../sql-generator/sql-generator.module';
 
 @Module({
-  imports: [AuthModule, SchemaModule],
-  controllers: [ApiAuthController, ApiSchemaController],
-  providers: [],
+  imports: [
+    TemplateModule,
+    ThreadModule,
+    MessageModule,
+    DbQueryModule,
+    SqlGeneratorModule,
+  ],
+  controllers: [TemplateController, ThreadController, MessageController],
+  providers: [ThreadTemplateService],
 })
 export class ApiModule {}

@@ -9,16 +9,19 @@ import {
   conversationPath,
 } from '@ailake/apitype';
 import { PostgresService } from './postgres.service';
-import { LlmService } from './llm.service';
 import { getPrompt } from './prompt';
 import { environment } from '../environment';
-import { getSchemaDefinition } from './schema';
+import { getAllSchema, getPartialSchema } from './schema';
+import { EmbeddingService } from './embedding.service';
+import { getEmbeddingQuery } from './get-embedding-query';
+import { LlmService } from '../llm/llm.service';
 
 @Controller()
 export class AppController {
   constructor(
     private readonly postgresService: PostgresService,
-    private readonly llmService: LlmService
+    private readonly llmService: LlmService,
+    private readonly embeddingService: EmbeddingService
   ) {}
 
   @Post(conversationPath.createConversation)
@@ -82,16 +85,30 @@ export class AppController {
   }
 
   private async getSql(ask: string) {
-    const prompt = getPrompt(ask, getSchemaDefinition());
+    const schema = await this.getSchema(ask);
+    const prompt = getPrompt(ask, schema);
 
-    if (environment.LLM_ENABLE) {
+    if (environment.LLM_API) {
       const sql = await this.llmService.run(prompt);
       return sql;
     } else {
-      return (
-        environment.LLM_MOCK_SQL ??
-        `SELECT table_arrival_tasks.id, table_arrival_tasks.flight_number, table_arrival_tasks.airport_code, table_arrival_tasks.actual_at, table_arrival_tasks.created_at, table_arrival_tasks.estimated_at, table_arrival_tasks.source_departure_at, table_arrival_tasks.status FROM table_arrival_tasks WHERE table_arrival_tasks.status ='synced' AND table_arrival_tasks.source_departure_at IS NOT NULL AND table_arrival_tasks.estimated_at IS NULL ORDER BY table_arrival_tasks.created_at DESC LIMIT 10;`
-      );
+      return `SELECT table_arrival_tasks.id, table_arrival_tasks.flight_number, table_arrival_tasks.airport_code, table_arrival_tasks.actual_at, table_arrival_tasks.created_at, table_arrival_tasks.estimated_at, table_arrival_tasks.source_departure_at, table_arrival_tasks.status FROM table_arrival_tasks WHERE table_arrival_tasks.status ='synced' AND table_arrival_tasks.source_departure_at IS NOT NULL AND table_arrival_tasks.estimated_at IS NULL ORDER BY table_arrival_tasks.created_at DESC LIMIT 10;`;
+    }
+  }
+
+  private async getSchema(ask: string) {
+    if (environment.EMBEDDING_API) {
+      const schema = getAllSchema();
+      const embeddingQuery = getEmbeddingQuery(schema);
+      const results = await this.embeddingService.query({
+        ask,
+        embeddingQuery,
+      });
+      const partialSchema = getPartialSchema(results);
+      return partialSchema;
+    } else {
+      const schema = getAllSchema();
+      return schema;
     }
   }
 }

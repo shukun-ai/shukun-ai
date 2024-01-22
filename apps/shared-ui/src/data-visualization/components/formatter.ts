@@ -16,6 +16,25 @@ export const createFormatter = (field: DataCollectionField) => {
     if (field.type === 'time') {
       return format(new Date(params.value), 'HH:mm:ss');
     }
+    if (field.type === 'interval') {
+      const { milliseconds, seconds, minute } = params.value;
+
+      let str = '';
+
+      if (minute) {
+        str += `${minute}分`;
+      }
+
+      if (seconds) {
+        str += `${seconds}秒`;
+      }
+
+      if (milliseconds) {
+        str += `${milliseconds}`;
+      }
+
+      return str;
+    }
     return params.value;
   };
 };

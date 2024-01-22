@@ -78,4 +78,23 @@ export const getPrompt3 = (question: string, schema: SchemaDefinition) =>
     '```sql',
   ].join('\n');
 
+export const getPrompt4 = (question: string, schema: SchemaDefinition) =>
+  [
+    '# Instructions',
+    '- if the question cannot be answered given the database schema, return "I do not know"',
+    '- only use the tables and columns in the schema above',
+    '- Use Table Aliases, example: SELECT t.column_name FROM table_name AS t;',
+    '# Glossary',
+    'the execution time of each task, it means the log table by taking the creation time of the logs with a status of executed. The completion time follows the same approach',
+    '### Task',
+    'Generate a SQL query to answer the following question:',
+    '`' + question + '`',
+    '# Schema',
+    '```',
+    buildSchema(schema),
+    '```',
+    '# Answer',
+    '```sql',
+  ].join('\n');
+
 export const getPrompt = getPrompt0;

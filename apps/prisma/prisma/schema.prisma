@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+    // output into a separate subdirectory so multiple schemas can be used in a monorepo
+    // this make the import path `@prisma/client/one` instead of `@prisma/client`
+    // Customize to make the most sense for your project
+    output   = "../../../node_modules/@prisma/client/basic"
+}
+
+datasource db {
+    // using sqlite for the ease of use
+    // feel free to use any other supported database
+    // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#fields
+    provider = "postgresql"
+    url      = env("APP_DATABASE_URL")
+}
+
+model User {
+    userId    String   @id @default(uuid())
+    username  String   @unique
+    password  String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    Threads   Thread[]
+
+    @@map("users")
+}
+
+model Schema {
+    schemaId  String   @id @default(uuid())
+    name      String   @unique
+    dbType    String
+    dbUrl     String   @unique
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("schemas")
+}
+
+model Template {
+    templateId String   @id @default(uuid())
+    name       String   @unique
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
+    steps      Json
+    Thread     Thread[]
+
+    @@map("templates")
+}
+
+model Thread {
+    threadId   String    @id @default(uuid())
+    title      String
+    createdAt  DateTime  @default(now())
+    updatedAt  DateTime  @updatedAt
+    Messages   Message[]
+    userId     String
+    user       User      @relation(fields: [userId], references: [userId])
+    templateId String
+    template   Template  @relation(fields: [templateId], references: [templateId])
+
+    @@map("threads")
+}
+
+model Message {
+    messageId String   @id @default(uuid())
+    role      String // system, user, assistant
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    metadata  Json
+    threadId  String
+    thread    Thread   @relation(fields: [threadId], references: [threadId])
+
+    @@map("messages")
+}

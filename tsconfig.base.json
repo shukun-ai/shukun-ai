@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@ailake/apitype": ["apps/apitype/src/index.ts"],
+      "@ailake/prisma-client-basic": ["apps/prisma-client-basic/src/index.ts"],
       "@ailake/shared-ui": ["apps/shared-ui/src/index.ts"]
     }
   },

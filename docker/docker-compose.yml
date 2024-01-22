@@ -1,0 +1,62 @@
+version: '3'
+
+services:
+  server:
+    image: shukun-ai/ailake-api:latest
+    restart: always
+    environment:
+      - MONGO_URI
+      - MM=host.docker.internal
+      - LLM_ENABLE=
+      - LLM_API=http://192.168.124.8:8000/api/get-sql
+      - PG_USER=chase_wu
+      - PG_HOST=localhost
+      - PG_DATABASE=bi_demo
+      - PG_PASSWORD=
+      - PG_PORT=5432
+      - PG_MAX=3
+      - VITE_SERVER_API=http://localhost:3000
+      - AUTH_PASSWORD_SALT=
+      - AUTH_PRIVATE_KEY=
+    ports:
+      - '3000'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=proxy'
+
+      - 'traefik.http.middlewares.api_server_cors.headers.customResponseHeaders.Access-Control-Allow-Headers=Origin,X-Requested-With,Content-Type,Accept,sessionid,Authorization'
+      - 'traefik.http.middlewares.api_server_cors.headers.customResponseHeaders.Access-Control-Allow-Methods=*'
+      - 'traefik.http.middlewares.api_server_cors.headers.customResponseHeaders.Access-Control-Allow-Origin=*'
+      - 'traefik.http.middlewares.api_server_cors.headers.customresponseheaders.Server=SHUKUN'
+      - 'traefik.http.middlewares.api_server_cors.headers.customresponseheaders.X-Powered-By=SHUKUN'
+      - 'traefik.http.routers.daily_build_server.middlewares=api_server_cors'
+      - 'traefik.http.routers.daily_build_server.entrypoints=webinternal'
+      - 'traefik.http.routers.daily_build_server.rule=PathPrefix(`/api`)'
+
+    networks:
+      - proxy
+      - default
+
+  client:
+    image: shukun-ai/ailake-web:latest
+    restart: always
+    ports:
+      - '3000'
+    networks:
+      - proxy
+      - default
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.docker.network=proxy'
+      - 'traefik.http.middlewares.web_client_cors.headers.customresponseheaders.Server=SHUKUN'
+      - 'traefik.http.middlewares.web_client_cors.headers.customresponseheaders.X-Powered-By=SHUKUN'
+      - 'traefik.http.middlewares.daily_build_client_compress.compress=true'
+      - 'traefik.http.routers.daily_build_client.middlewares=web_client_cors,daily_build_client_compress'
+      - 'traefik.http.routers.daily_build_client.entrypoints=webinternal'
+      - 'traefik.http.routers.daily_build_client.rule=PathPrefix(`/`)'
+
+networks:
+  proxy:
+    external: true

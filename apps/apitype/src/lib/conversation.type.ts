@@ -41,7 +41,8 @@ export type DataCollection = {
       | 'money'
       | 'byte'
       | 'code'
-      | 'polygon';
+      | 'polygon'
+      | 'interval';
     name: string;
   }[];
   rows: Record<string, unknown>[];

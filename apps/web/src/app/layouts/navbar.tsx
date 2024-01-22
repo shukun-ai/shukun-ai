@@ -3,6 +3,7 @@ import {
   IconWorldSearch,
   IconReportAnalytics,
   IconTableShare,
+  IconMessageChatbot,
 } from '@tabler/icons-react';
 import {
   NavLink,
@@ -30,16 +31,22 @@ export const AppNavbar = () => {
       path: '/',
     },
     {
-      icon: IconReportAnalytics,
-      label: t('navbar.reports'),
+      icon: IconMessageChatbot,
+      label: t('navbar.thread'),
       iconColor: theme.colors.gray[1],
-      path: '/reports',
+      path: '/threads',
     },
     {
       icon: IconTableShare,
       label: t('navbar.schema'),
       iconColor: theme.colors.gray[1],
       path: '/databases',
+    },
+    {
+      icon: IconReportAnalytics,
+      label: t('navbar.template'),
+      iconColor: theme.colors.gray[1],
+      path: '/templates',
     },
   ];
   const { classes } = useStyles();

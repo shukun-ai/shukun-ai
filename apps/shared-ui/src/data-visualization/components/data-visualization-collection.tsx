@@ -1,4 +1,4 @@
-import { DataCollection, DataResult } from '../data-visualization.type';
+import { DataCollection } from '../data-visualization.type';
 import { Box, Button, Group } from '@mantine/core';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import ReactECharts from 'echarts-for-react';
@@ -6,11 +6,9 @@ import { useTranslation } from 'react-i18next';
 import { ColDef } from 'ag-grid-community';
 import { AgGridReact } from 'ag-grid-react';
 import { createFormatter } from './formatter';
-import { toSentenceCase } from 'js-convert-case';
 import Color from 'color';
 
 export type DataVisualizationCollectionProps = {
-  dataResult: DataResult;
   data: DataCollection;
 };
 
@@ -48,7 +46,7 @@ export const DataVisualizationTable = ({ data }: { data: DataCollection }) => {
     const colDefs: ColDef<Record<string, unknown>>[] = data.fields.map(
       (field) => {
         return {
-          headerName: toSentenceCase(field.name),
+          headerName: field.name,
           field: field.name,
           valueFormatter: createFormatter(field),
         };
