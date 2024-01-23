@@ -7,6 +7,8 @@ import {
   SchemaRemoveOutput,
   SchemaRetrieveInput,
   SchemaRetrieveOutput,
+  SchemaSyncInput,
+  SchemaSyncOutput,
   SchemaUpdateInput,
   SchemaUpdateOutput,
   apiPath,
@@ -58,6 +60,16 @@ export const removeSchema = async (
 ): Promise<SchemaRemoveOutput> => {
   const response = await getAxios().post<SchemaRemoveOutput>(
     apiPath.schema.remove,
+    input
+  );
+  return response.data;
+};
+
+export const syncSchema = async (
+  input: SchemaSyncInput
+): Promise<SchemaSyncOutput> => {
+  const response = await getAxios().post<SchemaSyncOutput>(
+    apiPath.schema.sync,
     input
   );
   return response.data;

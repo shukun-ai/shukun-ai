@@ -6,16 +6,23 @@ import {
   SchemaRemoveOutput,
   SchemaRetrieveInput,
   SchemaRetrieveOutput,
+  SchemaSyncInput,
+  SchemaSyncOutput,
   SchemaUpdateInput,
   SchemaUpdateOutput,
+  TableDefinition,
   apiPath,
 } from '@ailake/apitype';
 import { Controller, Post, Body } from '@nestjs/common';
 import { SchemaService } from '../schema/schema.service';
+import { PostgresService } from '../db-query/postgres.service';
 
 @Controller()
 export class SchemaController {
-  constructor(private readonly schemaService: SchemaService) {}
+  constructor(
+    private readonly schemaService: SchemaService,
+    private readonly postgresService: PostgresService
+  ) {}
 
   @Post(apiPath.schema.retrieve)
   async retrieve(
@@ -42,5 +49,21 @@ export class SchemaController {
   @Post(apiPath.schema.remove)
   async remove(@Body() props: SchemaRemoveInput): Promise<SchemaRemoveOutput> {
     return await this.schemaService.remove(props);
+  }
+
+  @Post(apiPath.schema.sync)
+  async sync(@Body() props: SchemaSyncInput): Promise<SchemaSyncOutput> {
+    const { name, dbUrl } = await this.schemaService.retrieve(props);
+    let tables: TableDefinition[];
+    try {
+      tables = await this.postgresService.generateSchema(dbUrl);
+    } catch (error) {
+      console.error();
+      throw new Error(`We could not connect with ${name} database.`);
+    }
+    await this.schemaService.update({ schemaId: props.schemaId, tables });
+    return {
+      schemaId: props.schemaId,
+    };
   }
 }
