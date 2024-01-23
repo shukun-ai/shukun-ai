@@ -5,7 +5,7 @@ export default {
       thread: '询问助理',
       reports: '报告',
       schema: '数据库配置',
-      template: '智能助理',
+      template: '助理模板',
     },
     conversation: {
       placeholder: '问我关于你想查的数据，如前十条任务的机场代码分布是什么？',
@@ -44,6 +44,12 @@ export default {
       submit: '提交',
       createTitle: '创建数据库接入信息',
       editTitle: '修改数据库接入信息',
+    },
+    template: {
+      create: '创建一个新的功能模板',
+      createTitle: '创建一个新的功能模板',
+      name: '功能模板',
+      submit: '提交',
     },
     sharedUi: {
       languageSwitch: {

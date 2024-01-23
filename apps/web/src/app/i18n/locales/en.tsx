@@ -48,6 +48,12 @@ export default {
       createTitle: 'Create Database Connection',
       editTitle: 'Edit Database Connection',
     },
+    template: {
+      create: 'Create a new template',
+      createTitle: 'Create a new template',
+      name: 'Template name',
+      submit: 'Submit',
+    },
     sharedUi: {
       languageSwitch: {
         tip: "We will automatically set Language by your browser's language, if you want to switch language, you can choose other language, we will remember.",
