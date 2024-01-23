@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:14
+    # see https://www.postgresql.org/docs/current/non-durability.html
+    # see https://github.com/testjavascript/nodejs-integration-tests-best-practices/blob/master/example-application/test/docker-compose.yml
+    command: '-c full_page_writes=off -c fsync=off -c synchronous_commit=off'
+    ports:
+      - '35432:5432'
+    environment:
+      - POSTGRES_USER=shukun_ai
+      - POSTGRES_PASSWORD=shukun_ai
+      - POSTGRES_DB=shukun_ai

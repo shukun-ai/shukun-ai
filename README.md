@@ -9,9 +9,11 @@ git clone https://github.com/shukun-ai/ailake.git
 # Please use node 18+
 npm install
 
+# Start postgreSQL for development
+docker-compose -f docker-compose.development.yml up
+
 # Copy env file and change environment value here
-cp .env .env.local
-# For example: add APP_DATABASE_URL=postgresql://postgres@localhost:5432/shukun_ai
+touch .env.local
 
 # We've test in PostgreSQL 14
 npm run db:migrate
