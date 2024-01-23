@@ -31,7 +31,7 @@ export default {
         'All tasks in October 2023 are grouped by airline, which is the first two string of the flight number',
     },
     schema: {
-      editDb: 'Edit Database',
+      editDbUrl: 'Edit Database Connection',
       syncDb: 'Sync Database',
     },
     sharedUi: {

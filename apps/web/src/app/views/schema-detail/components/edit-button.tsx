@@ -28,7 +28,7 @@ export const EditButton = ({ schema }: EditButtonProps) => {
   return (
     <>
       <Button variant="subtle" onClick={open}>
-        {t('schema.editDb')}
+        {t('schema.editDbUrl')}
       </Button>
       <Modal opened={opened} onClose={close} title="Create new database">
         <EditButtonForm initialValues={schema} onSubmitSuccess={close} />

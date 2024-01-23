@@ -27,7 +27,7 @@ export default {
       question5: '2023年10月的所有任务按航司进行分组，航司是航班号的前两位',
     },
     schema: {
-      editDb: '编辑数据库',
+      editDbUrl: '编辑数据库连接信息',
       syncDb: '同步数据库',
     },
     sharedUi: {

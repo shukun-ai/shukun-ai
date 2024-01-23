@@ -1,15 +1,14 @@
-import { Card, Text, Button, Avatar, Grid, Flex, Modal } from '@mantine/core';
+import { Card, Text, Button, Grid, Flex, Modal } from '@mantine/core';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IconTrash, IconListDetails } from '@tabler/icons-react';
 import { SchemaListOutput, SchemaRemoveInput } from '@ailake/apitype';
 import { useDisclosure } from '@mantine/hooks';
-import { get } from 'lodash';
 import { useMutation } from '@tanstack/react-query';
 import { removeSchema } from '../../../../apis/schema';
 import { queryClient } from '../../../query-client';
-import { dbTypes } from '../../../constants';
 import { CreateForm } from './create-form';
+import { DbIcons } from '@ailake/shared-ui';
 
 type CardItemProps = {
   data: SchemaListOutput[number];
@@ -43,11 +42,7 @@ export const CardItem = ({ data }: CardItemProps) => {
         direction="row"
         wrap="wrap"
       >
-        <Avatar
-          variant="filled"
-          radius="sm"
-          src={get(dbTypes, `${data.dbType}.icon`, dbTypes.postgres.icon)}
-        />
+        <DbIcons dbType={data.dbType} />
         <Text weight={500} w={140} truncate="end">
           {data.name}
         </Text>
