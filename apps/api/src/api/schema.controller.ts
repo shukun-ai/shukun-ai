@@ -13,7 +13,7 @@ import {
   TableDefinition,
   apiPath,
 } from '@ailake/apitype';
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, BadRequestException } from '@nestjs/common';
 import { SchemaService } from '../schema/schema.service';
 import { PostgresService } from '../db-query/postgres.service';
 
@@ -59,7 +59,9 @@ export class SchemaController {
       tables = await this.postgresService.generateSchema(dbUrl);
     } catch (error) {
       console.error();
-      throw new Error(`We could not connect with ${name} database.`);
+      throw new BadRequestException(
+        `We could not connect with ${name} database.`
+      );
     }
     await this.schemaService.update({ schemaId: props.schemaId, tables });
     return {
