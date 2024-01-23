@@ -19,5 +19,6 @@ export const apiPath = {
     create: 'schemas/create',
     update: 'schemas/update',
     remove: 'schemas/remove',
+    sync: 'schemas/sync',
   },
 };

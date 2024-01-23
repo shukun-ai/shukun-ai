@@ -1,4 +1,4 @@
-import { TableDefinition } from '../app/schema';
+import { TableDefinition } from '@ailake/apitype';
 
 export type RetrieveRequest = {
   schemaId: string;

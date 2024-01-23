@@ -1,12 +1,15 @@
-import { DataResult } from '@ailake/apitype';
+import { DataResult, TableDefinition } from '@ailake/apitype';
 import {
   Injectable,
   OnApplicationShutdown,
   OnModuleInit,
 } from '@nestjs/common';
-import { Pool } from 'pg';
+import { Pool, Client } from 'pg';
 import { environment } from '../environment';
-import { z } from 'zod';
+import { PgResultSchema, pgResultSchema } from './postgres.type';
+import { listColumnsSql } from './postgres.columns.sql';
+import { pgColumnsSchema } from './postgres.columns.type';
+import { pgColumnsConvertor } from './postgres.columns.convertor';
 
 @Injectable()
 export class PostgresService implements OnModuleInit, OnApplicationShutdown {
@@ -65,6 +68,25 @@ export class PostgresService implements OnModuleInit, OnApplicationShutdown {
     }
   }
 
+  async generateSchema(dbUrl: string): Promise<TableDefinition[]> {
+    const result = pgColumnsSchema.parse(await this.listColumns(dbUrl));
+    const tables = pgColumnsConvertor(result);
+    return tables;
+  }
+
+  private async listColumns(dbUrl: string) {
+    const client = new Client(dbUrl);
+    await client.connect();
+
+    try {
+      const response = await client.query(listColumnsSql());
+
+      return response;
+    } finally {
+      await client.end();
+    }
+  }
+
   private getPool() {
     if (this.pool) {
       return this.pool;
@@ -72,38 +94,6 @@ export class PostgresService implements OnModuleInit, OnApplicationShutdown {
     throw new Error('the pool is not created');
   }
 }
-
-type PgResultSchema = z.infer<typeof pgResultSchema>;
-
-const pgResultSchema = z.object({
-  command: z.enum(['SELECT']),
-  rowCount: z.number().int(),
-  oid: z.unknown(),
-  rows: z.array(z.record(z.string(), z.unknown())),
-  fields: z.array(
-    z.object({
-      name: z.string(),
-      tableID: z.number().int(),
-      columnID: z.number().int(),
-      dataTypeID: z.number().int(),
-      dataTypeSize: z.number().int(),
-      dataTypeModifier: z.number().int(),
-      format: z.string(),
-    })
-  ),
-  _parsers: z.array(z.unknown()),
-  _types: z.object({
-    _types: z.object({
-      arrayParser: z.object({}),
-      builtins: z.record(z.string(), z.number().int()),
-    }),
-    text: z.object({}),
-    binary: z.object({}),
-  }),
-  RowCtor: z.unknown(),
-  rowAsArray: z.boolean(), // only be false
-  _prebuiltEmptyResultObject: z.record(z.string(), z.unknown()),
-});
 
 const parseFields = (result: PgResultSchema): DataResult['data']['fields'] => {
   return result.fields.map((field) => {

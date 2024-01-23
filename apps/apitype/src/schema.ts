@@ -54,6 +54,14 @@ export type SchemaRemoveOutput = {
   schemaId: string;
 };
 
+export type SchemaSyncInput = {
+  schemaId: string;
+};
+
+export type SchemaSyncOutput = {
+  schemaId: string;
+};
+
 export type SchemaDefinition = {
   tables: TableDefinition[];
   dbType: string;
@@ -69,13 +77,8 @@ export type TableDefinition = {
 export type ColumnDefinition = {
   columnName: string;
   columnAlias: string[];
-  columnType:
-    | 'varchar'
-    | 'integer'
-    | 'float'
-    | 'boolean'
-    | 'timestamp'
-    | 'enum';
+  columnType: string;
+  characterLength?: number;
   precision?: number;
   scale?: number;
   enums?: {
