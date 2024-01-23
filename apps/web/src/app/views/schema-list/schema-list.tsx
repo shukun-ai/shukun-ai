@@ -1,13 +1,14 @@
-import { IconTableShare } from '@tabler/icons-react';
-import { Flex } from '@mantine/core';
-import { Breadcrumbs } from '../../layouts/bread-crumbs';
+import { Flex, Title } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
 import { ErrorCard, PageSkeleton } from '@ailake/shared-ui';
 import { listSchema } from '../../../apis/schema';
 import { CardNew } from './components/card-new';
 import { CardItem } from './components/card-item';
+import { useTranslation } from 'react-i18next';
 
 export const SchemaList = () => {
+  const { t } = useTranslation();
+
   const { isPending, error, data } = useQuery({
     queryKey: ['listSchema'],
     queryFn: () => {
@@ -25,14 +26,9 @@ export const SchemaList = () => {
 
   return (
     <>
-      <Breadcrumbs
-        items={[
-          {
-            label: 'Databases',
-            icon: <IconTableShare size="1rem" stroke={1.5} />,
-          },
-        ]}
-      />
+      <Title order={3} mb={20}>
+        {t('schema.listTitle')}
+      </Title>
       <Flex
         gap="md"
         justify="flex-start"

@@ -8,8 +8,10 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import { IconPlus } from '@tabler/icons-react';
 import { CreateForm } from './create-form';
+import { useTranslation } from 'react-i18next';
 
 export const CardNew = () => {
+  const { t } = useTranslation();
   const theme = useMantineTheme();
   const [opened, { open, close }] = useDisclosure(false);
   return (
@@ -24,7 +26,7 @@ export const CardNew = () => {
           <IconPlus size="5.5rem" />
         </ActionIcon>
       </Center>
-      <Modal opened={opened} onClose={close} title="Create new database">
+      <Modal opened={opened} onClose={close} title={t('schema.createTitle')}>
         <CreateForm onSubmitSuccess={close} />
       </Modal>
     </Card>

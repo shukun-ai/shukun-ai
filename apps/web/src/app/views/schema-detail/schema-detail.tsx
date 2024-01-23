@@ -7,8 +7,11 @@ import { SyncButton } from './components/sync-button';
 import { DbIcons, ErrorCard, PageSkeleton } from '@ailake/shared-ui';
 import { EditButton } from './components/edit-button';
 import { Box, Flex, Group, Text, Title } from '@mantine/core';
+import { useTranslation } from 'react-i18next';
 
 export const SchemaDetail = () => {
+  const { t } = useTranslation();
+
   const { schemaId } = useParams();
 
   const { isPending, error, data } = useQuery<SchemaRetrieveOutput | undefined>(
@@ -38,7 +41,7 @@ export const SchemaDetail = () => {
         <Group>
           <DbIcons dbType={data.dbType} />
           <Box mb={20}>
-            <Title order={3}>Schema Management</Title>
+            <Title order={3}>{t('schema.detailTitle')}</Title>
             <Text>{data.name}</Text>
           </Box>
         </Group>

@@ -5,12 +5,15 @@ import { useMutation } from '@tanstack/react-query';
 import { createSchema } from '../../../../apis/schema';
 import { dbTypes } from '../../../constants';
 import { queryClient } from '../../../query-client';
+import { useTranslation } from 'react-i18next';
 
 export type CreateFormProps = {
   onSubmitSuccess?: () => void;
 };
 
 export const CreateForm = ({ onSubmitSuccess }: CreateFormProps) => {
+  const { t } = useTranslation();
+
   const form = useForm<CreateFormValuesProps>({
     initialValues: {
       name: '',
@@ -46,7 +49,7 @@ export const CreateForm = ({ onSubmitSuccess }: CreateFormProps) => {
     <Box maw={340} mx="auto">
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <TextInput
-          label="Name"
+          label={t('schema.name')}
           withAsterisk
           mb="md"
           placeholder="Enter name"
@@ -54,7 +57,7 @@ export const CreateForm = ({ onSubmitSuccess }: CreateFormProps) => {
         />
 
         <Select
-          label="Type"
+          label={t('schema.dbType')}
           withAsterisk
           mb="md"
           placeholder="Select type"
@@ -63,7 +66,7 @@ export const CreateForm = ({ onSubmitSuccess }: CreateFormProps) => {
         />
 
         <Textarea
-          label="URL"
+          label={t('schema.dbUrl')}
           withAsterisk
           mb="md"
           placeholder="Enter URL"
@@ -72,7 +75,7 @@ export const CreateForm = ({ onSubmitSuccess }: CreateFormProps) => {
 
         <Group position="right" mt="md">
           <Button type="submit" loading={isPending}>
-            Submit
+            {t('schema.submit')}
           </Button>
         </Group>
       </form>

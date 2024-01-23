@@ -31,8 +31,22 @@ export default {
         'All tasks in October 2023 are grouped by airline, which is the first two string of the flight number',
     },
     schema: {
+      listTitle: 'Query Databases',
       editDbUrl: 'Edit Database Connection',
       syncDb: 'Sync Database',
+      tableName: 'Table Name',
+      columnName: 'Column Name',
+      alias: 'Labeled Alias',
+      type: 'Data Type',
+      foreignTable: 'Foreign Table',
+      foreignColumn: 'Foreign Column',
+      comments: 'Comments',
+      name: 'Name',
+      dbType: 'DB Type',
+      dbUrl: 'DB URL',
+      submit: 'Submit',
+      createTitle: 'Create Database Connection',
+      editTitle: 'Edit Database Connection',
     },
     sharedUi: {
       languageSwitch: {

@@ -30,7 +30,7 @@ export const EditButton = ({ schema }: EditButtonProps) => {
       <Button variant="subtle" onClick={open}>
         {t('schema.editDbUrl')}
       </Button>
-      <Modal opened={opened} onClose={close} title="Create new database">
+      <Modal opened={opened} onClose={close} title={t('schema.editTitle')}>
         <EditButtonForm initialValues={schema} onSubmitSuccess={close} />
       </Modal>
     </>
@@ -46,6 +46,8 @@ const EditButtonForm = ({
   initialValues,
   onSubmitSuccess,
 }: EditButtonFormProps) => {
+  const { t } = useTranslation();
+
   const form = useForm<EditButtonFormValuesProps>({
     initialValues: initialValues,
     validate: zodResolver(
@@ -85,7 +87,7 @@ const EditButtonForm = ({
     <Box maw={340} mx="auto">
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <TextInput
-          label="Name"
+          label={t('schema.name')}
           withAsterisk
           mb="md"
           placeholder="Enter name"
@@ -93,7 +95,7 @@ const EditButtonForm = ({
         />
 
         <Select
-          label="Type"
+          label={t('schema.dbType')}
           withAsterisk
           mb="md"
           placeholder="Select type"
@@ -102,7 +104,7 @@ const EditButtonForm = ({
         />
 
         <Textarea
-          label="URL"
+          label={t('schema.dbUrl')}
           withAsterisk
           mb="md"
           placeholder="Enter URL"
@@ -111,7 +113,7 @@ const EditButtonForm = ({
 
         <Group position="right" mt="md">
           <Button type="submit" loading={isPending}>
-            Submit
+            {t('schema.submit')}
           </Button>
         </Group>
       </form>

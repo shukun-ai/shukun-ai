@@ -27,8 +27,23 @@ export default {
       question5: '2023年10月的所有任务按航司进行分组，航司是航班号的前两位',
     },
     schema: {
+      listTitle: '可查询数据库',
+      detailTitle: '数据库详情',
       editDbUrl: '编辑数据库连接信息',
       syncDb: '同步数据库',
+      tableName: '表名',
+      columnName: '字段名',
+      alias: '中文标记名',
+      type: '数据类型',
+      foreignTable: '外键表',
+      foreignColumn: '外键字段',
+      comments: '字段备注',
+      name: '名称',
+      dbType: '数据库类型',
+      dbUrl: '数据库连接信息',
+      submit: '提交',
+      createTitle: '创建数据库接入信息',
+      editTitle: '修改数据库接入信息',
     },
     sharedUi: {
       languageSwitch: {
