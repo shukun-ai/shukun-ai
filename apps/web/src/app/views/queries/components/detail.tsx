@@ -1,11 +1,16 @@
-import { Query, QueryRetrieveOutput, QueryUpdateInput } from '@ailake/apitype';
+import {
+  Query,
+  QueryRetrieveOutput,
+  QueryStep,
+  QueryUpdateInput,
+} from '@ailake/apitype';
 import { Box, Button, Flex, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { updateQuery } from '../../../../apis/query';
 import { useMutation } from '@tanstack/react-query';
 import { Metadata } from './metadata';
 import { DetailProvider } from './detail-context';
-import { useExecuteStep } from './use-execute-step';
+import { useGenerateStep } from './use-generate-step';
 
 export type DetailProps = {
   query: QueryRetrieveOutput;
@@ -22,11 +27,26 @@ export const Detail = ({ query }: DetailProps) => {
     initialValues: query,
   });
 
-  const { executeStep } = useExecuteStep();
+  const { generateStep } = useGenerateStep({
+    metadata: form.values.metadata,
+    onGeneratedChange: (generated) => {
+      const currentSteps = form.values.metadata.steps;
+      const newSteps: QueryStep[] = currentSteps.map((step, index) => {
+        return {
+          ...step,
+          generatedQuery: generated[index].generatedQuery,
+        };
+      });
+      form.setFieldValue('metadata', {
+        ...form.values.metadata,
+        steps: newSteps,
+      });
+    },
+  });
 
   return (
     <form>
-      <DetailProvider value={{ executeStep }}>
+      <DetailProvider value={{ generateStep }}>
         <Box style={{ maxWidth: 1440 }}>
           <Flex justify="space-between">
             <Box>

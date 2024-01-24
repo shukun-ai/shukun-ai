@@ -28,4 +28,7 @@ export const apiPath = {
     update: 'queries/update',
     remove: 'queries/remove',
   },
+  queryGenerators: {
+    create: 'query-generators/create',
+  },
 };

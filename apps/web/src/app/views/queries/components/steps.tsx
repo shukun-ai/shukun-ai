@@ -2,6 +2,8 @@ import { QueryStep, append, move, remove, update } from '@ailake/apitype';
 import { ArrayInputs } from '@ailake/shared-ui';
 import { Box, Button, Group, Textarea } from '@mantine/core';
 import { SelectSchema } from './select-schema';
+import { Prism } from '@mantine/prism';
+import { useDetailContext } from './detail-context';
 
 export type StepsProps = {
   value: QueryStep[];
@@ -9,6 +11,8 @@ export type StepsProps = {
 };
 
 export const Steps = ({ value, onChange }: StepsProps) => {
+  const { generateStep } = useDetailContext();
+
   return (
     <Box>
       <ArrayInputs<QueryStep>
@@ -30,6 +34,7 @@ export const Steps = ({ value, onChange }: StepsProps) => {
             <SelectSchema
               value={itemValue.schemaId}
               onChange={(schemaId) => {
+                console.log('schemaId', schemaId);
                 itemChange({
                   ...itemValue,
                   schemaId,
@@ -50,8 +55,17 @@ export const Steps = ({ value, onChange }: StepsProps) => {
               minRows={3}
               mb={20}
             />
+            {itemValue.generatedQuery && (
+              <Box>
+                <Prism language="sql">
+                  {itemValue.generatedQuery.querySql}
+                </Prism>
+              </Box>
+            )}
             <Group>
-              <Button>执行</Button>
+              <Button onClick={() => generateStep({ stepIndex: index })}>
+                执行
+              </Button>
               <Button variant="subtle" onClick={() => itemRemove()}>
                 删除
               </Button>

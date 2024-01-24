@@ -1,8 +1,7 @@
-import { QueryStep } from '@ailake/apitype';
 import { createContext, useContext } from 'react';
 
 type DetailContextType = {
-  executeStep: (props: { stepIndex: number; step: QueryStep }) => Promise<void>;
+  generateStep: (props: { stepIndex: number }) => Promise<void>;
 };
 
 const DetailContext = createContext<DetailContextType | null>(null);

@@ -33,6 +33,9 @@ export const SelectSchema = ({ value, onChange }: SelectSchemaProps) => {
           label: item.name,
           value: item.schemaId,
         }))}
+        onChange={(event) => {
+          onChange(event ?? undefined);
+        }}
         withinPortal
         withAsterisk
         clearable
