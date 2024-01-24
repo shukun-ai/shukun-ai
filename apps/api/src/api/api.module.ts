@@ -11,6 +11,7 @@ import { DbQueryModule } from '../db-query/db-query.module';
 import { SqlGeneratorModule } from '../sql-generator/sql-generator.module';
 import { SchemaController } from './schema.controller';
 import { SchemaModule } from '../schema/schema.module';
+import { QueryModule } from '../query/query.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { SchemaModule } from '../schema/schema.module';
     DbQueryModule,
     SqlGeneratorModule,
     SchemaModule,
+    QueryModule,
   ],
   controllers: [
     TemplateController,

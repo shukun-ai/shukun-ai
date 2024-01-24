@@ -21,4 +21,11 @@ export const apiPath = {
     remove: 'schemas/remove',
     sync: 'schemas/sync',
   },
+  queries: {
+    retrieve: 'queries/retrieve',
+    list: 'queries/list',
+    create: 'queries/create',
+    update: 'queries/update',
+    remove: 'queries/remove',
+  },
 };
