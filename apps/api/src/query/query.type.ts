@@ -25,7 +25,6 @@ export type ListResponse = {
 
 export type CreateRequest = {
   name: string;
-  metadata: Query;
 };
 
 export type CreateResponse = {

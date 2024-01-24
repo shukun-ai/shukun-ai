@@ -25,7 +25,6 @@ export type QueryListOutput = {
 
 export type QueryCreateInput = {
   name: string;
-  metadata: Query;
 };
 
 export type QueryCreateOutput = {

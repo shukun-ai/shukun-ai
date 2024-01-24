@@ -12,6 +12,7 @@ import { SqlGeneratorModule } from '../sql-generator/sql-generator.module';
 import { SchemaController } from './schema.controller';
 import { SchemaModule } from '../schema/schema.module';
 import { QueryModule } from '../query/query.module';
+import { QueryController } from './query.controller';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { QueryModule } from '../query/query.module';
     ThreadController,
     MessageController,
     SchemaController,
+    QueryController,
   ],
   providers: [ThreadTemplateService],
 })

@@ -54,6 +54,9 @@ export default {
       name: 'Template name',
       submit: 'Submit',
     },
+    query: {
+      create: 'Create a new query',
+    },
     sharedUi: {
       languageSwitch: {
         tip: "We will automatically set Language by your browser's language, if you want to switch language, you can choose other language, we will remember.",

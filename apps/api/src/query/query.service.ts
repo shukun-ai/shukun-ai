@@ -40,7 +40,7 @@ export class QueryService {
   }
 
   async list(): Promise<ListResponse> {
-    const templates = await this.prismaService.query.findMany({
+    const queries = await this.prismaService.query.findMany({
       select: {
         queryId: true,
         name: true,
@@ -49,18 +49,22 @@ export class QueryService {
       },
     });
 
-    return templates.map((template) => ({
-      ...template,
-      createdAt: template.createdAt.toISOString(),
-      updatedAt: template.updatedAt.toISOString(),
+    return queries.map((query) => ({
+      ...query,
+      createdAt: query.createdAt.toISOString(),
+      updatedAt: query.updatedAt.toISOString(),
     }));
   }
 
   async create(props: CreateRequest): Promise<CreateResponse> {
+    const defaultMetadata: Query = {
+      inputs: [],
+      steps: [],
+    };
     const template = await this.prismaService.query.create({
       data: {
         name: props.name,
-        metadata: querySchema.parse(props.metadata),
+        metadata: querySchema.parse(defaultMetadata),
       },
       select: {
         queryId: true,
