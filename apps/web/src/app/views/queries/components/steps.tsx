@@ -2,8 +2,8 @@ import { QueryStep, append, move, remove, update } from '@ailake/apitype';
 import { ArrayInputs } from '@ailake/shared-ui';
 import { Box, Button, Group, Textarea } from '@mantine/core';
 import { SelectSchema } from './select-schema';
-import { Prism } from '@mantine/prism';
 import { useDetailContext } from './detail-context';
+import { CodeCollapse } from './code-collapse';
 
 export type StepsProps = {
   value: QueryStep[];
@@ -57,9 +57,23 @@ export const Steps = ({ value, onChange }: StepsProps) => {
             />
             {itemValue.generatedQuery && (
               <Box>
-                <Prism language="sql">
-                  {itemValue.generatedQuery.querySql}
-                </Prism>
+                <CodeCollapse
+                  title="Before Query Schema"
+                  code={itemValue.generatedQuery.schemaDdl}
+                  codeType="sql"
+                />
+                <CodeCollapse
+                  title="Generated Query SQL"
+                  code={itemValue.generatedQuery.querySql}
+                  codeType="sql"
+                  initialOpen
+                />
+                <CodeCollapse
+                  title="Generated Query Schema"
+                  code={itemValue.generatedQuery.resultDdl}
+                  codeType="sql"
+                  initialOpen
+                />
               </Box>
             )}
             <Group>

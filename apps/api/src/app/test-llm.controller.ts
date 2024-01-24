@@ -38,7 +38,7 @@ export class TestLlmController {
 
   private async getSql(ask: string) {
     const prompt = getPrompt(ask, getSchemaDefinition());
-    const sql = await this.llmService.run(prompt);
+    const sql = await this.llmService.askSql(prompt);
     return sql;
   }
 }

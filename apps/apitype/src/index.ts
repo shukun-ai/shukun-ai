@@ -6,6 +6,7 @@ export * from './message';
 export * from './schema';
 export * from './query';
 export * from './query-generator';
+export * from './query-execution';
 export * from './utils/array';
 export * from './utils/sleep';
 export * from './utils/placeholder';

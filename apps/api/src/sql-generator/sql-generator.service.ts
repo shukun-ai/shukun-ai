@@ -8,7 +8,7 @@ export class SqlGeneratorService {
 
   async toSql(promptTask: string) {
     const prompt = getPrompt(promptTask);
-    const sql = await this.llmService.run(prompt);
+    const sql = await this.llmService.askSql(prompt);
     return sql;
   }
 }

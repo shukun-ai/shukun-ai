@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { environment } from '../environment';
 import axios from 'axios';
+import { LlmAdaptor } from '../llm/llm-adaptor';
 
 @Injectable()
-export class AzureOpenAiService {
-  async ask(prompt: string): Promise<string> {
+export class AzureOpenAiService implements LlmAdaptor {
+  async askSql(prompt: string): Promise<string> {
     const baseUrl = environment.LLM_API;
     const apiKey = environment.LLM_API_KEY;
 

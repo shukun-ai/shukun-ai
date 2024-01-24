@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import OpenAI from 'openai';
 import { environment } from '../environment';
+import { LlmAdaptor } from '../llm/llm-adaptor';
 
 @Injectable()
-export class OpenAiService {
-  async ask(prompt: string): Promise<string> {
+export class OpenAiService implements LlmAdaptor {
+  async askSql(prompt: string): Promise<string> {
     const baseUrl = environment.LLM_API;
     const apiKey = environment.LLM_API_KEY;
 

@@ -35,12 +35,16 @@ export class QueryGeneratorController {
 
     const schema = await this.schemaService.retrieve({ schemaId });
 
-    const { prompt, schemaDdl } = await this.sqlPromptService.create({
-      schema: schema,
-      taskPrompt: promptTask,
-    });
+    const { prompt, schemaDdl } = this.sqlPromptService.getDQL(
+      promptTask,
+      schema
+    );
 
-    const sql = await this.llmService.run(prompt);
+    const sql = await this.llmService.askSql(prompt);
+
+    const { prompt: ddlPrompt } = this.sqlPromptService.getDDL(sql, schemaDdl);
+
+    const resultDdl = await this.llmService.askSql(ddlPrompt);
 
     return {
       generatedSteps: [
@@ -49,7 +53,7 @@ export class QueryGeneratorController {
             dbType: schema.dbType as 'postgres',
             schemaDdl,
             querySql: sql,
-            resultDdl: '',
+            resultDdl: resultDdl,
             lastGeneratedAt: new Date().toISOString(),
           },
         },

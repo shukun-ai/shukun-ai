@@ -31,4 +31,7 @@ export const apiPath = {
   queryGenerators: {
     create: 'query-generators/create',
   },
+  queryExecutions: {
+    create: 'query-executions/create',
+  },
 };
