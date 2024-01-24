@@ -1,9 +1,4 @@
-import {
-  Query,
-  QueryRetrieveOutput,
-  QueryStep,
-  QueryUpdateInput,
-} from '@ailake/apitype';
+import { Query, QueryRetrieveOutput, QueryUpdateInput } from '@ailake/apitype';
 import { Box, Button, Flex, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { updateQuery } from '../../../../apis/query';
@@ -29,14 +24,10 @@ export const Detail = ({ query }: DetailProps) => {
 
   const { generateStep } = useGenerateStep({
     metadata: form.values.metadata,
-    onGeneratedChange: (generated) => {
-      const currentSteps = form.values.metadata.steps;
-      const newSteps: QueryStep[] = currentSteps.map((step, index) => {
-        return {
-          ...step,
-          generatedQuery: generated[index].generatedQuery,
-        };
-      });
+    onGeneratedChange: (generatedQuery, stepIndex) => {
+      const steps = form.values.metadata.steps;
+      const newSteps = structuredClone(steps);
+      newSteps[stepIndex].generatedQuery = generatedQuery;
       form.setFieldValue('metadata', {
         ...form.values.metadata,
         steps: newSteps,

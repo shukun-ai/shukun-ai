@@ -9,17 +9,21 @@ export class SqlPromptService {
 
   getDQL(
     taskPrompt: string,
-    schema: SchemaDefinition
+    schema: SchemaDefinition,
+    lastResultDDL: string
   ): {
     prompt: string;
     schemaDdl: string;
   } {
     const schemaDdl = buildSchema(schema);
-    const prompt = getPromptTemplate(taskPrompt, schemaDdl);
+    const schemaPrompt = lastResultDDL
+      ? lastResultDDL + '\n' + schemaDdl
+      : schemaDdl;
+    const prompt = getPromptTemplate(taskPrompt, schemaPrompt);
 
     return {
       prompt,
-      schemaDdl,
+      schemaDdl: schemaPrompt,
     };
   }
 
@@ -30,8 +34,10 @@ export class SqlPromptService {
     prompt: string;
   } {
     const prompt = [
+      '#Instruction',
+      'Do not use table and column names that have appeared in the Schema.',
       '# Task',
-      'Generate a SQL Create table statement based on the following SQL Query:',
+      'Generate a CREATE TABLE statement based on the SQL Query, ensuring to create only one table. Avoid creating a second or third table. The field names of the new table must match the fields in the SQL Query:',
       '### SQL Query',
       '```',
       sql,

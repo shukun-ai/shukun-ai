@@ -13,9 +13,8 @@ export const useGenerateStep = ({
 }: {
   metadata: Query;
   onGeneratedChange: (
-    generatedSteps: {
-      generatedQuery: QueryGeneratedQuery;
-    }[]
+    generatedQuery: QueryGeneratedQuery,
+    stepIndex: number
   ) => void;
 }) => {
   const { isPending, mutateAsync } = useMutation({
@@ -31,7 +30,7 @@ export const useGenerateStep = ({
         stepIndex,
       });
 
-      onGeneratedChange(data.generatedSteps);
+      onGeneratedChange(data.generatedQuery, stepIndex);
     },
     [metadata, mutateAsync, onGeneratedChange]
   );

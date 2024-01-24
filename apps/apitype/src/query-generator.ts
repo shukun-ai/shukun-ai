@@ -6,7 +6,5 @@ export type QueryGeneratorCreateInput = {
 };
 
 export type QueryGeneratorCreateOutput = {
-  generatedSteps: {
-    generatedQuery: QueryGeneratedQuery;
-  }[];
+  generatedQuery: QueryGeneratedQuery;
 };
