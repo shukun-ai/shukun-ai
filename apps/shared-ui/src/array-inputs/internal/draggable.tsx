@@ -14,7 +14,7 @@ export type DraggableProps<T> = {
     options: {
       drag: ConnectDragSource;
       index: number;
-    },
+    }
   ) => JSX.Element;
   onUpdate: (newItemValue: T) => void;
   onRemove: () => void;
@@ -46,7 +46,7 @@ export const Draggable = <T,>({
         {
           drag,
           index,
-        },
+        }
       )}
     </Box>
   );

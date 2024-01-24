@@ -21,7 +21,7 @@ export type ArrayInputProps<T> = {
     options: {
       drag: ConnectDragSource;
       index: number;
-    },
+    }
   ) => JSX.Element;
   disabled?: boolean;
 };

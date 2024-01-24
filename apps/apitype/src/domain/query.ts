@@ -21,7 +21,7 @@ export const querySchema = z.object({
   ),
   steps: z.array(
     z.object({
-      schemaId: z.string(),
+      schemaId: z.string().optional(),
       promptTask: z.string(),
       generatedQuery: z
         .object({
