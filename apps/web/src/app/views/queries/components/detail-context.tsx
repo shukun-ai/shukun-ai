@@ -1,7 +1,8 @@
 import { createContext, useContext } from 'react';
 
 type DetailContextType = {
-  generateStep: (props: { stepIndex: number }) => Promise<void>;
+  runTextToSql: (props: { stepIndex: number }) => Promise<void>;
+  runSqlToResult: (props: { stepIndex: number }) => Promise<void>;
 };
 
 const DetailContext = createContext<DetailContextType | null>(null);

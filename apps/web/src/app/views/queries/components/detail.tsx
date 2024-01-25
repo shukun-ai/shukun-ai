@@ -5,7 +5,8 @@ import { updateQuery } from '../../../../apis/query';
 import { useMutation } from '@tanstack/react-query';
 import { Metadata } from './metadata';
 import { DetailProvider } from './detail-context';
-import { useGenerateStep } from './use-generate-step';
+import { useSqlToResult } from './use-sql-to-result';
+import { useTextToSql } from './use-text-to-sql';
 
 export type DetailProps = {
   query: QueryRetrieveOutput;
@@ -22,9 +23,9 @@ export const Detail = ({ query }: DetailProps) => {
     initialValues: query,
   });
 
-  const { generateStep } = useGenerateStep({
+  const { runTextToSql } = useTextToSql({
     metadata: form.values.metadata,
-    onGeneratedChange: (generatedQuery, stepIndex) => {
+    onTextToSql: (generatedQuery, stepIndex) => {
       const steps = form.values.metadata.steps;
       const newSteps = structuredClone(steps);
       newSteps[stepIndex].generatedQuery = generatedQuery;
@@ -35,9 +36,22 @@ export const Detail = ({ query }: DetailProps) => {
     },
   });
 
+  const { runSqlToResult } = useSqlToResult({
+    metadata: form.values.metadata,
+    onSqlToResult: (queriedFields, stepIndex) => {
+      const steps = form.values.metadata.steps;
+      const newSteps = structuredClone(steps);
+      newSteps[stepIndex].queriedFields = queriedFields;
+      form.setFieldValue('metadata', {
+        ...form.values.metadata,
+        steps: newSteps,
+      });
+    },
+  });
+
   return (
     <form>
-      <DetailProvider value={{ generateStep }}>
+      <DetailProvider value={{ runTextToSql, runSqlToResult }}>
         <Box style={{ maxWidth: 1440 }}>
           <Flex justify="space-between">
             <Box>

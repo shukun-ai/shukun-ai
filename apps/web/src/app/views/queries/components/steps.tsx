@@ -11,7 +11,7 @@ export type StepsProps = {
 };
 
 export const Steps = ({ value, onChange }: StepsProps) => {
-  const { generateStep } = useDetailContext();
+  const { generateStep, runSqlToResult } = useDetailContext();
 
   return (
     <Box>
@@ -68,20 +68,27 @@ export const Steps = ({ value, onChange }: StepsProps) => {
                   codeType="sql"
                   initialOpen
                 />
+              </Box>
+            )}
+            {itemValue.queriedFields && (
+              <Box>
                 <CodeCollapse
                   title="Generated Query Schema"
-                  code={itemValue.generatedQuery.resultDdl}
-                  codeType="sql"
+                  code={JSON.stringify(itemValue.queriedFields.fields, null, 2)}
+                  codeType="json"
                   initialOpen
                 />
               </Box>
             )}
             <Group>
               <Button onClick={() => generateStep({ stepIndex: index })}>
-                执行
+                Text to SQL
+              </Button>
+              <Button onClick={() => runSqlToResult({ stepIndex: index })}>
+                SQL to Query DB
               </Button>
               <Button variant="subtle" onClick={() => itemRemove()}>
-                删除
+                Delete
               </Button>
             </Group>
           </Box>

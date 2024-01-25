@@ -10,6 +10,10 @@ export type QueryGeneratedQuery = NonNullable<
   Query['steps'][number]['generatedQuery']
 >;
 
+export type QueryQueriedFields = NonNullable<
+  Query['steps'][number]['queriedFields']
+>;
+
 export const querySchema = z.object({
   inputs: z.array(
     z.object({
@@ -25,10 +29,34 @@ export const querySchema = z.object({
       promptTask: z.string(),
       generatedQuery: z
         .object({
+          tableName: z.string(),
           dbType: z.enum(['postgres']),
           schemaDdl: z.string(),
           querySql: z.string(),
-          resultDdl: z.string(),
+          lastGeneratedAt: z.string().datetime({ precision: 3 }),
+        })
+        .optional(),
+      queriedFields: z
+        .object({
+          fields: z.array(
+            z.object({
+              type: z.enum([
+                'text',
+                'int',
+                'float',
+                'bool',
+                'date',
+                'time',
+                'dateTime',
+                'money',
+                'byte',
+                'code',
+                'polygon',
+                'interval',
+              ]),
+              name: z.string(),
+            })
+          ),
           lastGeneratedAt: z.string().datetime({ precision: 3 }),
         })
         .optional(),

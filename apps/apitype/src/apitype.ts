@@ -29,9 +29,7 @@ export const apiPath = {
     remove: 'queries/remove',
   },
   queryGenerators: {
-    create: 'query-generators/create',
-  },
-  queryExecutions: {
-    create: 'query-executions/create',
+    textToSql: 'query-generators/text-to-sql',
+    sqlToResult: 'query-generators/sql-to-result',
   },
 };
