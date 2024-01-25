@@ -24,7 +24,7 @@ export const CodeCollapse = ({
       <UnstyledButton onClick={toggle} style={{ width: '100%' }}>
         <Group>
           <IconArrowRight size="1rem" />
-          <Text>{title}</Text>
+          <Text size="xs">{title}</Text>
         </Group>
       </UnstyledButton>
 

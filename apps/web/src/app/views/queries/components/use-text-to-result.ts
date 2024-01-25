@@ -4,6 +4,7 @@ import {
   QueryGeneratorSqlToResultInput,
   QueryGeneratorTextToSqlInput,
   QueryQueriedFields,
+  Result,
 } from '@ailake/apitype';
 import { useCallback } from 'react';
 import { useMutation } from '@tanstack/react-query';
@@ -17,6 +18,7 @@ export const useTextToResult = ({
   onTextToResult: (
     generatedQuery: QueryGeneratedQuery,
     queriedFields: QueryQueriedFields,
+    result: Result,
     stepIndex: number
   ) => void;
 }) => {
@@ -62,7 +64,14 @@ export const useTextToResult = ({
         lastGeneratedAt: new Date().toString(),
       };
 
-      onTextToResult(response1.generatedQuery, queriedFields, stepIndex);
+      const result: Result = response2.result;
+
+      onTextToResult(
+        response1.generatedQuery,
+        queriedFields,
+        result,
+        stepIndex
+      );
     },
     [metadata, onTextToResult, sqlToResultMutateAsync, textToSqlMutateAsync]
   );

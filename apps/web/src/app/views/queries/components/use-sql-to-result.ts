@@ -2,6 +2,7 @@ import {
   Query,
   QueryGeneratorSqlToResultInput,
   QueryQueriedFields,
+  Result,
 } from '@ailake/apitype';
 import { useCallback } from 'react';
 import { useMutation } from '@tanstack/react-query';
@@ -12,7 +13,11 @@ export const useSqlToResult = ({
   onSqlToResult,
 }: {
   metadata: Query;
-  onSqlToResult: (queriedFields: QueryQueriedFields, stepIndex: number) => void;
+  onSqlToResult: (
+    queriedFields: QueryQueriedFields,
+    result: Result,
+    stepIndex: number
+  ) => void;
 }) => {
   const { isPending, mutateAsync } = useMutation({
     mutationFn: (props: QueryGeneratorSqlToResultInput) => {
@@ -32,7 +37,9 @@ export const useSqlToResult = ({
         lastGeneratedAt: new Date().toString(),
       };
 
-      onSqlToResult(queriedFields, stepIndex);
+      const result: Result = data.result;
+
+      onSqlToResult(queriedFields, result, stepIndex);
     },
     [metadata, mutateAsync, onSqlToResult]
   );

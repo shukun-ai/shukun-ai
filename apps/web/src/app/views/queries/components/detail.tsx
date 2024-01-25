@@ -1,4 +1,10 @@
-import { Query, QueryRetrieveOutput, QueryUpdateInput } from '@ailake/apitype';
+import {
+  Query,
+  QueryRetrieveOutput,
+  QueryUpdateInput,
+  Result,
+  update,
+} from '@ailake/apitype';
 import { Box, Button, Flex, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { updateQuery } from '../../../../apis/query';
@@ -25,9 +31,19 @@ export const Detail = ({ query }: DetailProps) => {
     initialValues: query,
   });
 
+  const [activeStepIndex, setActiveStepIndex] = useState<number | undefined>(0);
+
+  const [globalSchemaId, setGlobalSchemaId] = useState<string | undefined>(
+    undefined
+  );
+
+  const [results, setResults] = useState<Result[]>([]);
+
+  const [globalLoading, setGlobalLoading] = useState<boolean>(false);
+
   const { runTextToResult } = useTextToResult({
     metadata: form.values.metadata,
-    onTextToResult: (generatedQuery, queriedFields, stepIndex) => {
+    onTextToResult: (generatedQuery, queriedFields, result, stepIndex) => {
       const steps = form.values.metadata.steps;
       const newSteps = structuredClone(steps);
       newSteps[stepIndex].generatedQuery = generatedQuery;
@@ -36,6 +52,7 @@ export const Detail = ({ query }: DetailProps) => {
         ...form.values.metadata,
         steps: newSteps,
       });
+      setResults((results) => update(results, stepIndex, result));
     },
   });
 
@@ -54,7 +71,7 @@ export const Detail = ({ query }: DetailProps) => {
 
   const { runSqlToResult } = useSqlToResult({
     metadata: form.values.metadata,
-    onSqlToResult: (queriedFields, stepIndex) => {
+    onSqlToResult: (queriedFields, result, stepIndex) => {
       const steps = form.values.metadata.steps;
       const newSteps = structuredClone(steps);
       newSteps[stepIndex].queriedFields = queriedFields;
@@ -62,14 +79,9 @@ export const Detail = ({ query }: DetailProps) => {
         ...form.values.metadata,
         steps: newSteps,
       });
+      setResults((results) => update(results, stepIndex, result));
     },
   });
-
-  const [activeStepIndex, setActiveStepIndex] = useState<number | undefined>(0);
-
-  const [globalSchemaId, setGlobalSchemaId] = useState<string | undefined>(
-    undefined
-  );
 
   const setAllSchemaIds = useCallback(
     (schemaId: string | undefined) => {
@@ -82,7 +94,7 @@ export const Detail = ({ query }: DetailProps) => {
           schemaId: schemaId,
         };
       });
-      console.log('newSteps', newSteps);
+
       form.setFieldValue('metadata', {
         ...form.values.metadata,
         steps: newSteps,
@@ -102,6 +114,9 @@ export const Detail = ({ query }: DetailProps) => {
           runSqlToResult,
           globalSchemaId,
           setGlobalSchemaId: setAllSchemaIds,
+          results,
+          globalLoading,
+          setGlobalLoading,
         }}
       >
         <Box style={{ maxWidth: 1440 }}>

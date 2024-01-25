@@ -60,7 +60,7 @@ export const ArrayInputs = <T,>({
       </Box>
       <Box>
         <Button onClick={() => onCreate()} disabled={disabled}>
-          新增
+          Add
         </Button>
       </Box>
     </Box>

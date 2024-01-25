@@ -1,3 +1,4 @@
+import { Result } from '@ailake/apitype';
 import { createContext, useContext } from 'react';
 
 type DetailContextType = {
@@ -8,6 +9,9 @@ type DetailContextType = {
   runSqlToResult: (props: { stepIndex: number }) => Promise<void>;
   globalSchemaId: string | undefined;
   setGlobalSchemaId: (schemaId: string | undefined) => void;
+  results: Result[];
+  globalLoading: boolean;
+  setGlobalLoading: (loading: boolean) => void;
 };
 
 const DetailContext = createContext<DetailContextType | null>(null);

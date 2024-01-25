@@ -1,8 +1,10 @@
-import { QueryStep } from '@ailake/apitype';
+import { QueryStep, Result } from '@ailake/apitype';
 import { Box, Button, Group, Menu, Textarea } from '@mantine/core';
 import { CodeCollapse } from './code-collapse';
 import { useDetailContext } from './detail-context';
 import { IconCaretDownFilled, IconInputAi, IconSql } from '@tabler/icons-react';
+import { useMemo } from 'react';
+import { DataVisualization } from '@ailake/shared-ui';
 
 export type StepContentsProps = {
   value: QueryStep;
@@ -15,7 +17,12 @@ export const StepContents = ({
   onChange,
   stepIndex,
 }: StepContentsProps) => {
-  const { runTextToResult, runTextToSql, runSqlToResult } = useDetailContext();
+  const { runTextToResult, runTextToSql, runSqlToResult, results } =
+    useDetailContext();
+
+  const result = useMemo<Result | undefined>(() => {
+    return results[stepIndex];
+  }, [results, stepIndex]);
 
   return (
     <Box>
@@ -33,41 +40,7 @@ export const StepContents = ({
         minRows={3}
         mb={20}
       />
-      {value.generatedQuery && (
-        <Box>
-          <CodeCollapse
-            title="Before Query Schema"
-            code={value.generatedQuery.schemaDdl}
-            codeType="sql"
-          />
-          <CodeCollapse
-            title="Generated Query SQL"
-            code={value.generatedQuery.querySql}
-            codeType="sql"
-          />
-        </Box>
-      )}
-      {value.queriedFields && (
-        <Box>
-          <CodeCollapse
-            title="Generated Query Schema"
-            code={JSON.stringify(value.queriedFields.fields, null, 2)}
-            codeType="json"
-          />
-        </Box>
-      )}
       <Group>
-        {/* <Button
-          onClick={async () => {
-            await runTextToSql({ stepIndex });
-            await runSqlToResult({ stepIndex });
-          }}
-        >
-          Execute
-        </Button>
-
-        */}
-
         <Button.Group>
           <Button
             variant="filled"
@@ -101,6 +74,42 @@ export const StepContents = ({
           </Menu>
         </Button.Group>
       </Group>
+      {result && (
+        <Box mb={20}>
+          <DataVisualization
+            dataResult={{
+              data: {
+                type: 'Collection',
+                command: 'select',
+                ...result,
+              },
+            }}
+          />
+        </Box>
+      )}
+      {value.generatedQuery && (
+        <Box>
+          <CodeCollapse
+            title="Before Query Schema"
+            code={value.generatedQuery.schemaDdl}
+            codeType="sql"
+          />
+          <CodeCollapse
+            title="Generated Query SQL"
+            code={value.generatedQuery.querySql}
+            codeType="sql"
+          />
+        </Box>
+      )}
+      {value.queriedFields && (
+        <Box>
+          <CodeCollapse
+            title="Generated Query Schema"
+            code={JSON.stringify(value.queriedFields.fields, null, 2)}
+            codeType="json"
+          />
+        </Box>
+      )}
     </Box>
   );
 };

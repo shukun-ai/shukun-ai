@@ -1,4 +1,5 @@
 export * from './domain/query';
+export * from './domain/result';
 export * from './apitype';
 export * from './template';
 export * from './thread';
