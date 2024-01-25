@@ -1,0 +1,75 @@
+import {
+  Query,
+  QueryGeneratedQuery,
+  QueryGeneratorSqlToResultInput,
+  QueryGeneratorTextToSqlInput,
+  QueryQueriedFields,
+} from '@ailake/apitype';
+import { useCallback } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { sqlToResult, textToSql } from '../../../../apis/query-generator';
+
+export const useTextToResult = ({
+  metadata,
+  onTextToResult,
+}: {
+  metadata: Query;
+  onTextToResult: (
+    generatedQuery: QueryGeneratedQuery,
+    queriedFields: QueryQueriedFields,
+    stepIndex: number
+  ) => void;
+}) => {
+  const { isPending: textToSqlIsPending, mutateAsync: textToSqlMutateAsync } =
+    useMutation({
+      mutationFn: (props: QueryGeneratorTextToSqlInput) => {
+        return textToSql(props);
+      },
+    });
+
+  const {
+    isPending: sqlToResultIsPending,
+    mutateAsync: sqlToResultMutateAsync,
+  } = useMutation({
+    mutationFn: (props: QueryGeneratorSqlToResultInput) => {
+      return sqlToResult(props);
+    },
+  });
+
+  const runTextToResult = useCallback(
+    async ({ stepIndex }: { stepIndex: number }) => {
+      const response1 = await textToSqlMutateAsync({
+        metadata,
+        stepIndex,
+      });
+
+      const generatedQuery = response1.generatedQuery;
+      const steps = metadata.steps;
+      const newSteps = structuredClone(steps);
+      newSteps[stepIndex].generatedQuery = generatedQuery;
+      const newMetadata = {
+        ...metadata,
+        steps: newSteps,
+      };
+
+      const response2 = await sqlToResultMutateAsync({
+        metadata: newMetadata,
+        stepIndex,
+      });
+
+      const queriedFields: QueryQueriedFields = {
+        fields: response2.result.fields,
+        lastGeneratedAt: new Date().toString(),
+      };
+
+      onTextToResult(response1.generatedQuery, queriedFields, stepIndex);
+    },
+    [metadata, onTextToResult, sqlToResultMutateAsync, textToSqlMutateAsync]
+  );
+
+  return {
+    runTextToResult,
+    textToSqlIsPending,
+    sqlToResultIsPending,
+  };
+};

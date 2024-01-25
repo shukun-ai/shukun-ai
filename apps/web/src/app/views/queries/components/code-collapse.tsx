@@ -1,6 +1,7 @@
-import { Box, Button, Collapse } from '@mantine/core';
+import { Box, Collapse, Group, Text, UnstyledButton } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { Prism } from '@mantine/prism';
+import { IconArrowRight } from '@tabler/icons-react';
 import { Language } from 'prism-react-renderer';
 
 export type CodeCollapseProps = {
@@ -20,9 +21,12 @@ export const CodeCollapse = ({
 
   return (
     <Box>
-      <Button fullWidth onClick={toggle} variant="light">
-        {title}
-      </Button>
+      <UnstyledButton onClick={toggle} style={{ width: '100%' }}>
+        <Group>
+          <IconArrowRight size="1rem" />
+          <Text>{title}</Text>
+        </Group>
+      </UnstyledButton>
 
       <Collapse in={opened}>
         <Prism language={codeType}>{code}</Prism>

@@ -7,6 +7,8 @@ import { Metadata } from './metadata';
 import { DetailProvider } from './detail-context';
 import { useSqlToResult } from './use-sql-to-result';
 import { useTextToSql } from './use-text-to-sql';
+import { useCallback, useState } from 'react';
+import { useTextToResult } from './use-text-to-result';
 
 export type DetailProps = {
   query: QueryRetrieveOutput;
@@ -21,6 +23,20 @@ export const Detail = ({ query }: DetailProps) => {
 
   const form = useForm<{ name: string; metadata: Query }>({
     initialValues: query,
+  });
+
+  const { runTextToResult } = useTextToResult({
+    metadata: form.values.metadata,
+    onTextToResult: (generatedQuery, queriedFields, stepIndex) => {
+      const steps = form.values.metadata.steps;
+      const newSteps = structuredClone(steps);
+      newSteps[stepIndex].generatedQuery = generatedQuery;
+      newSteps[stepIndex].queriedFields = queriedFields;
+      form.setFieldValue('metadata', {
+        ...form.values.metadata,
+        steps: newSteps,
+      });
+    },
   });
 
   const { runTextToSql } = useTextToSql({
@@ -49,9 +65,45 @@ export const Detail = ({ query }: DetailProps) => {
     },
   });
 
+  const [activeStepIndex, setActiveStepIndex] = useState<number | undefined>(0);
+
+  const [globalSchemaId, setGlobalSchemaId] = useState<string | undefined>(
+    undefined
+  );
+
+  const setAllSchemaIds = useCallback(
+    (schemaId: string | undefined) => {
+      console.log(schemaId);
+      setGlobalSchemaId(schemaId);
+      const steps = form.values.metadata.steps;
+      const newSteps = steps.map((step) => {
+        return {
+          ...step,
+          schemaId: schemaId,
+        };
+      });
+      console.log('newSteps', newSteps);
+      form.setFieldValue('metadata', {
+        ...form.values.metadata,
+        steps: newSteps,
+      });
+    },
+    [form]
+  );
+
   return (
     <form>
-      <DetailProvider value={{ runTextToSql, runSqlToResult }}>
+      <DetailProvider
+        value={{
+          activeStepIndex,
+          setActiveStepIndex,
+          runTextToResult,
+          runTextToSql,
+          runSqlToResult,
+          globalSchemaId,
+          setGlobalSchemaId: setAllSchemaIds,
+        }}
+      >
         <Box style={{ maxWidth: 1440 }}>
           <Flex justify="space-between">
             <Box>

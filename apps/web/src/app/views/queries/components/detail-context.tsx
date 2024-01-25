@@ -1,8 +1,13 @@
 import { createContext, useContext } from 'react';
 
 type DetailContextType = {
+  activeStepIndex: number | undefined;
+  setActiveStepIndex: (stepIndex: number | undefined) => void;
+  runTextToResult: (props: { stepIndex: number }) => Promise<void>;
   runTextToSql: (props: { stepIndex: number }) => Promise<void>;
   runSqlToResult: (props: { stepIndex: number }) => Promise<void>;
+  globalSchemaId: string | undefined;
+  setGlobalSchemaId: (schemaId: string | undefined) => void;
 };
 
 const DetailContext = createContext<DetailContextType | null>(null);
