@@ -21,7 +21,7 @@ export const Detail = ({ query }: DetailProps) => {
 
   return (
     <form>
-      <Box style={{ maxWidth: 1440 }}>
+      <Box>
         <Flex justify="space-between">
           <Box>
             <Title order={3}>Query Configuration</Title>

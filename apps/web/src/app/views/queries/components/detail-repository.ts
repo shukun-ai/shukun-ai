@@ -8,10 +8,11 @@ import {
   update,
   QueryRetrieveOutput,
 } from '@ailake/apitype';
-import { BehaviorSubject, distinctUntilChanged } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { sqlToResult, textToSql } from '../../../../apis/query-generator';
 
 const state = new BehaviorSubject<{
+  initializedQueryId: string | undefined;
   query: QueryRetrieveOutput | undefined;
   activeStepIndex: number | undefined;
   globalSchemaId: string | undefined;
@@ -19,6 +20,7 @@ const state = new BehaviorSubject<{
   globalLoading: boolean;
   generatedStepIndex: number | undefined;
 }>({
+  initializedQueryId: undefined,
   query: undefined,
   activeStepIndex: undefined,
   globalSchemaId: undefined,
@@ -27,11 +29,14 @@ const state = new BehaviorSubject<{
   generatedStepIndex: undefined,
 });
 
-export const getObservable = () =>
-  state.asObservable().pipe(distinctUntilChanged());
+export const getObservable = () => state.asObservable();
 
 export const dispatch = {
   initQuery: async (query: QueryRetrieveOutput): Promise<void> => {
+    if (state.value.initializedQueryId === query.queryId) {
+      return;
+    }
+
     state.next({
       ...state.value,
       query,
@@ -57,6 +62,11 @@ export const dispatch = {
     for (let i = 0; i < steps.length; i++) {
       await dispatch.runSqlToResult({ stepIndex: i });
     }
+
+    state.next({
+      ...state.value,
+      initializedQueryId: query.queryId,
+    });
   },
   setMetadata: (metadata: Query): void => {
     if (!state.value.query) {
@@ -101,7 +111,7 @@ export const dispatch = {
       });
       generatedQuery = data.generatedQuery;
     } finally {
-      dispatch.setGlobalLoading(true);
+      dispatch.setGlobalLoading(false);
     }
     if (!generatedQuery) {
       throw new Error('No generated query');
@@ -131,7 +141,7 @@ export const dispatch = {
         stepIndex,
       });
     } finally {
-      dispatch.setGlobalLoading(true);
+      dispatch.setGlobalLoading(false);
     }
     const queriedFields: QueryQueriedFields = {
       fields: data.result.fields,
