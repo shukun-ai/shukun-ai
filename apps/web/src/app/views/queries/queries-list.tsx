@@ -6,6 +6,7 @@ import { Avatar, Box, Grid } from '@mantine/core';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';
 import { CreateButton } from './components/create-button';
+import { ListMenu } from './components/list-menu';
 
 export type QueriesListProps = {
   //
@@ -44,6 +45,7 @@ export const QueriesList = () => {
               onClick={() => {
                 navigate(`/queries/${item.queryId}`);
               }}
+              menu={<ListMenu query={item} />}
             />
           </Grid.Col>
         ))}

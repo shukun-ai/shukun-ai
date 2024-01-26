@@ -3,6 +3,8 @@ import {
   QueryCreateOutput,
   QueryListInput,
   QueryListOutput,
+  QueryRemoveInput,
+  QueryRemoveOutput,
   QueryRetrieveInput,
   QueryRetrieveOutput,
   QueryUpdateInput,
@@ -46,6 +48,16 @@ export const updateQuery = async (
 ): Promise<QueryUpdateOutput> => {
   const response = await getAxios().post<QueryUpdateOutput>(
     apiPath.queries.update,
+    input
+  );
+  return response.data;
+};
+
+export const removeQuery = async (
+  input: QueryRemoveInput
+): Promise<QueryRemoveOutput> => {
+  const response = await getAxios().post<QueryRemoveOutput>(
+    apiPath.queries.remove,
     input
   );
   return response.data;

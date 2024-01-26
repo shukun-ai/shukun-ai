@@ -11,7 +11,6 @@ import { SchemaDetail } from './views/schema-detail/schema-detail';
 import { Queries } from './views/queries/queries';
 import { QueriesList } from './views/queries/queries-list';
 import { QueriesDetail } from './views/queries/queries-detail';
-import { QueriesForm } from './views/queries/queries-form';
 
 export const AppRouter = () => {
   const element = useRoutes([
@@ -43,10 +42,6 @@ export const AppRouter = () => {
             {
               path: ':queryId',
               element: <QueriesDetail />,
-            },
-            {
-              path: 'create',
-              element: <QueriesForm />,
             },
           ],
         },

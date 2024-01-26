@@ -83,7 +83,9 @@ export class QueryService {
       },
       data: {
         name: props.name,
-        metadata: querySchema.parse(props.metadata),
+        metadata: props.metadata
+          ? querySchema.parse(props.metadata)
+          : undefined,
       },
       select: {
         queryId: true,

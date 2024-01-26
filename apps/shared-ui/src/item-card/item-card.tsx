@@ -8,6 +8,7 @@ export type ItemCardProps = {
   badges?: JSX.Element | JSX.Element[];
   onClick?: () => void;
   loading?: boolean;
+  menu?: JSX.Element | JSX.Element[];
 };
 
 export const ItemCard = ({
@@ -18,21 +19,28 @@ export const ItemCard = ({
   badges,
   onClick,
   loading,
+  menu,
 }: ItemCardProps) => {
   return (
-    <UnstyledButton
-      onClick={onClick}
-      style={{ width: '100%' }}
-      disabled={loading}
+    <Card
+      withBorder
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        height: 150,
+        justifyContent: 'space-between',
+      }}
+      radius="md"
     >
-      <Card
-        withBorder
+      <UnstyledButton
+        onClick={onClick}
         style={{
+          width: '100%',
+          flex: 1,
           display: 'flex',
           flexDirection: 'column',
-          height: 150,
         }}
-        radius="md"
+        disabled={loading}
       >
         <Group>
           {icon}
@@ -41,11 +49,10 @@ export const ItemCard = ({
             {text && <Text size="xs">{text}</Text>}
           </Box>
         </Group>
-        <Box style={{ flex: 1 }}>
-          {description && <Text>{description}</Text>}
-        </Box>
-        <Box>{badges}</Box>
-      </Card>
-    </UnstyledButton>
+        <Box>{description && <Text lineClamp={2}>{description}</Text>}</Box>
+      </UnstyledButton>
+      <Box>{badges}</Box>
+      {menu && <Box>{menu}</Box>}
+    </Card>
   );
 };

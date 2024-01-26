@@ -6,7 +6,9 @@ import { useMutation } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 import { createQuery } from '../../../../apis/query';
 import { queryClient } from '../../../query-client';
-import { nanoid } from 'nanoid';
+import { useCallback } from 'react';
+import { modals } from '@mantine/modals';
+import { BasicForm } from './basic-form';
 
 export type CreateButtonProps = {
   //
@@ -26,6 +28,22 @@ export const CreateButton = () => {
     },
   });
 
+  const open = useCallback(() => {
+    modals.open({
+      title: 'Create a new query orchestrate',
+      children: (
+        <BasicForm
+          onSubmit={async (values) => {
+            await mutateAsync({
+              name: values.name,
+            });
+            modals.closeAll();
+          }}
+        />
+      ),
+    });
+  }, [mutateAsync]);
+
   return (
     <ItemCard
       icon={
@@ -35,11 +53,7 @@ export const CreateButton = () => {
       }
       title={t('query.create')}
       loading={isPending}
-      onClick={() => {
-        mutateAsync({
-          name: nanoid(),
-        });
-      }}
+      onClick={open}
     />
   );
 };
