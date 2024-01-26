@@ -24,7 +24,7 @@ export const Detail = ({ query }: DetailProps) => {
       <Box>
         <Flex justify="space-between">
           <Box>
-            <Title order={3}>Query Configuration</Title>
+            <Title order={3}>Query Orchestrate</Title>
             <Title order={6} mb="md">
               {query.name}
             </Title>

@@ -33,6 +33,10 @@ export const QueriesDetail = () => {
     if (data) {
       dispatch.initQuery(data);
     }
+
+    return () => {
+      dispatch.clearQuery();
+    };
   }, [data]);
 
   if (isPending || !data || !state || !state.query) {

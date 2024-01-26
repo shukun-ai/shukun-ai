@@ -11,7 +11,7 @@ import {
 import { BehaviorSubject } from 'rxjs';
 import { sqlToResult, textToSql } from '../../../../apis/query-generator';
 
-const state = new BehaviorSubject<{
+export type State = {
   initializedQueryId: string | undefined;
   query: QueryRetrieveOutput | undefined;
   activeStepIndex: number | undefined;
@@ -19,7 +19,9 @@ const state = new BehaviorSubject<{
   results: Result[];
   globalLoading: boolean;
   generatedStepIndex: number | undefined;
-}>({
+};
+
+const initialState: State = {
   initializedQueryId: undefined,
   query: undefined,
   activeStepIndex: undefined,
@@ -27,7 +29,9 @@ const state = new BehaviorSubject<{
   results: [],
   globalLoading: false,
   generatedStepIndex: undefined,
-});
+};
+
+const state = new BehaviorSubject<State>(initialState);
 
 export const getObservable = () => state.asObservable();
 
@@ -67,6 +71,9 @@ export const dispatch = {
       ...state.value,
       initializedQueryId: query.queryId,
     });
+  },
+  clearQuery: () => {
+    state.next(initialState);
   },
   setMetadata: (metadata: Query): void => {
     if (!state.value.query) {
