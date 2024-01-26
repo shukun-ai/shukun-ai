@@ -5,13 +5,14 @@ import {
   Avatar,
   Box,
   Flex,
-  Group,
   Text,
+  Title,
+  Tooltip,
   UnstyledButton,
   useMantineTheme,
 } from '@mantine/core';
 import { useDetailContext } from './detail-context';
-import { IconX } from '@tabler/icons-react';
+import { IconCheck, IconX } from '@tabler/icons-react';
 
 export type StepTabsProps = {
   value: QueryStep[];
@@ -19,8 +20,15 @@ export type StepTabsProps = {
 };
 
 export const StepTabs = ({ value, onChange }: StepTabsProps) => {
-  const { activeStepIndex, setActiveStepIndex, globalSchemaId, globalLoading } =
-    useDetailContext();
+  const {
+    activeStepIndex,
+    setActiveStepIndex,
+    globalSchemaId,
+    globalLoading,
+    generatedStepIndex,
+    setGeneratedStepIndex,
+    removeOneResult,
+  } = useDetailContext();
 
   const theme = useMantineTheme();
 
@@ -48,36 +56,73 @@ export const StepTabs = ({ value, onChange }: StepTabsProps) => {
               width: '100%',
               padding: 8,
               background:
-                activeStepIndex === index
+                typeof activeStepIndex === 'number' && activeStepIndex === index
                   ? theme.colors.blue[0]
                   : 'transparent',
             }}
             disabled={globalLoading}
           >
             <Flex align="center">
-              <Box style={{ flex: 1 }}>
-                <Group>
-                  <Avatar>{index + 1}</Avatar>
-                  <Text>Step {index + 1}</Text>
-                </Group>
-                <Box>
-                  <Text lineClamp={2}>{itemValue.promptTask}</Text>
-                </Box>
+              <Box mr={12}>
+                {typeof generatedStepIndex === 'number' &&
+                index <= generatedStepIndex ? (
+                  <Tooltip
+                    label="The step is generated, you can check your data results."
+                    withinPortal
+                    withArrow
+                  >
+                    <Avatar color="blue">
+                      <IconCheck size="1rem" />
+                    </Avatar>
+                  </Tooltip>
+                ) : (
+                  <Tooltip
+                    label="The step is not generated, please edit your task for prompt and execute the data results."
+                    withinPortal
+                    withArrow
+                  >
+                    <Avatar color="red">
+                      <IconX size="1rem" />
+                    </Avatar>
+                  </Tooltip>
+                )}
               </Box>
-              <ActionIcon
-                variant="transparent"
-                onClick={() => {
-                  setActiveStepIndex(index === 0 ? undefined : index - 1);
-                  itemRemove();
-                }}
-                disabled={globalLoading}
-              >
-                <IconX size="1rem" />
-              </ActionIcon>
+              <Box style={{ flex: 1 }}>
+                <Title order={5}>Step {index + 1}</Title>
+                <Text lineClamp={1}>{itemValue.promptTask}</Text>
+              </Box>
+              {(typeof generatedStepIndex !== 'number' ||
+                index >= generatedStepIndex) && (
+                <ActionIcon
+                  variant="transparent"
+                  onClick={() => {
+                    const previous = index === 0 ? undefined : index - 1;
+                    setActiveStepIndex(previous);
+                    setGeneratedStepIndex(
+                      getNewGenerateStepIndex(generatedStepIndex, index)
+                    );
+                    removeOneResult(index);
+                    itemRemove();
+                  }}
+                  disabled={globalLoading}
+                >
+                  <IconX size="1rem" />
+                </ActionIcon>
+              )}
             </Flex>
           </UnstyledButton>
         )}
       />
     </Box>
   );
+};
+
+const getNewGenerateStepIndex = (
+  generatedStepIndex: number | undefined,
+  index: number
+) => {
+  if (typeof generatedStepIndex !== 'number') {
+    return undefined;
+  }
+  return index <= generatedStepIndex ? index - 1 : generatedStepIndex;
 };

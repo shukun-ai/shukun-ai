@@ -1,5 +1,5 @@
 import { SchemaListOutput } from '@ailake/apitype';
-import { Box, Button, Group, Loader, Select } from '@mantine/core';
+import { Box, Group, Loader, Select } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
 import { listSchema } from '../../../../apis/schema';
 
@@ -33,16 +33,19 @@ export const SelectSchema = ({ value, onChange }: SelectSchemaProps) => {
           label: item.name,
           value: item.schemaId,
         }))}
+        value={value}
         onChange={(event) => {
           onChange(event ?? undefined);
         }}
         withinPortal
         withAsterisk
-        clearable
       />
-      <Button variant="subtle" mt={20}>
-        View Tables
-      </Button>
+      {/* TODO implement it */}
+      {/* {value && (
+        <Button variant="subtle" mt={20}>
+          View Tables
+        </Button>
+      )} */}
     </Group>
   );
 };

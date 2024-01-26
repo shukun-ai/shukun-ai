@@ -42,7 +42,7 @@ export const useSqlToResult = ({
 
       const queriedFields: QueryQueriedFields = {
         fields: data.result.fields,
-        lastGeneratedAt: new Date().toString(),
+        lastGeneratedAt: new Date().toISOString(),
       };
 
       const result: Result = data.result;

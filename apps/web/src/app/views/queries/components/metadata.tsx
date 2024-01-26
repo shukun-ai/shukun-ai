@@ -23,35 +23,37 @@ export const Metadata = ({ value, onChange }: MetadataProps) => {
         }}
       />
       <Box mb={20} />
-      <Grid>
-        <Grid.Col span={3}>
-          <StepTabs
-            value={value.steps}
-            onChange={(steps) => {
-              onChange({
-                ...value,
-                steps,
-              });
-            }}
-          />
-        </Grid.Col>
-        <Grid.Col span={9}>
-          {typeof activeStepIndex === 'number' &&
-            value.steps.length > 0 &&
-            value.steps[activeStepIndex] && (
-              <StepContents
-                value={value.steps[activeStepIndex]}
-                onChange={(step) => {
-                  onChange({
-                    ...value,
-                    steps: update(value.steps, activeStepIndex, step),
-                  });
-                }}
-                stepIndex={activeStepIndex}
-              />
-            )}
-        </Grid.Col>
-      </Grid>
+      {globalSchemaId && (
+        <Grid>
+          <Grid.Col span={3}>
+            <StepTabs
+              value={value.steps}
+              onChange={(steps) => {
+                onChange({
+                  ...value,
+                  steps,
+                });
+              }}
+            />
+          </Grid.Col>
+          <Grid.Col span={9}>
+            {typeof activeStepIndex === 'number' &&
+              value.steps.length > 0 &&
+              value.steps[activeStepIndex] && (
+                <StepContents
+                  value={value.steps[activeStepIndex]}
+                  onChange={(step) => {
+                    onChange({
+                      ...value,
+                      steps: update(value.steps, activeStepIndex, step),
+                    });
+                  }}
+                  stepIndex={activeStepIndex}
+                />
+              )}
+          </Grid.Col>
+        </Grid>
+      )}
     </Box>
   );
 };

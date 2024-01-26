@@ -75,7 +75,7 @@ export const useTextToResult = ({
 
       const queriedFields: QueryQueriedFields = {
         fields: response2.result.fields,
-        lastGeneratedAt: new Date().toString(),
+        lastGeneratedAt: new Date().toISOString(),
       };
 
       const result: Result = response2.result;

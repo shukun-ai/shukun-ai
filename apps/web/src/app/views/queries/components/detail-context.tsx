@@ -10,8 +10,11 @@ type DetailContextType = {
   globalSchemaId: string | undefined;
   setGlobalSchemaId: (schemaId: string | undefined) => void;
   results: Result[];
+  removeOneResult: (resultIndex: number) => void;
   globalLoading: boolean;
   setGlobalLoading: (loading: boolean) => void;
+  generatedStepIndex: number | undefined;
+  setGeneratedStepIndex: (stepIndex: number | undefined) => void;
 };
 
 const DetailContext = createContext<DetailContextType | null>(null);

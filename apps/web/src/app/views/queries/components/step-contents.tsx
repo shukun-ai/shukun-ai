@@ -23,11 +23,19 @@ export const StepContents = ({
     runSqlToResult,
     results,
     globalLoading,
+    generatedStepIndex,
+    setGeneratedStepIndex,
   } = useDetailContext();
 
   const result = useMemo<Result | undefined>(() => {
     return results[stepIndex];
   }, [results, stepIndex]);
+
+  const isGenerated = useMemo<boolean>(() => {
+    return (
+      typeof generatedStepIndex === 'number' && stepIndex <= generatedStepIndex
+    );
+  }, [generatedStepIndex, stepIndex]);
 
   return (
     <Box>
@@ -44,43 +52,55 @@ export const StepContents = ({
         autosize
         minRows={3}
         mb={20}
-        disabled={globalLoading}
+        disabled={globalLoading || isGenerated}
       />
       <Group>
-        <Button.Group>
+        {isGenerated ? (
           <Button
-            variant="filled"
-            leftIcon={<IconInputAi size="1rem" />}
-            onClick={() => runTextToResult({ stepIndex })}
-            loading={globalLoading}
+            variant="light"
+            onClick={() => {
+              const previous = stepIndex === 0 ? undefined : stepIndex - 1;
+              setGeneratedStepIndex(previous);
+            }}
           >
-            Execute
+            Edit
           </Button>
-          <Menu shadow="md" width={200}>
-            <Menu.Target>
-              <Button variant="filled" pl={6} pr={6} loading={globalLoading}>
-                <IconCaretDownFilled size="1rem" />
-              </Button>
-            </Menu.Target>
+        ) : (
+          <Button.Group>
+            <Button
+              variant="filled"
+              leftIcon={<IconInputAi size="1rem" />}
+              onClick={() => runTextToResult({ stepIndex })}
+              loading={globalLoading}
+            >
+              Execute
+            </Button>
+            <Menu shadow="md" width={200}>
+              <Menu.Target>
+                <Button variant="filled" pl={6} pr={6} loading={globalLoading}>
+                  <IconCaretDownFilled size="1rem" />
+                </Button>
+              </Menu.Target>
 
-            <Menu.Dropdown>
-              <Menu.Item
-                onClick={() => runTextToSql({ stepIndex })}
-                icon={<IconInputAi size="1rem" />}
-                disabled={globalLoading}
-              >
-                Execute AI Only
-              </Menu.Item>
-              <Menu.Item
-                icon={<IconSql size="1rem" />}
-                disabled={!value.generatedQuery || globalLoading}
-                onClick={() => runSqlToResult({ stepIndex })}
-              >
-                Execute SQL Only
-              </Menu.Item>
-            </Menu.Dropdown>
-          </Menu>
-        </Button.Group>
+              <Menu.Dropdown>
+                <Menu.Item
+                  onClick={() => runTextToSql({ stepIndex })}
+                  icon={<IconInputAi size="1rem" />}
+                  disabled={globalLoading}
+                >
+                  Execute AI Only
+                </Menu.Item>
+                <Menu.Item
+                  icon={<IconSql size="1rem" />}
+                  disabled={!value.generatedQuery || globalLoading}
+                  onClick={() => runSqlToResult({ stepIndex })}
+                >
+                  Execute SQL Only
+                </Menu.Item>
+              </Menu.Dropdown>
+            </Menu>
+          </Button.Group>
+        )}
       </Group>
       {result && (
         <Box mb={20}>

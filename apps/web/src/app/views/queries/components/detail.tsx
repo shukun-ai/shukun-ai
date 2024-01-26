@@ -3,6 +3,7 @@ import {
   QueryRetrieveOutput,
   QueryUpdateInput,
   Result,
+  remove,
   update,
 } from '@ailake/apitype';
 import { Box, Button, Flex, Title } from '@mantine/core';
@@ -15,6 +16,7 @@ import { useSqlToResult } from './use-sql-to-result';
 import { useTextToSql } from './use-text-to-sql';
 import { useCallback, useState } from 'react';
 import { useTextToResult } from './use-text-to-result';
+import { notifications } from '@mantine/notifications';
 
 export type DetailProps = {
   query: QueryRetrieveOutput;
@@ -31,7 +33,9 @@ export const Detail = ({ query }: DetailProps) => {
     initialValues: query,
   });
 
-  const [activeStepIndex, setActiveStepIndex] = useState<number | undefined>(0);
+  const [activeStepIndex, setActiveStepIndex] = useState<number | undefined>(
+    undefined
+  );
 
   const [globalSchemaId, setGlobalSchemaId] = useState<string | undefined>(
     undefined
@@ -40,6 +44,10 @@ export const Detail = ({ query }: DetailProps) => {
   const [results, setResults] = useState<Result[]>([]);
 
   const [globalLoading, setGlobalLoading] = useState<boolean>(false);
+
+  const [generatedStepIndex, setGeneratedStepIndex] = useState<
+    number | undefined
+  >(undefined);
 
   const { runTextToResult } = useTextToResult({
     metadata: form.values.metadata,
@@ -53,6 +61,7 @@ export const Detail = ({ query }: DetailProps) => {
         steps: newSteps,
       });
       setResults((results) => update(results, stepIndex, result));
+      setGeneratedStepIndex(stepIndex);
     },
     setGlobalLoading,
   });
@@ -82,6 +91,7 @@ export const Detail = ({ query }: DetailProps) => {
         steps: newSteps,
       });
       setResults((results) => update(results, stepIndex, result));
+      setGeneratedStepIndex(stepIndex);
     },
     setGlobalLoading,
   });
@@ -106,6 +116,13 @@ export const Detail = ({ query }: DetailProps) => {
     [form]
   );
 
+  const removeOneResult = useCallback(
+    (resultIndex: number) => {
+      setResults((results) => remove(results, resultIndex));
+    },
+    [setResults]
+  );
+
   return (
     <form>
       <DetailProvider
@@ -118,8 +135,11 @@ export const Detail = ({ query }: DetailProps) => {
           globalSchemaId,
           setGlobalSchemaId: setAllSchemaIds,
           results,
+          removeOneResult,
           globalLoading,
           setGlobalLoading,
+          generatedStepIndex,
+          setGeneratedStepIndex,
         }}
       >
         <Box style={{ maxWidth: 1440 }}>
@@ -131,15 +151,26 @@ export const Detail = ({ query }: DetailProps) => {
               </Title>
             </Box>
             <Button
-              variant="gradient"
               loading={isPending}
               onClick={async () => {
+                if (
+                  generatedStepIndex !==
+                  form.values.metadata.steps.length - 1
+                ) {
+                  notifications.show({
+                    title: 'Please generate all steps before saving.',
+                    message:
+                      'Please generate all steps before you save them. If you would not like to generate all steps, you can delete them.',
+                    color: 'red',
+                    autoClose: 5000,
+                  });
+                  return;
+                }
                 await mutateAsync({
                   queryId: query.queryId,
                   ...form.values,
                 });
               }}
-              radius="md"
             >
               Save
             </Button>
