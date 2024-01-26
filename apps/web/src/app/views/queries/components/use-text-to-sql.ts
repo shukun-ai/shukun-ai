@@ -10,13 +10,21 @@ import { textToSql } from '../../../../apis/query-generator';
 export const useTextToSql = ({
   metadata,
   onTextToSql,
+  setGlobalLoading,
 }: {
   metadata: Query;
   onTextToSql: (generatedQuery: QueryGeneratedQuery, stepIndex: number) => void;
+  setGlobalLoading: (loading: boolean) => void;
 }) => {
   const { isPending, mutateAsync } = useMutation({
     mutationFn: (props: QueryGeneratorTextToSqlInput) => {
       return textToSql(props);
+    },
+    onMutate: () => {
+      setGlobalLoading(true);
+    },
+    onSettled: () => {
+      setGlobalLoading(false);
     },
   });
 

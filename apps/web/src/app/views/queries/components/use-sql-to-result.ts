@@ -11,6 +11,7 @@ import { sqlToResult } from '../../../../apis/query-generator';
 export const useSqlToResult = ({
   metadata,
   onSqlToResult,
+  setGlobalLoading,
 }: {
   metadata: Query;
   onSqlToResult: (
@@ -18,10 +19,17 @@ export const useSqlToResult = ({
     result: Result,
     stepIndex: number
   ) => void;
+  setGlobalLoading: (loading: boolean) => void;
 }) => {
   const { isPending, mutateAsync } = useMutation({
     mutationFn: (props: QueryGeneratorSqlToResultInput) => {
       return sqlToResult(props);
+    },
+    onMutate: () => {
+      setGlobalLoading(true);
+    },
+    onSettled: () => {
+      setGlobalLoading(false);
     },
   });
 

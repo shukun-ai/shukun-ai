@@ -54,6 +54,7 @@ export const Detail = ({ query }: DetailProps) => {
       });
       setResults((results) => update(results, stepIndex, result));
     },
+    setGlobalLoading,
   });
 
   const { runTextToSql } = useTextToSql({
@@ -67,6 +68,7 @@ export const Detail = ({ query }: DetailProps) => {
         steps: newSteps,
       });
     },
+    setGlobalLoading,
   });
 
   const { runSqlToResult } = useSqlToResult({
@@ -81,6 +83,7 @@ export const Detail = ({ query }: DetailProps) => {
       });
       setResults((results) => update(results, stepIndex, result));
     },
+    setGlobalLoading,
   });
 
   const setAllSchemaIds = useCallback(

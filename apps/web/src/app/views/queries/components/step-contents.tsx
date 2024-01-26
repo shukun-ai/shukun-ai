@@ -17,8 +17,13 @@ export const StepContents = ({
   onChange,
   stepIndex,
 }: StepContentsProps) => {
-  const { runTextToResult, runTextToSql, runSqlToResult, results } =
-    useDetailContext();
+  const {
+    runTextToResult,
+    runTextToSql,
+    runSqlToResult,
+    results,
+    globalLoading,
+  } = useDetailContext();
 
   const result = useMemo<Result | undefined>(() => {
     return results[stepIndex];
@@ -39,6 +44,7 @@ export const StepContents = ({
         autosize
         minRows={3}
         mb={20}
+        disabled={globalLoading}
       />
       <Group>
         <Button.Group>
@@ -46,12 +52,13 @@ export const StepContents = ({
             variant="filled"
             leftIcon={<IconInputAi size="1rem" />}
             onClick={() => runTextToResult({ stepIndex })}
+            loading={globalLoading}
           >
             Execute
           </Button>
           <Menu shadow="md" width={200}>
             <Menu.Target>
-              <Button variant="filled" pl={6} pr={6}>
+              <Button variant="filled" pl={6} pr={6} loading={globalLoading}>
                 <IconCaretDownFilled size="1rem" />
               </Button>
             </Menu.Target>
@@ -60,12 +67,13 @@ export const StepContents = ({
               <Menu.Item
                 onClick={() => runTextToSql({ stepIndex })}
                 icon={<IconInputAi size="1rem" />}
+                disabled={globalLoading}
               >
                 Execute AI Only
               </Menu.Item>
               <Menu.Item
                 icon={<IconSql size="1rem" />}
-                disabled={!value.generatedQuery}
+                disabled={!value.generatedQuery || globalLoading}
                 onClick={() => runSqlToResult({ stepIndex })}
               >
                 Execute SQL Only

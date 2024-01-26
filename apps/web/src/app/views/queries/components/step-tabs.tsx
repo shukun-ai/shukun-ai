@@ -19,7 +19,7 @@ export type StepTabsProps = {
 };
 
 export const StepTabs = ({ value, onChange }: StepTabsProps) => {
-  const { activeStepIndex, setActiveStepIndex, globalSchemaId } =
+  const { activeStepIndex, setActiveStepIndex, globalSchemaId, globalLoading } =
     useDetailContext();
 
   const theme = useMantineTheme();
@@ -52,6 +52,7 @@ export const StepTabs = ({ value, onChange }: StepTabsProps) => {
                   ? theme.colors.blue[0]
                   : 'transparent',
             }}
+            disabled={globalLoading}
           >
             <Flex align="center">
               <Box style={{ flex: 1 }}>
@@ -69,6 +70,7 @@ export const StepTabs = ({ value, onChange }: StepTabsProps) => {
                   setActiveStepIndex(index === 0 ? undefined : index - 1);
                   itemRemove();
                 }}
+                disabled={globalLoading}
               >
                 <IconX size="1rem" />
               </ActionIcon>

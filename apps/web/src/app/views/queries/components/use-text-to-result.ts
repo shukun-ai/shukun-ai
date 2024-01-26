@@ -13,6 +13,7 @@ import { sqlToResult, textToSql } from '../../../../apis/query-generator';
 export const useTextToResult = ({
   metadata,
   onTextToResult,
+  setGlobalLoading,
 }: {
   metadata: Query;
   onTextToResult: (
@@ -21,11 +22,18 @@ export const useTextToResult = ({
     result: Result,
     stepIndex: number
   ) => void;
+  setGlobalLoading: (loading: boolean) => void;
 }) => {
   const { isPending: textToSqlIsPending, mutateAsync: textToSqlMutateAsync } =
     useMutation({
       mutationFn: (props: QueryGeneratorTextToSqlInput) => {
         return textToSql(props);
+      },
+      onMutate: () => {
+        setGlobalLoading(true);
+      },
+      onSettled: () => {
+        setGlobalLoading(false);
       },
     });
 
@@ -35,6 +43,12 @@ export const useTextToResult = ({
   } = useMutation({
     mutationFn: (props: QueryGeneratorSqlToResultInput) => {
       return sqlToResult(props);
+    },
+    onMutate: () => {
+      setGlobalLoading(true);
+    },
+    onSettled: () => {
+      setGlobalLoading(false);
     },
   });
 
