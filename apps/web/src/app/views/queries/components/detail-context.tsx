@@ -1,8 +1,9 @@
-import { Result } from '@ailake/apitype';
+import { Query, Result } from '@ailake/apitype';
 import { createContext, useContext } from 'react';
 
 type DetailContextType = {
   activeStepIndex: number | undefined;
+  setMetadata: (metadata: Query) => void;
   setActiveStepIndex: (stepIndex: number | undefined) => void;
   runTextToResult: (props: { stepIndex: number }) => Promise<void>;
   runTextToSql: (props: { stepIndex: number }) => Promise<void>;
