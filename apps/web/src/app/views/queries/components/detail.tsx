@@ -5,12 +5,15 @@ import { useMutation } from '@tanstack/react-query';
 import { Metadata } from './metadata';
 import { useDetailContext } from './detail-context';
 import { notifications } from '@mantine/notifications';
+import { useTranslation } from 'react-i18next';
 
 export type DetailProps = {
   query: QueryRetrieveOutput;
 };
 
 export const Detail = ({ query }: DetailProps) => {
+  const { t } = useTranslation();
+
   const { isPending, mutateAsync } = useMutation({
     mutationFn: (props: QueryUpdateInput) => {
       return updateQuery(props);
@@ -24,7 +27,7 @@ export const Detail = ({ query }: DetailProps) => {
       <Box>
         <Flex justify="space-between">
           <Box>
-            <Title order={3}>Query Orchestrate</Title>
+            <Title order={3}>{t('query.detailTitle')}</Title>
             <Title order={6} mb="md">
               {query.name}
             </Title>
@@ -34,9 +37,8 @@ export const Detail = ({ query }: DetailProps) => {
             onClick={async () => {
               if (generatedStepIndex !== query.metadata.steps.length - 1) {
                 notifications.show({
-                  title: 'Please generate all steps before saving.',
-                  message:
-                    'Please generate all steps before you save them. If you would not like to generate all steps, you can delete them.',
+                  title: t('query.saveNotificationTitle'),
+                  message: t('query.saveNotificationMessage'),
                   color: 'red',
                   autoClose: 5000,
                 });
@@ -45,7 +47,7 @@ export const Detail = ({ query }: DetailProps) => {
               await mutateAsync(query);
             }}
           >
-            Save
+            {t('query.save')}
           </Button>
         </Flex>
       </Box>

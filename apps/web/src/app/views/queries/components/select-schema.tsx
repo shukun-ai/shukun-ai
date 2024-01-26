@@ -2,6 +2,7 @@ import { SchemaListOutput } from '@ailake/apitype';
 import { Box, Group, Loader, Select } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
 import { listSchema } from '../../../../apis/schema';
+import { useTranslation } from 'react-i18next';
 
 export type SelectSchemaProps = {
   value: string | undefined;
@@ -9,6 +10,8 @@ export type SelectSchemaProps = {
 };
 
 export const SelectSchema = ({ value, onChange }: SelectSchemaProps) => {
+  const { t } = useTranslation();
+
   const { isPending, error, data } = useQuery<SchemaListOutput>({
     queryKey: ['listSchema'],
     queryFn: async () => {
@@ -27,8 +30,8 @@ export const SelectSchema = ({ value, onChange }: SelectSchemaProps) => {
   return (
     <Group>
       <Select
-        label="Select Database"
-        placeholder="Select a Database to ask"
+        label={t('query.selectSchemaLabel')}
+        placeholder={t('query.selectSchemaPlaceholder')}
         data={data.map((item) => ({
           label: item.name,
           value: item.schemaId,

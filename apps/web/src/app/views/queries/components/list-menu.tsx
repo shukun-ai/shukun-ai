@@ -11,12 +11,15 @@ import { queryClient } from '../../../query-client';
 import { useCallback } from 'react';
 import { modals } from '@mantine/modals';
 import { BasicForm } from './basic-form';
+import { useTranslation } from 'react-i18next';
 
 export type ListMenuProps = {
   query: QueryListOutput[number];
 };
 
 export const ListMenu = ({ query }: ListMenuProps) => {
+  const { t } = useTranslation();
+
   const { mutateAsync: editMutateAsync } = useMutation({
     mutationFn: (props: QueryUpdateInput) => {
       return updateQuery(props);
@@ -30,7 +33,7 @@ export const ListMenu = ({ query }: ListMenuProps) => {
 
   const openUpdate = useCallback(() => {
     modals.open({
-      title: 'Create a new query orchestrate',
+      title: t('query.updateModalTitle'),
       children: (
         <BasicForm
           initialValues={query}
@@ -44,7 +47,7 @@ export const ListMenu = ({ query }: ListMenuProps) => {
         />
       ),
     });
-  }, [editMutateAsync, query]);
+  }, [editMutateAsync, query, t]);
 
   const { mutateAsync: removeMutateAsync } = useMutation({
     mutationFn: (props: QueryRemoveInput) => {
@@ -59,14 +62,14 @@ export const ListMenu = ({ query }: ListMenuProps) => {
 
   const openRemove = useCallback(() => {
     modals.openConfirmModal({
-      title: 'Please confirm to delete it?',
-      labels: { confirm: 'Confirm', cancel: 'Cancel' },
+      title: t('query.removeModalTitle'),
+      labels: { confirm: t('query.confirm'), cancel: t('query.cancel') },
       onConfirm: () =>
         removeMutateAsync({
           queryId: query.queryId,
         }),
     });
-  }, [query.queryId, removeMutateAsync]);
+  }, [query.queryId, removeMutateAsync, t]);
 
   return (
     <Menu shadow="md" width={200} withinPortal>
@@ -84,7 +87,7 @@ export const ListMenu = ({ query }: ListMenuProps) => {
             openUpdate();
           }}
         >
-          Setting
+          {t('query.setting')}
         </Menu.Item>
         <Menu.Item
           color="red"
@@ -94,7 +97,7 @@ export const ListMenu = ({ query }: ListMenuProps) => {
             openRemove();
           }}
         >
-          Delete
+          {t('query.delete')}
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>

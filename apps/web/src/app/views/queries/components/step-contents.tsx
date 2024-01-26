@@ -5,6 +5,7 @@ import { useDetailContext } from './detail-context';
 import { IconCaretDownFilled, IconInputAi, IconSql } from '@tabler/icons-react';
 import { useMemo } from 'react';
 import { DataVisualization } from '@ailake/shared-ui';
+import { useTranslation } from 'react-i18next';
 
 export type StepContentsProps = {
   value: QueryStep;
@@ -17,6 +18,8 @@ export const StepContents = ({
   onChange,
   stepIndex,
 }: StepContentsProps) => {
+  const { t } = useTranslation();
+
   const {
     runTextToResult,
     runTextToSql,
@@ -40,7 +43,7 @@ export const StepContents = ({
   return (
     <Box>
       <Textarea
-        label="Tasks"
+        label={t('query.tasks')}
         value={value.promptTask}
         onChange={(event) =>
           onChange({
@@ -63,7 +66,7 @@ export const StepContents = ({
               setGeneratedStepIndex(previous);
             }}
           >
-            Edit
+            {t('query.edit')}
           </Button>
         ) : (
           <Button.Group>
@@ -73,7 +76,7 @@ export const StepContents = ({
               onClick={() => runTextToResult({ stepIndex })}
               loading={globalLoading}
             >
-              Execute
+              {t('query.execute')}
             </Button>
             <Menu shadow="md" width={200}>
               <Menu.Target>
@@ -88,14 +91,14 @@ export const StepContents = ({
                   icon={<IconInputAi size="1rem" />}
                   disabled={globalLoading}
                 >
-                  Execute AI Only
+                  {t('query.executeAi')}
                 </Menu.Item>
                 <Menu.Item
                   icon={<IconSql size="1rem" />}
                   disabled={!value.generatedQuery || globalLoading}
                   onClick={() => runSqlToResult({ stepIndex })}
                 >
-                  Execute SQL Only
+                  {t('query.executeSql')}
                 </Menu.Item>
               </Menu.Dropdown>
             </Menu>
@@ -118,12 +121,12 @@ export const StepContents = ({
       {value.generatedQuery && (
         <Box>
           <CodeCollapse
-            title="Before Query Schema"
+            title={t('query.beforeQuerySchema')}
             code={value.generatedQuery.schemaDdl}
             codeType="sql"
           />
           <CodeCollapse
-            title="Generated Query SQL"
+            title={t('query.generatedQuerySql')}
             code={value.generatedQuery.querySql}
             codeType="sql"
           />
@@ -132,7 +135,7 @@ export const StepContents = ({
       {value.queriedFields && (
         <Box>
           <CodeCollapse
-            title="Generated Query Schema"
+            title={t('query.generatedQuerySchema')}
             code={JSON.stringify(value.queriedFields.fields, null, 2)}
             codeType="json"
           />

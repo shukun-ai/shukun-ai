@@ -24,6 +24,7 @@ export type ArrayInputProps<T> = {
     }
   ) => JSX.Element;
   disabled?: boolean;
+  addLabel?: string;
 };
 
 export const ArrayInputs = <T,>({
@@ -34,6 +35,7 @@ export const ArrayInputs = <T,>({
   onCreate,
   renderItem,
   disabled,
+  addLabel = 'Add',
 }: ArrayInputProps<T>) => {
   const dragDropId = useId();
 
@@ -60,7 +62,7 @@ export const ArrayInputs = <T,>({
       </Box>
       <Box>
         <Button onClick={() => onCreate()} disabled={disabled}>
-          Add
+          {addLabel}
         </Button>
       </Box>
     </Box>

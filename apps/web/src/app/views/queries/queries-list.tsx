@@ -39,7 +39,7 @@ export const QueriesList = () => {
         {data.map((item) => (
           <Grid.Col span={3}>
             <ItemCard
-              icon={<Avatar color="#0D74CE">QU</Avatar>}
+              icon={<Avatar color="#0D74CE">Q</Avatar>}
               title={item.name}
               text={format(new Date(item.createdAt), 'yyyy-MM-dd')}
               onClick={() => {

@@ -30,7 +30,7 @@ export const CreateButton = () => {
 
   const open = useCallback(() => {
     modals.open({
-      title: 'Create a new query orchestrate',
+      title: t('query.createModalTitle'),
       children: (
         <BasicForm
           onSubmit={async (values) => {
@@ -42,7 +42,7 @@ export const CreateButton = () => {
         />
       ),
     });
-  }, [mutateAsync]);
+  }, [mutateAsync, t]);
 
   return (
     <ItemCard
@@ -51,7 +51,7 @@ export const CreateButton = () => {
           <IconCubePlus size="1rem" />
         </Avatar>
       }
-      title={t('query.create')}
+      title={t('query.createModalTitle')}
       loading={isPending}
       onClick={open}
     />

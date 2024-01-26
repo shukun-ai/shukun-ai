@@ -13,6 +13,7 @@ import {
 } from '@mantine/core';
 import { useDetailContext } from './detail-context';
 import { IconCheck, IconX } from '@tabler/icons-react';
+import { useTranslation } from 'react-i18next';
 
 export type StepTabsProps = {
   value: QueryStep[];
@@ -20,6 +21,8 @@ export type StepTabsProps = {
 };
 
 export const StepTabs = ({ value, onChange }: StepTabsProps) => {
+  const { t } = useTranslation();
+
   const {
     activeStepIndex,
     setActiveStepIndex,
@@ -35,6 +38,7 @@ export const StepTabs = ({ value, onChange }: StepTabsProps) => {
   return (
     <Box>
       <ArrayInputs<QueryStep>
+        addLabel={t('query.addStep')}
         value={value}
         onUpdate={(index, newValue) => onChange(update(value, index, newValue))}
         onCreate={() =>
@@ -67,7 +71,7 @@ export const StepTabs = ({ value, onChange }: StepTabsProps) => {
                 {typeof generatedStepIndex === 'number' &&
                 index <= generatedStepIndex ? (
                   <Tooltip
-                    label="The step is generated, you can check your data results."
+                    label={t('query.stepPassTip')}
                     withinPortal
                     withArrow
                   >
@@ -77,7 +81,7 @@ export const StepTabs = ({ value, onChange }: StepTabsProps) => {
                   </Tooltip>
                 ) : (
                   <Tooltip
-                    label="The step is not generated, please edit your task for prompt and execute the data results."
+                    label={t('query.stepNotPassTip')}
                     withinPortal
                     withArrow
                   >
@@ -88,7 +92,9 @@ export const StepTabs = ({ value, onChange }: StepTabsProps) => {
                 )}
               </Box>
               <Box style={{ flex: 1 }}>
-                <Title order={5}>Step {index + 1}</Title>
+                <Title order={5}>
+                  {t('query.step')} {index + 1}
+                </Title>
                 <Text lineClamp={1}>{itemValue.promptTask}</Text>
               </Box>
               {(typeof generatedStepIndex !== 'number' ||

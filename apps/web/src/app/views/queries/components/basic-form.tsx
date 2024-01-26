@@ -40,16 +40,16 @@ export const BasicForm = ({ initialValues, onSubmit }: BasicFormProps) => {
     >
       <Box>
         <TextInput
-          label={t('schema.name')}
+          label={t('query.name')}
           withAsterisk
           mb="md"
-          placeholder="Enter name"
+          placeholder={t('query.namePlaceholder')}
           {...form.getInputProps('name')}
         />
 
         <Group position="right" mt="md">
           <Button type="submit" loading={pending}>
-            {t('schema.submit')}
+            {t('query.submit')}
           </Button>
         </Group>
       </Box>
