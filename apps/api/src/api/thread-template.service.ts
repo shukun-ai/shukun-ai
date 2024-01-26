@@ -67,7 +67,6 @@ export class ThreadTemplateService {
     stepInputs: string[],
     userInputKeys: Record<string, unknown>
   ): Promise<Output> {
-    console.log(stepInputs, userInputKeys);
     const nextKey = stepInputs.find((stepInput) => !userInputKeys[stepInput]);
 
     if (!nextKey) {

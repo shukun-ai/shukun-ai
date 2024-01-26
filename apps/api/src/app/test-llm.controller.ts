@@ -23,7 +23,6 @@ export class TestLlmController {
       const ask = askTemplate.question;
       const sql = await this.askQuestion(ask);
       const spend = (new Date().getTime() - start.getTime()) / 1000;
-      console.log(sql);
       const result = await this.postgresService.run(sql);
 
       sets.push({ ask, sql, spend, result: result.rows.length });

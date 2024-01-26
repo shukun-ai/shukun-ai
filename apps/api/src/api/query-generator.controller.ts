@@ -136,8 +136,6 @@ export class QueryGeneratorController {
 
     const sql = `WITH ${withSql} SELECT * FROM ${tableName}`;
 
-    console.log('sql', sql);
-
     const result = await this.postgresService.runQuery(sql, schema.dbUrl);
 
     return {
