@@ -44,9 +44,9 @@ export const AppNavbar = () => {
     },
     {
       icon: IconReportAnalytics,
-      label: t('navbar.template'),
+      label: t('navbar.query'),
       iconColor: theme.colors.gray[1],
-      path: '/templates',
+      path: '/queries',
     },
   ];
   const { classes } = useStyles();

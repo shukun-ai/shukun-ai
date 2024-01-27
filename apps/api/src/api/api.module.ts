@@ -11,6 +11,11 @@ import { DbQueryModule } from '../db-query/db-query.module';
 import { SqlGeneratorModule } from '../sql-generator/sql-generator.module';
 import { SchemaController } from './schema.controller';
 import { SchemaModule } from '../schema/schema.module';
+import { QueryModule } from '../query/query.module';
+import { QueryController } from './query.controller';
+import { QueryGeneratorController } from './query-generator.controller';
+import { LlmModule } from '../llm/llm.module';
+import { SqlPromptModule } from '../sql-prompt/sql-prompt.module';
 
 @Module({
   imports: [
@@ -20,12 +25,17 @@ import { SchemaModule } from '../schema/schema.module';
     DbQueryModule,
     SqlGeneratorModule,
     SchemaModule,
+    QueryModule,
+    SqlPromptModule,
+    LlmModule,
   ],
   controllers: [
     TemplateController,
     ThreadController,
     MessageController,
     SchemaController,
+    QueryController,
+    QueryGeneratorController,
   ],
   providers: [ThreadTemplateService],
 })

@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { environment } from '../environment';
 import axios from 'axios';
+import { LlmAdaptor } from '../llm/llm-adaptor';
 
 @Injectable()
-export class AzureOpenAiService {
-  async ask(prompt: string): Promise<string> {
+export class AzureOpenAiService implements LlmAdaptor {
+  async askSql(prompt: string): Promise<string> {
     const baseUrl = environment.LLM_API;
     const apiKey = environment.LLM_API_KEY;
 
@@ -38,6 +39,45 @@ export class AzureOpenAiService {
 
     if (!sql) {
       return 'I did not find sql.';
+    }
+
+    return sql.trim().replace('```', '');
+  }
+
+  async askJson(prompt: string): Promise<string> {
+    const baseUrl = environment.LLM_API;
+    const apiKey = environment.LLM_API_KEY;
+
+    if (!baseUrl || !apiKey) {
+      throw new Error('LLM_OPEN_AI_KEY is not set');
+    }
+
+    const response = await axios.post<Response>(
+      baseUrl + '/deployments/gpt35/chat/completions?api-version=2023-05-15',
+      {
+        messages: [
+          {
+            role: 'user',
+            content: prompt,
+          },
+        ],
+        max_tokens: 2000,
+        temperature: 0,
+        top_p: 1,
+        frequency_penalty: 0,
+        presence_penalty: 0,
+      },
+      {
+        headers: {
+          'Api-Key': apiKey,
+        },
+      }
+    );
+
+    const sql = response.data.choices[0].message.content;
+
+    if (!sql) {
+      return 'I did not find json.';
     }
 
     return sql.trim().replace('```', '');

@@ -23,7 +23,6 @@ export class TestLlmController {
       const ask = askTemplate.question;
       const sql = await this.askQuestion(ask);
       const spend = (new Date().getTime() - start.getTime()) / 1000;
-      console.log(sql);
       const result = await this.postgresService.run(sql);
 
       sets.push({ ask, sql, spend, result: result.rows.length });
@@ -38,7 +37,7 @@ export class TestLlmController {
 
   private async getSql(ask: string) {
     const prompt = getPrompt(ask, getSchemaDefinition());
-    const sql = await this.llmService.run(prompt);
+    const sql = await this.llmService.askSql(prompt);
     return sql;
   }
 }

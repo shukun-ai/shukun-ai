@@ -21,4 +21,15 @@ export const apiPath = {
     remove: 'schemas/remove',
     sync: 'schemas/sync',
   },
+  queries: {
+    retrieve: 'queries/retrieve',
+    list: 'queries/list',
+    create: 'queries/create',
+    update: 'queries/update',
+    remove: 'queries/remove',
+  },
+  queryGenerators: {
+    textToSql: 'query-generators/text-to-sql',
+    sqlToResult: 'query-generators/sql-to-result',
+  },
 };

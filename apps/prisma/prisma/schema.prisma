@@ -76,3 +76,13 @@ model Message {
 
     @@map("messages")
 }
+
+model Query {
+    queryId   String   @id @default(uuid())
+    name      String   @unique
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    metadata  Json
+
+    @@map("queries")
+}

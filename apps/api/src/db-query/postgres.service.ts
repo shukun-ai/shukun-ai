@@ -68,6 +68,26 @@ export class PostgresService implements OnModuleInit, OnApplicationShutdown {
     }
   }
 
+  async runQuery(sql: string, dbUrl: string): Promise<DataResult['data']> {
+    const client = new Client(dbUrl);
+    await client.connect();
+
+    try {
+      const result = await client.query(sql);
+      const parsedResult = pgResultSchema.parse(result);
+      const data: DataResult['data'] = {
+        type: 'Collection',
+        command: parsedResult.command,
+        fields: parseFields(parsedResult),
+        rows: parsedResult.rows,
+      };
+
+      return data;
+    } finally {
+      await client.end();
+    }
+  }
+
   async generateSchema(dbUrl: string): Promise<TableDefinition[]> {
     const result = pgColumnsSchema.parse(await this.listColumns(dbUrl));
     const tables = pgColumnsConvertor(result);

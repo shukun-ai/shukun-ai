@@ -6,6 +6,7 @@ import { Notifications } from '@mantine/notifications';
 import { queryClient } from './query-client';
 import './i18n';
 import { ModalsProvider } from '@mantine/modals';
+import { DndProvider } from '@ailake/shared-ui';
 
 export type AppProps = {
   //
@@ -15,12 +16,14 @@ export const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
-        <ModalsProvider>
-          <BrowserRouter>
-            <AppRouter />
-          </BrowserRouter>
-        </ModalsProvider>
-        <Notifications position="top-right" />
+        <DndProvider>
+          <ModalsProvider>
+            <BrowserRouter>
+              <AppRouter />
+            </BrowserRouter>
+          </ModalsProvider>
+          <Notifications position="top-right" />
+        </DndProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );
