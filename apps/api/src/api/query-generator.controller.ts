@@ -9,7 +9,7 @@ import {
 } from '@shukun-ai/apitype';
 import { SchemaService } from '../schema/schema.service';
 import { LlmService } from '@shukun-ai/llm';
-import { SqlPromptService } from '../sql-prompt/sql-prompt.service';
+import { SqlPromptService } from '@shukun-ai/prompt';
 import { PostgresService } from '../db-query/postgres.service';
 
 @Controller()
