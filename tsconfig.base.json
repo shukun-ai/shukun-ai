@@ -24,7 +24,8 @@
         "apps/core/prisma-client-basic/src/index.ts"
       ],
       "@shukun-ai/prompt": ["apps/core/prompt/src/index.ts"],
-      "@shukun-ai/shared-ui": ["apps/shared-ui/src/index.ts"]
+      "@shukun-ai/shared-ui": ["apps/shared-ui/src/index.ts"],
+      "@shukun-ai/utils": ["apps/utils/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

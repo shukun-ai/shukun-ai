@@ -4,7 +4,3 @@ export * from './api-path';
 export * from './data-transfer-object/schema';
 export * from './data-transfer-object/query';
 export * from './data-transfer-object/query-generator';
-export * from './utils/array';
-export * from './utils/sleep';
-export * from './utils/placeholder';
-export * from './utils/extract-difference';

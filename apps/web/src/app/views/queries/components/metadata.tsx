@@ -1,4 +1,5 @@
-import { Query, update } from '@shukun-ai/apitype';
+import { Query } from '@shukun-ai/apitype';
+import { update } from '@shukun-ai/utils';
 import { Box, Grid } from '@mantine/core';
 import { StepTabs } from './step-tabs';
 import { StepContents } from './step-contents';

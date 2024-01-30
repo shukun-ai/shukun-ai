@@ -14,7 +14,8 @@ import { updateSchema } from '../../../../apis/schema';
 import { dbTypes } from '../../../constants';
 import { queryClient } from '../../../query-client';
 import { useDisclosure } from '@mantine/hooks';
-import { SchemaRetrieveOutput, extractDifference } from '@shukun-ai/apitype';
+import { SchemaRetrieveOutput } from '@shukun-ai/apitype';
+import { extractDifference } from '@shukun-ai/utils';
 import { useTranslation } from 'react-i18next';
 
 export type EditButtonProps = {

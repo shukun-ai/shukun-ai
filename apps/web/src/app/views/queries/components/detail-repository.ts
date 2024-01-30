@@ -1,13 +1,12 @@
 import {
   Result,
-  remove,
   Query,
   QueryGeneratedQuery,
   QueryQueriedFields,
   QueryGeneratorSqlToResultOutput,
-  update,
   QueryRetrieveOutput,
 } from '@shukun-ai/apitype';
+import { update, remove } from '@shukun-ai/utils';
 import { BehaviorSubject } from 'rxjs';
 import { sqlToResult, textToSql } from '../../../../apis/query-generator';
 
