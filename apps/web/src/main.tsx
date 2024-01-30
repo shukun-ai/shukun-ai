@@ -4,6 +4,7 @@ import { devTools } from '@ngneat/elf-devtools';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-quartz.css';
 import { App } from './app/app';
+import { registerExceptionListeners } from './registerExceptionListeners';
 
 devTools();
 
@@ -16,3 +17,5 @@ root.render(
     <App />
   </StrictMode>
 );
+
+registerExceptionListeners();
