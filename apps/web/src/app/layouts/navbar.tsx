@@ -20,16 +20,16 @@ export const AppNavbar = () => {
   const [active, setActive] = useState('');
   const data = [
     {
-      icon: IconTableShare,
-      label: t('navbar.schema'),
-      iconColor: theme.colors.gray[1],
-      path: '/schemas',
-    },
-    {
       icon: IconReportAnalytics,
       label: t('navbar.query'),
       iconColor: theme.colors.gray[1],
       path: '/queries',
+    },
+    {
+      icon: IconTableShare,
+      label: t('navbar.schema'),
+      iconColor: theme.colors.gray[1],
+      path: '/schemas',
     },
   ];
   const { classes } = useStyles();
@@ -67,7 +67,7 @@ export const AppNavbar = () => {
         >
           <img src={logo} alt="SHUKUN AI" style={{ width: 120 }} />
           <Text c="#fff" fw="bold" pb={2}>
-            AI Seek
+            LAKE
           </Text>
         </Navbar.Section>
         <Navbar.Section grow component={ScrollArea} mx="-xs" px="xs">

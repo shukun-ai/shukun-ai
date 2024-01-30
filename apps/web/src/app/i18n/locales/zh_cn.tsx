@@ -6,7 +6,7 @@ export default {
       reports: '报告',
       schema: '数据库配置',
       template: '助理模板',
-      query: '组合查询配置',
+      query: '组合查询',
     },
     conversation: {
       placeholder: '问我关于你想查的数据，如前十条任务的机场代码分布是什么？',
