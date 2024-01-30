@@ -22,6 +22,7 @@ export class OpenAiService implements LlmAdaptor {
       messages: [{ role: 'user', content: prompt }],
       model: 'gpt-3.5-turbo',
       temperature: 0,
+      stop: '```',
     });
 
     const sql = chatCompletion.choices[0].message.content;
