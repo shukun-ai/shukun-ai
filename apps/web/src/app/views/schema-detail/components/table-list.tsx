@@ -1,6 +1,6 @@
 import { Box } from '@mantine/core';
 import { TableDetail } from './table-detail';
-import { TableDefinition } from '@ailake/apitype';
+import { TableDefinition } from '@shukun-ai/apitype';
 
 export type TableListProps = {
   tables: TableDefinition[];

@@ -15,9 +15,11 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@ailake/apitype": ["apps/apitype/src/index.ts"],
-      "@ailake/prisma-client-basic": ["apps/prisma-client-basic/src/index.ts"],
-      "@ailake/shared-ui": ["apps/shared-ui/src/index.ts"]
+      "@shukun-ai/apitype": ["apps/apitype/src/index.ts"],
+      "@shukun-ai/prisma-client-basic": [
+        "apps/prisma-client-basic/src/index.ts"
+      ],
+      "@shukun-ai/shared-ui": ["apps/shared-ui/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

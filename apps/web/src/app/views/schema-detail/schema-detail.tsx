@@ -1,10 +1,10 @@
 import { TableList } from './components/table-list';
 import { useQuery } from '@tanstack/react-query';
 import { retrieveSchema } from '../../../apis/schema';
-import { SchemaRetrieveOutput } from '@ailake/apitype';
+import { SchemaRetrieveOutput } from '@shukun-ai/apitype';
 import { useParams } from 'react-router-dom';
 import { SyncButton } from './components/sync-button';
-import { DbIcons, ErrorCard, PageSkeleton } from '@ailake/shared-ui';
+import { DbIcons, ErrorCard, PageSkeleton } from '@shukun-ai/shared-ui';
 import { EditButton } from './components/edit-button';
 import { Box, Flex, Group, Text, Title } from '@mantine/core';
 import { useTranslation } from 'react-i18next';

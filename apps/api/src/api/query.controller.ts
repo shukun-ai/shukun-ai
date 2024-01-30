@@ -11,7 +11,7 @@ import {
   QueryUpdateOutput,
   QueryRemoveInput,
   QueryRemoveOutput,
-} from '@ailake/apitype';
+} from '@shukun-ai/apitype';
 
 @Controller()
 export class QueryController {

@@ -2,7 +2,7 @@ import {
   QueryListOutput,
   QueryRemoveInput,
   QueryUpdateInput,
-} from '@ailake/apitype';
+} from '@shukun-ai/apitype';
 import { ActionIcon, Menu } from '@mantine/core';
 import { IconDots } from '@tabler/icons-react';
 import { useMutation } from '@tanstack/react-query';

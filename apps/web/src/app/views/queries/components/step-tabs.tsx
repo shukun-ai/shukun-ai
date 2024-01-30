@@ -1,5 +1,5 @@
-import { QueryStep, append, move, remove, update } from '@ailake/apitype';
-import { ArrayInputs } from '@ailake/shared-ui';
+import { QueryStep, append, move, remove, update } from '@shukun-ai/apitype';
+import { ArrayInputs } from '@shukun-ai/shared-ui';
 import {
   ActionIcon,
   Avatar,

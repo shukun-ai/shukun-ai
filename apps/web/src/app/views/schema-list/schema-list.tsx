@@ -1,6 +1,6 @@
 import { Flex, Title } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
-import { ErrorCard, PageSkeleton } from '@ailake/shared-ui';
+import { ErrorCard, PageSkeleton } from '@shukun-ai/shared-ui';
 import { listSchema } from '../../../apis/schema';
 import { CardNew } from './components/card-new';
 import { CardItem } from './components/card-item';

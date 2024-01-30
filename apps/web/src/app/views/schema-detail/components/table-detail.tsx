@@ -13,7 +13,7 @@ import {
   IconChevronRight,
   IconPlus,
 } from '@tabler/icons-react';
-import { TableDefinition } from '@ailake/apitype';
+import { TableDefinition } from '@shukun-ai/apitype';
 import { useTranslation } from 'react-i18next';
 
 export type TableDetailProps = {

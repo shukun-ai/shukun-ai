@@ -4,7 +4,7 @@ import {
   QueryGeneratorTextToSqlInput,
   QueryGeneratorTextToSqlOutput,
   apiPath,
-} from '@ailake/apitype';
+} from '@shukun-ai/apitype';
 import { getAxios } from './axios';
 
 export const textToSql = async (

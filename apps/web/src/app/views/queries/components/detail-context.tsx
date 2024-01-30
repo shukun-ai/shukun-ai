@@ -1,4 +1,4 @@
-import { Query, Result } from '@ailake/apitype';
+import { Query, Result } from '@shukun-ai/apitype';
 import { createContext, useContext } from 'react';
 
 type DetailContextType = {

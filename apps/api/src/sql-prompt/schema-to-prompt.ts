@@ -1,4 +1,4 @@
-import { ColumnDefinition, TableDefinition } from '@ailake/apitype';
+import { ColumnDefinition, TableDefinition } from '@shukun-ai/apitype';
 
 export const buildSchema = (schema: { tables: TableDefinition[] }): string => {
   return buildTables(schema.tables);

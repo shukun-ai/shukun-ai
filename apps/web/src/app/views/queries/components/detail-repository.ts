@@ -7,7 +7,7 @@ import {
   QueryGeneratorSqlToResultOutput,
   update,
   QueryRetrieveOutput,
-} from '@ailake/apitype';
+} from '@shukun-ai/apitype';
 import { BehaviorSubject } from 'rxjs';
 import { sqlToResult, textToSql } from '../../../../apis/query-generator';
 

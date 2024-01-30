@@ -1,4 +1,4 @@
-import { SchemaListOutput } from '@ailake/apitype';
+import { SchemaListOutput } from '@shukun-ai/apitype';
 import { Box, Group, Loader, Select } from '@mantine/core';
 import { useQuery } from '@tanstack/react-query';
 import { listSchema } from '../../../../apis/schema';

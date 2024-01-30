@@ -1,4 +1,4 @@
-import { Result, TableDefinition } from '@ailake/apitype';
+import { Result, TableDefinition } from '@shukun-ai/apitype';
 import {
   Injectable,
   OnApplicationShutdown,

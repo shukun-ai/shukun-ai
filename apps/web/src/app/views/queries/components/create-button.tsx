@@ -1,5 +1,5 @@
-import { QueryCreateInput } from '@ailake/apitype';
-import { ItemCard } from '@ailake/shared-ui';
+import { QueryCreateInput } from '@shukun-ai/apitype';
+import { ItemCard } from '@shukun-ai/shared-ui';
 import { Avatar } from '@mantine/core';
 import { IconCubePlus } from '@tabler/icons-react';
 import { useMutation } from '@tanstack/react-query';

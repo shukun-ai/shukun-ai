@@ -1,6 +1,6 @@
 import { Group, Avatar, Text, Box } from '@mantine/core';
 import mockFace from '../../assets/mock-face.png';
-import { LanguageSwitch } from '@ailake/shared-ui';
+import { LanguageSwitch } from '@shukun-ai/shared-ui';
 
 export const User = () => {
   return (

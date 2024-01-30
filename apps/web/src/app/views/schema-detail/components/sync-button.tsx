@@ -1,4 +1,4 @@
-import { SchemaSyncInput } from '@ailake/apitype';
+import { SchemaSyncInput } from '@shukun-ai/apitype';
 import { Button } from '@mantine/core';
 import { useMutation } from '@tanstack/react-query';
 import { syncSchema } from '../../../../apis/schema';

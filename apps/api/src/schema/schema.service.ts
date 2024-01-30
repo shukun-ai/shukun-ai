@@ -1,4 +1,4 @@
-import { PrismaService } from '@ailake/prisma-client-basic';
+import { PrismaService } from '@shukun-ai/prisma-client-basic';
 import { Injectable } from '@nestjs/common';
 import {
   CreateRequest,
@@ -11,7 +11,7 @@ import {
   UpdateRequest,
   UpdateResponse,
 } from './schema.type';
-import { TableDefinition } from '@ailake/apitype';
+import { TableDefinition } from '@shukun-ai/apitype';
 
 @Injectable()
 export class SchemaService {

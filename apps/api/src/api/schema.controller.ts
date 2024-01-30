@@ -12,7 +12,7 @@ import {
   SchemaUpdateOutput,
   TableDefinition,
   apiPath,
-} from '@ailake/apitype';
+} from '@shukun-ai/apitype';
 import { Controller, Post, Body, BadRequestException } from '@nestjs/common';
 import { SchemaService } from '../schema/schema.service';
 import { PostgresService } from '../db-query/postgres.service';

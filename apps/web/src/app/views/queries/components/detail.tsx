@@ -1,4 +1,4 @@
-import { QueryRetrieveOutput, QueryUpdateInput } from '@ailake/apitype';
+import { QueryRetrieveOutput, QueryUpdateInput } from '@shukun-ai/apitype';
 import { Box, Button, Flex, Title } from '@mantine/core';
 import { updateQuery } from '../../../../apis/query';
 import { useMutation } from '@tanstack/react-query';

@@ -1,7 +1,7 @@
-import { QueryListOutput } from '@ailake/apitype';
+import { QueryListOutput } from '@shukun-ai/apitype';
 import { useQuery } from '@tanstack/react-query';
 import { listQuery } from '../../../apis/query';
-import { ErrorCard, ItemCard, PageSkeleton } from '@ailake/shared-ui';
+import { ErrorCard, ItemCard, PageSkeleton } from '@shukun-ai/shared-ui';
 import { Avatar, Box, Grid } from '@mantine/core';
 import { format } from 'date-fns';
 import { useNavigate } from 'react-router-dom';

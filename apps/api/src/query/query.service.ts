@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '@ailake/prisma-client-basic';
+import { PrismaService } from '@shukun-ai/prisma-client-basic';
 import {
   RetrieveRequest,
   RetrieveResponse,
@@ -11,7 +11,7 @@ import {
   RemoveRequest,
   RemoveResponse,
 } from './query.type';
-import { Query, querySchema } from '@ailake/apitype';
+import { Query, querySchema } from '@shukun-ai/apitype';
 
 @Injectable()
 export class QueryService {

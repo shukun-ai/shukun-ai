@@ -1,4 +1,4 @@
-import { Query } from '@ailake/apitype';
+import { Query } from '@shukun-ai/apitype';
 
 export type RetrieveRequest = {
   queryId: string;

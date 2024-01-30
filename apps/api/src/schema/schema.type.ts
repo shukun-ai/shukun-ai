@@ -1,4 +1,4 @@
-import { TableDefinition } from '@ailake/apitype';
+import { TableDefinition } from '@shukun-ai/apitype';
 
 export type RetrieveRequest = {
   schemaId: string;

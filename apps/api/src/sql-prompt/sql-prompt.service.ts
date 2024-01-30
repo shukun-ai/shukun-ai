@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { getPromptTemplate } from './sql-prompt.template';
 import { buildSchema } from './schema-to-prompt';
-import { SchemaDefinition } from '@ailake/apitype';
+import { SchemaDefinition } from '@shukun-ai/apitype';
 
 @Injectable()
 export class SqlPromptService {

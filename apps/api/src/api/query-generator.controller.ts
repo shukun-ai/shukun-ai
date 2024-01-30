@@ -6,7 +6,7 @@ import {
   QueryGeneratorTextToSqlInput,
   QueryGeneratorTextToSqlOutput,
   QueryStep,
-} from '@ailake/apitype';
+} from '@shukun-ai/apitype';
 import { SchemaService } from '../schema/schema.service';
 import { LlmService } from '../llm/llm.service';
 import { SqlPromptService } from '../sql-prompt/sql-prompt.service';

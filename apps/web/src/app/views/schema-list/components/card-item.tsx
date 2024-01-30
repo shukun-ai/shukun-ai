@@ -2,13 +2,13 @@ import { Card, Text, Button, Grid, Flex, Modal } from '@mantine/core';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IconTrash, IconListDetails } from '@tabler/icons-react';
-import { SchemaListOutput, SchemaRemoveInput } from '@ailake/apitype';
+import { SchemaListOutput, SchemaRemoveInput } from '@shukun-ai/apitype';
 import { useDisclosure } from '@mantine/hooks';
 import { useMutation } from '@tanstack/react-query';
 import { removeSchema } from '../../../../apis/schema';
 import { queryClient } from '../../../query-client';
 import { CreateForm } from './create-form';
-import { DbIcons } from '@ailake/shared-ui';
+import { DbIcons } from '@shukun-ai/shared-ui';
 
 type CardItemProps = {
   data: SchemaListOutput[number];

@@ -12,7 +12,7 @@ import {
   SchemaUpdateInput,
   SchemaUpdateOutput,
   apiPath,
-} from '@ailake/apitype';
+} from '@shukun-ai/apitype';
 import { getAxios } from './axios';
 
 export const listSchema = async (

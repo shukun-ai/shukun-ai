@@ -1,10 +1,10 @@
-import { QueryStep, Result } from '@ailake/apitype';
+import { QueryStep, Result } from '@shukun-ai/apitype';
 import { Box, Button, Group, Menu, Textarea } from '@mantine/core';
 import { CodeCollapse } from './code-collapse';
 import { useDetailContext } from './detail-context';
 import { IconCaretDownFilled, IconInputAi, IconSql } from '@tabler/icons-react';
 import { useMemo } from 'react';
-import { DataVisualization } from '@ailake/shared-ui';
+import { DataVisualization } from '@shukun-ai/shared-ui';
 import { useTranslation } from 'react-i18next';
 
 export type StepContentsProps = {

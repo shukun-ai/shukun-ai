@@ -6,7 +6,7 @@ import { Notifications } from '@mantine/notifications';
 import { queryClient } from './query-client';
 import './i18n';
 import { ModalsProvider } from '@mantine/modals';
-import { DndProvider } from '@ailake/shared-ui';
+import { DndProvider } from '@shukun-ai/shared-ui';
 
 export type AppProps = {
   //

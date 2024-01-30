@@ -1,4 +1,4 @@
-import { ColumnDefinition, TableDefinition } from '@ailake/apitype';
+import { ColumnDefinition, TableDefinition } from '@shukun-ai/apitype';
 import { PgColumnsSchema } from './postgres.columns.type';
 
 export const pgColumnsConvertor = (
