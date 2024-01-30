@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="./images/dark-logo-en@4x.png">
+    <img src="./images/dark-logo-en@4x.png" style="border-radius: 20px;">
 </p>
 
 # SHUKUN AI
