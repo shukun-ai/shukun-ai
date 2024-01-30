@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import OpenAI from 'openai';
-import { environment } from '../environment';
+import { environment } from '@shukun-ai/environment';
 import { LlmAdaptor } from '../llm/llm-adaptor';
 
 @Injectable()

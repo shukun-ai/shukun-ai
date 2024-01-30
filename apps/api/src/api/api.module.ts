@@ -6,7 +6,7 @@ import { SchemaModule } from '../schema/schema.module';
 import { QueryModule } from '../query/query.module';
 import { QueryController } from './query.controller';
 import { QueryGeneratorController } from './query-generator.controller';
-import { LlmModule } from '../llm/llm.module';
+import { LlmModule } from '@shukun-ai/llm';
 import { SqlPromptModule } from '../sql-prompt/sql-prompt.module';
 
 @Module({

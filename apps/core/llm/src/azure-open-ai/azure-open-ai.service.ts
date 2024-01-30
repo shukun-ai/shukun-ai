@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { environment } from '../environment';
+import { environment } from '@shukun-ai/environment';
 import axios from 'axios';
 import { LlmAdaptor } from '../llm/llm-adaptor';
 
