@@ -2,7 +2,7 @@ version: '3'
 
 services:
   server:
-    image: shukun-ai/ailake-api:latest
+    image: shukun-ai/app:latest
     restart: always
     environment:
       - MONGO_URI
@@ -40,7 +40,7 @@ services:
       - default
 
   client:
-    image: shukun-ai/ailake-web:latest
+    image: shukun-ai/web:latest
     restart: always
     ports:
       - '3000'
