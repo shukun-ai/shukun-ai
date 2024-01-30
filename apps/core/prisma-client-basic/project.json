@@ -1,7 +1,7 @@
 {
   "name": "prisma-client-basic",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/prisma-client-basic/src",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/core/prisma-client-basic/src",
   "projectType": "library",
   "targets": {
     "lint": {
@@ -12,7 +12,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/prisma-client-basic/jest.config.ts"
+        "jestConfig": "apps/core/prisma-client-basic/jest.config.ts"
       }
     }
   },

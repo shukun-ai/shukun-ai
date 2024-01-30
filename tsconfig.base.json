@@ -21,7 +21,7 @@
       "@shukun-ai/environment": ["apps/core/environment/src/index.ts"],
       "@shukun-ai/llm": ["apps/core/llm/src/index.ts"],
       "@shukun-ai/prisma-client-basic": [
-        "apps/prisma-client-basic/src/index.ts"
+        "apps/core/prisma-client-basic/src/index.ts"
       ],
       "@shukun-ai/prompt": ["apps/core/prompt/src/index.ts"],
       "@shukun-ai/shared-ui": ["apps/shared-ui/src/index.ts"]
