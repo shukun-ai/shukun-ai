@@ -5,7 +5,7 @@ import {
   OnModuleInit,
 } from '@nestjs/common';
 import { Pool, Client } from 'pg';
-import { environment } from '../environment';
+import { environment } from '@shukun-ai/environment';
 import { PgResultSchema, pgResultSchema } from './postgres.type';
 import { listColumnsSql } from './postgres.columns.sql';
 import { pgColumnsSchema } from './postgres.columns.type';

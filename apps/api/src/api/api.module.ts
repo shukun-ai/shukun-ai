@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { DbQueryModule } from '../db-query/db-query.module';
+import { DbQueryModule } from '@shukun-ai/db';
 import { SchemaController } from './schema.controller';
 import { SchemaModule } from '../schema/schema.module';
 import { QueryModule } from '../query/query.module';

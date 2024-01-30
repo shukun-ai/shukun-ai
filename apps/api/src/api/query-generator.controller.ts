@@ -10,7 +10,7 @@ import {
 import { SchemaService } from '../schema/schema.service';
 import { LlmService } from '@shukun-ai/llm';
 import { SqlPromptService } from '@shukun-ai/prompt';
-import { PostgresService } from '../db-query/postgres.service';
+import { PostgresService } from '@shukun-ai/db';
 
 @Controller()
 export class QueryGeneratorController {

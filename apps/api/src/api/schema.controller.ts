@@ -15,7 +15,7 @@ import {
 } from '@shukun-ai/apitype';
 import { Controller, Post, Body, BadRequestException } from '@nestjs/common';
 import { SchemaService } from '../schema/schema.service';
-import { PostgresService } from '../db-query/postgres.service';
+import { PostgresService } from '@shukun-ai/db';
 
 @Controller()
 export class SchemaController {
