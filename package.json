@@ -1,6 +1,10 @@
 {
-  "name": "@shukun-ai/source",
+  "name": "shukun-ai",
+  "description": "AI-native database search application",
   "version": "0.0.0",
+  "author": "SHUKUN, Inc.",
+  "license": "Apache-2.0",
+  "private": true,
   "scripts": {
     "start": "nx run-many --target=serve",
     "build": "nx run-many --target=build --all --configuration=production",
@@ -13,7 +17,6 @@
     "db:studio": "dotenv -e .env.local -e .env npx prisma studio -- --schema=apps/prisma/prisma/schema.prisma",
     "prepare": "is-ci || husky install"
   },
-  "private": true,
   "dependencies": {
     "@emotion/react": "11.11.1",
     "@emotion/styled": "11.11.0",
@@ -124,5 +127,18 @@
     "vite-plugin-checker": "^0.6.2",
     "vite-plugin-dts": "~2.3.0",
     "vitest": "~0.34.6"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shukun-ai/shukun-ai.git"
+  },
+  "engines": {
+    "npm": ">=9.0.0",
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "ai",
+    "llm",
+    "database"
+  ]
 }
