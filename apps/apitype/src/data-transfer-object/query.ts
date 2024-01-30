@@ -1,4 +1,4 @@
-import { Query } from './domain/query';
+import { Query } from '../domain/query';
 
 export type QueryRetrieveInput = {
   queryId: string;
