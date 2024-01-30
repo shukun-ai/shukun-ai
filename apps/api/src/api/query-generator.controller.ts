@@ -7,7 +7,7 @@ import {
   QueryGeneratorTextToSqlOutput,
   QueryStep,
 } from '@shukun-ai/apitype';
-import { SchemaService } from '../schema/schema.service';
+import { SchemaService } from '@shukun-ai/entities';
 import { LlmService } from '@shukun-ai/llm';
 import { SqlPromptService } from '@shukun-ai/prompt';
 import { PostgresService } from '@shukun-ai/db';

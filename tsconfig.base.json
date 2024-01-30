@@ -17,6 +17,7 @@
     "paths": {
       "@shukun-ai/apitype": ["apps/apitype/src/index.ts"],
       "@shukun-ai/db": ["apps/core/db/src/index.ts"],
+      "@shukun-ai/entities": ["apps/core/entities/src/index.ts"],
       "@shukun-ai/environment": ["apps/core/environment/src/index.ts"],
       "@shukun-ai/llm": ["apps/core/llm/src/index.ts"],
       "@shukun-ai/prisma-client-basic": [

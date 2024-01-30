@@ -1,5 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { QueryService } from '../query/query.service';
+import { QueryService } from '@shukun-ai/entities';
 import {
   QueryRetrieveOutput,
   QueryListOutput,

@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { SchemaService } from './schema.service';
 import { PrismaClientBasicModule } from '@shukun-ai/prisma-client-basic';
-import { DbQueryModule } from '../db-query/db-query.module';
+import { DbQueryModule } from '@shukun-ai/db';
 
 @Module({
   imports: [PrismaClientBasicModule, DbQueryModule],
