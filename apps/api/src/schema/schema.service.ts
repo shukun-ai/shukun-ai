@@ -11,7 +11,7 @@ import {
   UpdateRequest,
   UpdateResponse,
 } from './schema.type';
-import { TableDefinition } from '../app/schema';
+import { TableDefinition } from '@ailake/apitype';
 
 @Injectable()
 export class SchemaService {

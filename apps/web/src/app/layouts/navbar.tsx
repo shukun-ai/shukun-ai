@@ -1,10 +1,5 @@
 import { useState } from 'react';
-import {
-  IconWorldSearch,
-  IconReportAnalytics,
-  IconTableShare,
-  IconMessageChatbot,
-} from '@tabler/icons-react';
+import { IconReportAnalytics, IconTableShare } from '@tabler/icons-react';
 import {
   NavLink,
   Navbar,
@@ -24,18 +19,6 @@ export const AppNavbar = () => {
   const theme = useMantineTheme();
   const [active, setActive] = useState('');
   const data = [
-    {
-      icon: IconWorldSearch,
-      label: t('navbar.explore'),
-      iconColor: theme.colors.gray[1],
-      path: '/',
-    },
-    {
-      icon: IconMessageChatbot,
-      label: t('navbar.thread'),
-      iconColor: theme.colors.gray[1],
-      path: '/threads',
-    },
     {
       icon: IconTableShare,
       label: t('navbar.schema'),

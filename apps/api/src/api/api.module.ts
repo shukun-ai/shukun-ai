@@ -1,12 +1,5 @@
 import { Module } from '@nestjs/common';
 
-import { TemplateModule } from '../template/template.module';
-import { TemplateController } from './template.controller';
-import { ThreadController } from './thread.controller';
-import { MessageController } from './message.controller';
-import { ThreadModule } from '../thread/thread.module';
-import { MessageModule } from '../message/message.module';
-import { ThreadTemplateService } from './thread-template.service';
 import { DbQueryModule } from '../db-query/db-query.module';
 import { SqlGeneratorModule } from '../sql-generator/sql-generator.module';
 import { SchemaController } from './schema.controller';
@@ -19,9 +12,6 @@ import { SqlPromptModule } from '../sql-prompt/sql-prompt.module';
 
 @Module({
   imports: [
-    TemplateModule,
-    ThreadModule,
-    MessageModule,
     DbQueryModule,
     SqlGeneratorModule,
     SchemaModule,
@@ -29,14 +19,6 @@ import { SqlPromptModule } from '../sql-prompt/sql-prompt.module';
     SqlPromptModule,
     LlmModule,
   ],
-  controllers: [
-    TemplateController,
-    ThreadController,
-    MessageController,
-    SchemaController,
-    QueryController,
-    QueryGeneratorController,
-  ],
-  providers: [ThreadTemplateService],
+  controllers: [SchemaController, QueryController, QueryGeneratorController],
 })
 export class ApiModule {}

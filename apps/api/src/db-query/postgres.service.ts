@@ -1,4 +1,4 @@
-import { DataResult, TableDefinition } from '@ailake/apitype';
+import { Result, TableDefinition } from '@ailake/apitype';
 import {
   Injectable,
   OnApplicationShutdown,
@@ -38,7 +38,7 @@ export class PostgresService implements OnModuleInit, OnApplicationShutdown {
     }
   }
 
-  async run(sql: string): Promise<DataResult['data']> {
+  async run(sql: string): Promise<Result> {
     const client = await this.getPool().connect();
 
     try {
@@ -46,9 +46,7 @@ export class PostgresService implements OnModuleInit, OnApplicationShutdown {
 
       const parsedResult = pgResultSchema.parse(result);
 
-      const data: DataResult['data'] = {
-        type: 'Collection',
-        command: parsedResult.command,
+      const data: Result = {
         fields: parseFields(parsedResult),
         rows: parsedResult.rows,
       };
@@ -58,8 +56,6 @@ export class PostgresService implements OnModuleInit, OnApplicationShutdown {
       console.error(error);
 
       return {
-        type: 'Collection',
-        command: 'SELECT',
         fields: [],
         rows: [],
       };
@@ -68,16 +64,14 @@ export class PostgresService implements OnModuleInit, OnApplicationShutdown {
     }
   }
 
-  async runQuery(sql: string, dbUrl: string): Promise<DataResult['data']> {
+  async runQuery(sql: string, dbUrl: string): Promise<Result> {
     const client = new Client(dbUrl);
     await client.connect();
 
     try {
       const result = await client.query(sql);
       const parsedResult = pgResultSchema.parse(result);
-      const data: DataResult['data'] = {
-        type: 'Collection',
-        command: parsedResult.command,
+      const data: Result = {
         fields: parseFields(parsedResult),
         rows: parsedResult.rows,
       };
@@ -115,7 +109,7 @@ export class PostgresService implements OnModuleInit, OnApplicationShutdown {
   }
 }
 
-const parseFields = (result: PgResultSchema): DataResult['data']['fields'] => {
+const parseFields = (result: PgResultSchema): Result['fields'] => {
   return result.fields.map((field) => {
     return {
       type: getFieldType(field.dataTypeID, result._types),
@@ -127,7 +121,7 @@ const parseFields = (result: PgResultSchema): DataResult['data']['fields'] => {
 const getFieldType = (
   dataTypeID: number,
   types: PgResultSchema['_types']
-): DataResult['data']['fields'][number]['type'] => {
+): Result['fields'][number]['type'] => {
   const columnType = Object.entries(types._types.builtins).find(
     ([, value]) => value === dataTypeID
   );
