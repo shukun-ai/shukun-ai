@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@shukun-ai/apitype": ["apps/apitype/src/index.ts"],
+      "@shukun-ai/llm": ["apps/core/llm/src/index.ts"],
       "@shukun-ai/prisma-client-basic": [
         "apps/prisma-client-basic/src/index.ts"
       ],
