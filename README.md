@@ -1,5 +1,6 @@
 <p align="center">
-    <img src="https://github.com/shukun-ai/shukun-ai/assets/1282787/8eb8c311-a3d2-40ef-bc54-c5379ad029e7#gh-light-mode-only" />
+    <img src="https://raw.githubusercontent.com/shukun-ai/vi/master/banner-white.png#gh-light-mode-only">
+    <img src="https://raw.githubusercontent.com/shukun-ai/vi/master/banner-black.png#gh-dark-mode-only">
 </p>
 
 # SHUKUN AI
@@ -8,7 +9,7 @@ SHUKUN AI is an AI-native database search application that helps companies explo
 
 ## Features
 
-1. LLM Support: Integration with OpenAI's GPT-3.5 or CodeLlama aims to use smaller models to accomplish tasks more quickly affordably.
+1. LLM Support: Integration with OpenAI's GPT-3.5 or CodeLlama aims to use smaller models to accomplish tasks more quickly and affordably.
 2. SQL Assistants: Split complex natural language tasks into smaller parts then combines them into the results.
 3. Database Configurations: Works with your exist database, retrieves the structure automatically, and labels the structure effectively.
 4. Insight Dashboard: Explore, observe, analyze your data with multiple levels of detail on Dashboard.
