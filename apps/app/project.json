@@ -53,7 +53,7 @@
       "options": {
         "commands": [
           {
-            "command": "ncc build dist/apps/app/main.js -o dist/installation/api/ -m"
+            "command": "ncc build dist/apps/app/main.js -o dist/installation/app/ -m"
           }
         ]
       },
