@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="./images/readme-banner.png" />
+    <img src="https://github.com/shukun-ai/shukun-ai/assets/1282787/8eb8c311-a3d2-40ef-bc54-c5379ad029e7#gh-light-mode-only" />
 </p>
 
 # SHUKUN AI
