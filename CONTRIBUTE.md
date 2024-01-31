@@ -10,8 +10,9 @@ npm install
 # Start postgreSQL for development
 docker-compose -f docker-compose.development.yml up
 
-# Copy env file and change environment value here
-touch .env.local
+# Change environment value here
+# More environments please see .env file
+echo "LLM_API_KEY=<replace_your_open_ai_key>" >> .env.local
 
 # We've test in PostgreSQL 14
 npm run db:migrate

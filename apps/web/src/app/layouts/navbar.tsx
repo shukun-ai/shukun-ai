@@ -67,7 +67,7 @@ export const AppNavbar = () => {
         >
           <img src={logo} alt="SHUKUN AI" style={{ width: 120 }} />
           <Text c="#fff" fw="bold" pb={2}>
-            LAKE
+            AI
           </Text>
         </Navbar.Section>
         <Navbar.Section grow component={ScrollArea} mx="-xs" px="xs">

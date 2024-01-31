@@ -9,8 +9,8 @@ export class OpenAiService implements LlmAdaptor {
     const baseUrl = environment.LLM_API;
     const apiKey = environment.LLM_API_KEY;
 
-    if (!baseUrl || !apiKey) {
-      throw new Error('LLM_OPEN_AI_KEY is not set');
+    if (!apiKey) {
+      throw new Error('LLM_API_KEY is not set');
     }
 
     const openai = new OpenAI({
@@ -20,8 +20,12 @@ export class OpenAiService implements LlmAdaptor {
 
     const chatCompletion = await openai.chat.completions.create({
       messages: [{ role: 'user', content: prompt }],
-      model: 'gpt-3.5-turbo',
+      model: environment.LLM_MODEL,
       temperature: 0,
+      max_tokens: 2000,
+      top_p: 1,
+      frequency_penalty: 0,
+      presence_penalty: 0,
       stop: '```',
     });
 

@@ -1,68 +1,14 @@
 import { Result, TableDefinition } from '@shukun-ai/apitype';
-import {
-  Injectable,
-  OnApplicationShutdown,
-  OnModuleInit,
-} from '@nestjs/common';
-import { Pool, Client } from 'pg';
-import { environment } from '@shukun-ai/environment';
+import { Injectable } from '@nestjs/common';
+import { Client } from 'pg';
 import { PgResultSchema, pgResultSchema } from './postgres.type';
 import { listColumnsSql } from './postgres.columns.sql';
 import { pgColumnsSchema } from './postgres.columns.type';
 import { pgColumnsConvertor } from './postgres.columns.convertor';
 
 @Injectable()
-export class PostgresService implements OnModuleInit, OnApplicationShutdown {
-  pool?: Pool;
-
+export class PostgresService {
   constructor() {}
-
-  onModuleInit() {
-    this.pool = new Pool({
-      user: environment.PG_USER,
-      host: environment.PG_HOST,
-      database: environment.PG_DATABASE,
-      password: environment.PG_PASSWORD,
-      port: environment.PG_PORT,
-      max: environment.PG_MAX,
-    });
-    this.pool.on('error', (err) => {
-      console.error('Unexpected error on idle client', err);
-      process.exit(-1);
-    });
-  }
-
-  async onApplicationShutdown() {
-    if (this.pool) {
-      await this.pool.end();
-    }
-  }
-
-  async run(sql: string): Promise<Result> {
-    const client = await this.getPool().connect();
-
-    try {
-      const result = await client.query(sql);
-
-      const parsedResult = pgResultSchema.parse(result);
-
-      const data: Result = {
-        fields: parseFields(parsedResult),
-        rows: parsedResult.rows,
-      };
-
-      return data;
-    } catch (error) {
-      console.error(error);
-
-      return {
-        fields: [],
-        rows: [],
-      };
-    } finally {
-      client.release();
-    }
-  }
 
   async runQuery(sql: string, dbUrl: string): Promise<Result> {
     const client = new Client(dbUrl);
@@ -99,13 +45,6 @@ export class PostgresService implements OnModuleInit, OnApplicationShutdown {
     } finally {
       await client.end();
     }
-  }
-
-  private getPool() {
-    if (this.pool) {
-      return this.pool;
-    }
-    throw new Error('the pool is not created');
   }
 }
 

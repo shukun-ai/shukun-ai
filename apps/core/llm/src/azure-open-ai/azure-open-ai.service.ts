@@ -10,11 +10,12 @@ export class AzureOpenAiService implements LlmAdaptor {
     const apiKey = environment.LLM_API_KEY;
 
     if (!baseUrl || !apiKey) {
-      throw new Error('LLM_OPEN_AI_KEY is not set');
+      throw new Error('LLM_API_KEY is not set');
     }
 
     const response = await axios.post<Response>(
-      baseUrl + '/deployments/gpt35/chat/completions?api-version=2023-05-15',
+      baseUrl +
+        `/deployments/${environment.LLM_MODEL}/chat/completions?api-version=2023-05-15`,
       {
         messages: [
           {
