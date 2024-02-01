@@ -14,7 +14,7 @@ import { updateSchema } from '../../../../apis/schema';
 import { dbTypes } from '../../../constants';
 import { queryClient } from '../../../query-client';
 import { useDisclosure } from '@mantine/hooks';
-import { SchemaRetrieveOutput } from '@shukun-ai/apitype';
+import { SchemaConnection, SchemaRetrieveOutput } from '@shukun-ai/apitype';
 import { extractDifference } from '@shukun-ai/utils';
 import { useTranslation } from 'react-i18next';
 
@@ -32,7 +32,14 @@ export const EditButton = ({ schema }: EditButtonProps) => {
         {t('schema.editDbUrl')}
       </Button>
       <Modal opened={opened} onClose={close} title={t('schema.editTitle')}>
-        <EditButtonForm initialValues={schema} onSubmitSuccess={close} />
+        <EditButtonForm
+          initialValues={{
+            schemaId: schema.schemaId,
+            name: schema.name,
+            ...schema.connection,
+          }}
+          onSubmitSuccess={close}
+        />
       </Modal>
     </>
   );
@@ -62,12 +69,18 @@ const EditButtonForm = ({
 
   const { isPending, mutateAsync } = useMutation({
     mutationFn: (props: EditButtonFormValuesProps) => {
-      const { name, dbType, dbUrl } = props;
       return updateSchema({
         ...extractDifference(initialValues, {
-          name,
-          dbType,
-          dbUrl,
+          name: props.name,
+          connection: {
+            type: props.type,
+            database: props.database,
+            user: props.user,
+            password: props.password,
+            port: props.port,
+            host: props.host,
+            schema: props.schema,
+          },
         }),
         schemaId: props.schemaId,
       });
@@ -125,6 +138,4 @@ const EditButtonForm = ({
 type EditButtonFormValuesProps = {
   schemaId: string;
   name: string;
-  dbType: string;
-  dbUrl: string;
-};
+} & SchemaConnection;

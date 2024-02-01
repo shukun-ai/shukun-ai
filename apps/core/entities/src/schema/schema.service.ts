@@ -1,4 +1,4 @@
-import { PrismaService } from '@shukun-ai/prisma-client-basic';
+import { PrismaService, Prisma } from '@shukun-ai/prisma-client-basic';
 import { Injectable } from '@nestjs/common';
 import {
   CreateRequest,
@@ -11,7 +11,13 @@ import {
   UpdateRequest,
   UpdateResponse,
 } from './schema.type';
-import { TableDefinition } from '@shukun-ai/apitype';
+import {
+  Schema,
+  SchemaTable,
+  schemaConnectionSchema,
+  schemaTableSchema,
+} from '@shukun-ai/apitype';
+import { z } from 'zod';
 
 @Injectable()
 export class SchemaService {
@@ -25,17 +31,17 @@ export class SchemaService {
       select: {
         schemaId: true,
         name: true,
+        connection: true,
+        tables: true,
         createdAt: true,
         updatedAt: true,
-        dbType: true,
-        dbUrl: true,
-        tables: true,
       },
     });
 
     return {
       ...schema,
-      tables: schema.tables as TableDefinition[],
+      connection: schema.connection as Schema['connection'],
+      tables: schema.tables as SchemaTable[],
       createdAt: schema.createdAt.toISOString(),
       updatedAt: schema.updatedAt.toISOString(),
     };
@@ -46,7 +52,7 @@ export class SchemaService {
       select: {
         schemaId: true,
         name: true,
-        dbType: true,
+        connection: true,
         createdAt: true,
         updatedAt: true,
       },
@@ -54,6 +60,7 @@ export class SchemaService {
 
     return schemas.map((schema) => ({
       ...schema,
+      connection: schema.connection as Schema['connection'],
       createdAt: schema.createdAt.toISOString(),
       updatedAt: schema.updatedAt.toISOString(),
     }));
@@ -63,9 +70,9 @@ export class SchemaService {
     const schema = await this.prismaService.schema.create({
       data: {
         ...props,
-        // TODO add json schema validate
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        tables: props.tables as any,
+        tables: z
+          .array(schemaTableSchema)
+          .parse(props.tables) as Prisma.InputJsonValue,
       },
       select: {
         schemaId: true,
@@ -84,11 +91,16 @@ export class SchemaService {
       },
       data: {
         name: props.name,
-        dbType: props.dbType,
-        dbUrl: props.dbUrl,
-        // TODO add json schema validate
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        tables: props.tables as any,
+        connection: props.connection
+          ? (schemaConnectionSchema.parse(
+              props.connection
+            ) as Prisma.InputJsonValue)
+          : undefined,
+        tables: props.tables
+          ? (z
+              .array(schemaTableSchema)
+              .parse(props.tables) as Prisma.InputJsonValue)
+          : undefined,
       },
       select: {
         schemaId: true,

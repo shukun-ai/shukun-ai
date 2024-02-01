@@ -42,7 +42,7 @@ export const CardItem = ({ data }: CardItemProps) => {
         direction="row"
         wrap="wrap"
       >
-        <DbIcons dbType={data.dbType} />
+        <DbIcons dbType={data.connection.type} />
         <Text weight={500} w={140} truncate="end">
           {data.name}
         </Text>

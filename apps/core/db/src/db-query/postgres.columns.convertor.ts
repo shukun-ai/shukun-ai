@@ -1,12 +1,10 @@
-import { ColumnDefinition, TableDefinition } from '@shukun-ai/apitype';
+import { SchemaColumn, SchemaTable } from '@shukun-ai/apitype';
 import { PgColumnsSchema } from './postgres.columns.type';
 
-export const pgColumnsConvertor = (
-  input: PgColumnsSchema
-): TableDefinition[] => {
-  const tableRecord: Record<string, TableDefinition> = input.rows.reduce(
+export const pgColumnsConvertor = (input: PgColumnsSchema): SchemaTable[] => {
+  const tableRecord: Record<string, SchemaTable> = input.rows.reduce(
     (total, next) => {
-      const tableDefinition: TableDefinition = {
+      const tableDefinition: SchemaTable = {
         tableName: next.table_name,
         tableAlias: [],
         columns: [],
@@ -21,7 +19,7 @@ export const pgColumnsConvertor = (
   );
 
   input.rows.forEach((column) => {
-    const columnDefinition: ColumnDefinition = {
+    const columnDefinition: SchemaColumn = {
       columnName: column.column_name,
       columnAlias: [],
       columnType: column.data_type,

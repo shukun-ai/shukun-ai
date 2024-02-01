@@ -8,9 +8,9 @@ import {
   SchemaRetrieveOutput,
   SchemaSyncInput,
   SchemaSyncOutput,
+  SchemaTable,
   SchemaUpdateInput,
   SchemaUpdateOutput,
-  TableDefinition,
   apiPath,
 } from '@shukun-ai/apitype';
 import { Controller, Post, Body, BadRequestException } from '@nestjs/common';
@@ -53,12 +53,12 @@ export class SchemaController {
 
   @Post(apiPath.schema.sync)
   async sync(@Body() props: SchemaSyncInput): Promise<SchemaSyncOutput> {
-    const { name, dbUrl } = await this.schemaService.retrieve(props);
-    let tables: TableDefinition[];
+    const { name, connection } = await this.schemaService.retrieve(props);
+    let tables: SchemaTable[];
     try {
-      tables = await this.postgresService.generateSchema(dbUrl);
+      tables = await this.postgresService.generateSchema(connection);
     } catch (error) {
-      console.error();
+      console.error(error);
       throw new BadRequestException(
         `We could not connect with ${name} database.`
       );

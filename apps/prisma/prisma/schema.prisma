@@ -29,13 +29,12 @@ model User {
 }
 
 model Schema {
-    schemaId  String   @id @default(uuid())
-    name      String   @unique
-    dbType    String
-    dbUrl     String   @unique
-    tables    Json
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+    schemaId   String   @id @default(uuid())
+    name       String   @unique
+    connection Json
+    tables     Json
+    createdAt  DateTime @default(now())
+    updatedAt  DateTime @updatedAt
 
     @@map("schemas")
 }

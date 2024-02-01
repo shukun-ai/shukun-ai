@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { getPromptTemplate } from './sql-prompt.template';
 import { buildSchema } from './schema-to-prompt';
-import { SchemaDefinition } from '@shukun-ai/apitype';
+import { Schema } from '@shukun-ai/apitype';
 
 @Injectable()
 export class SqlPromptService {
@@ -9,7 +9,7 @@ export class SqlPromptService {
 
   getDQL(
     taskPrompt: string,
-    schema: SchemaDefinition,
+    schema: Schema,
     lastResultDDL: string
   ): {
     prompt: string;

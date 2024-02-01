@@ -1,11 +1,19 @@
 import { z } from 'zod';
 import { useForm, zodResolver } from '@mantine/form';
-import { TextInput, Select, Button, Group, Box, Textarea } from '@mantine/core';
+import {
+  TextInput,
+  Select,
+  Button,
+  Group,
+  Box,
+  NumberInput,
+} from '@mantine/core';
 import { useMutation } from '@tanstack/react-query';
 import { createSchema } from '../../../../apis/schema';
 import { dbTypes } from '../../../constants';
 import { queryClient } from '../../../query-client';
 import { useTranslation } from 'react-i18next';
+import { SchemaConnection } from '@shukun-ai/apitype';
 
 export type CreateFormProps = {
   onSubmitSuccess?: () => void;
@@ -17,21 +25,41 @@ export const CreateForm = ({ onSubmitSuccess }: CreateFormProps) => {
   const form = useForm<CreateFormValuesProps>({
     initialValues: {
       name: '',
-      dbType: '',
-      dbUrl: '',
+      type: 'postgres',
+      database: '',
+      user: '',
+      password: '',
+      port: 5432,
+      host: '127.0.0.1',
+      schema: undefined,
     },
     validate: zodResolver(
       z.object({
-        name: z.string().min(1),
-        dbType: z.string().min(1),
-        dbUrl: z.string().min(1),
+        type: z.string().min(1),
+        database: z.string().min(1),
+        user: z.string().min(1),
+        password: z.string().min(1),
+        port: z.number().int(),
+        host: z.string().min(1),
+        schema: z.string().min(1).optional(),
       })
     ),
   });
 
   const { isPending, mutateAsync } = useMutation({
     mutationFn: (props: CreateFormValuesProps) => {
-      return createSchema(props);
+      return createSchema({
+        name: props.name,
+        connection: {
+          type: props.type,
+          database: props.database,
+          user: props.user,
+          password: props.password,
+          port: props.port,
+          host: props.host,
+          schema: props.schema,
+        },
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -46,7 +74,7 @@ export const CreateForm = ({ onSubmitSuccess }: CreateFormProps) => {
   };
 
   return (
-    <Box maw={340} mx="auto">
+    <Box>
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <TextInput
           label={t('schema.name')}
@@ -57,20 +85,52 @@ export const CreateForm = ({ onSubmitSuccess }: CreateFormProps) => {
         />
 
         <Select
-          label={t('schema.dbType')}
+          label={t('schema.connection.type')}
           withAsterisk
           mb="md"
           placeholder="Select type"
           data={Object.values(dbTypes)}
-          {...form.getInputProps('dbType')}
+          {...form.getInputProps('type')}
         />
 
-        <Textarea
-          label={t('schema.dbUrl')}
+        <TextInput
+          label={t('schema.connection.host')}
           withAsterisk
           mb="md"
-          placeholder="Enter URL"
-          {...form.getInputProps('dbUrl')}
+          placeholder="Enter host"
+          {...form.getInputProps('host')}
+        />
+
+        <NumberInput
+          label={t('schema.connection.port')}
+          withAsterisk
+          mb="md"
+          placeholder="Enter port"
+          {...form.getInputProps('port')}
+        />
+
+        <TextInput
+          label={t('schema.connection.database')}
+          withAsterisk
+          mb="md"
+          placeholder="Enter database"
+          {...form.getInputProps('database')}
+        />
+
+        <TextInput
+          label={t('schema.connection.user')}
+          withAsterisk
+          mb="md"
+          placeholder="Enter user"
+          {...form.getInputProps('user')}
+        />
+
+        <TextInput
+          label={t('schema.connection.password')}
+          withAsterisk
+          mb="md"
+          placeholder="Enter password"
+          {...form.getInputProps('password')}
         />
 
         <Group position="right" mt="md">
@@ -86,6 +146,4 @@ export const CreateForm = ({ onSubmitSuccess }: CreateFormProps) => {
 export type CreateFormValuesProps = {
   schemaId?: string;
   name: string;
-  dbType: string;
-  dbUrl: string;
-};
+} & SchemaConnection;

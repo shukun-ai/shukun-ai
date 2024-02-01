@@ -1,3 +1,5 @@
+import { SchemaConnection, SchemaTable } from '../domain/schema';
+
 export type SchemaRetrieveInput = {
   schemaId: string;
 };
@@ -5,9 +7,8 @@ export type SchemaRetrieveInput = {
 export type SchemaRetrieveOutput = {
   schemaId: string;
   name: string;
-  tables: TableDefinition[];
-  dbType: string;
-  dbUrl: string;
+  connection: SchemaConnection;
+  tables: SchemaTable[];
   createdAt: string;
   updatedAt: string;
 };
@@ -19,15 +20,14 @@ export type SchemaListInput = {
 export type SchemaListOutput = {
   schemaId: string;
   name: string;
-  dbType: string;
+  connection: SchemaConnection;
   createdAt: string;
   updatedAt: string;
 }[];
 
 export type SchemaCreateInput = {
   name: string;
-  dbType: string;
-  dbUrl: string;
+  connection: SchemaConnection;
 };
 
 export type SchemaCreateOutput = {
@@ -36,10 +36,8 @@ export type SchemaCreateOutput = {
 
 export type SchemaUpdateInput = {
   schemaId: string;
-  name?: string;
-  tables?: TableDefinition[];
-  dbType?: string;
-  dbUrl?: string;
+  connection?: SchemaConnection;
+  tables?: SchemaTable[];
 };
 
 export type SchemaUpdateOutput = {
@@ -60,40 +58,4 @@ export type SchemaSyncInput = {
 
 export type SchemaSyncOutput = {
   schemaId: string;
-};
-
-export type SchemaDefinition = {
-  tables: TableDefinition[];
-  dbType: string;
-  dbUrl: string;
-};
-
-export type TableDefinition = {
-  tableName: string;
-  tableAlias: string[];
-  columns: ColumnDefinition[];
-};
-
-export type ColumnDefinition = {
-  columnName: string;
-  columnAlias: string[];
-  columnType: string;
-  characterLength?: number;
-  precision?: number;
-  scale?: number;
-  enums?: {
-    key: string;
-    label: string;
-  }[];
-  columnDefault?: unknown;
-  notNullable?: boolean;
-  isPrimary?: boolean;
-  isUnique?: boolean;
-  isIndexed?: boolean;
-  comment?: string;
-  reference?: {
-    tableName: string;
-    columnName: string;
-    displayColumnName: string;
-  };
 };

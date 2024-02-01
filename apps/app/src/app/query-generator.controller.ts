@@ -53,7 +53,7 @@ export class QueryGeneratorController {
     return {
       generatedQuery: {
         tableName: 'generated_step_' + stepIndex + 1,
-        dbType: schema.dbType as 'postgres',
+        dbType: schema.connection.type,
         schemaDdl,
         querySql: sql,
         lastGeneratedAt: new Date().toISOString(),
@@ -136,7 +136,7 @@ export class QueryGeneratorController {
 
     const sql = `WITH ${withSql} SELECT * FROM ${tableName}`;
 
-    const result = await this.postgresService.runQuery(sql, schema.dbUrl);
+    const result = await this.postgresService.runQuery(sql, schema.connection);
 
     return {
       result: {
