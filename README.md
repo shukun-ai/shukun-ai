@@ -22,7 +22,7 @@ Star us on GitHub, and be instantly notified for new releases!
 
 ## Contributing
 
-For those who'd like to contribute code, see our [Contribution Guide](./CONTRIBUTE.md).
+For those who'd like to contribute code, see our [Contribution Guide](./CONTRIBUTING.md).
 
 At the same time, please consider supporting SHUKUN AI by sharing it on social media and at events and conferences.
 
