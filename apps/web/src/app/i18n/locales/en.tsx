@@ -33,6 +33,7 @@ export default {
     },
     schema: {
       listTitle: 'Query Databases',
+      detailTitle: 'Database Details',
       editDbUrl: 'Edit Database Connection',
       syncDb: 'Sync Database',
       tableName: 'Table Name',
