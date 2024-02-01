@@ -1,9 +1,9 @@
 import { Box } from '@mantine/core';
 import { TableDetail } from './table-detail';
-import { TableDefinition } from '@shukun-ai/apitype';
+import { SchemaTable } from '@shukun-ai/apitype';
 
 export type TableListProps = {
-  tables: TableDefinition[];
+  tables: SchemaTable[];
 };
 
 export const TableList = ({ tables }: TableListProps) => {

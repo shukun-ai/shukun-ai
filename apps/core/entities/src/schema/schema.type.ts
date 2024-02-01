@@ -1,4 +1,4 @@
-import { TableDefinition } from '@shukun-ai/apitype';
+import { SchemaConnection, SchemaTable } from '@shukun-ai/apitype';
 
 export type RetrieveRequest = {
   schemaId: string;
@@ -7,9 +7,8 @@ export type RetrieveRequest = {
 export type RetrieveResponse = {
   schemaId: string;
   name: string;
-  tables: TableDefinition[];
-  dbType: string;
-  dbUrl: string;
+  connection: SchemaConnection;
+  tables: SchemaTable[];
   createdAt: string;
   updatedAt: string;
 };
@@ -21,16 +20,15 @@ export type ListRequest = {
 export type ListResponse = {
   schemaId: string;
   name: string;
-  dbType: string;
+  connection: SchemaConnection;
   createdAt: string;
   updatedAt: string;
 }[];
 
 export type CreateRequest = {
   name: string;
-  tables: TableDefinition[];
-  dbType: string;
-  dbUrl: string;
+  connection: SchemaConnection;
+  tables: SchemaTable[];
 };
 
 export type CreateResponse = {
@@ -40,9 +38,8 @@ export type CreateResponse = {
 export type UpdateRequest = {
   schemaId: string;
   name?: string;
-  tables?: TableDefinition[];
-  dbType?: string;
-  dbUrl?: string;
+  connection?: SchemaConnection;
+  tables?: SchemaTable[];
 };
 
 export type UpdateResponse = {

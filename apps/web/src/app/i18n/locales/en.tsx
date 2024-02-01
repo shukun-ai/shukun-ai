@@ -6,6 +6,7 @@ export default {
       reports: 'Reports',
       schema: 'Schema Configurations',
       template: 'Assistant Templates',
+      query: 'Complex Queries',
     },
     conversation: {
       placeholder:
@@ -42,8 +43,15 @@ export default {
       foreignColumn: 'Foreign Column',
       comments: 'Comments',
       name: 'Name',
-      dbType: 'DB Type',
-      dbUrl: 'DB URL',
+      connection: {
+        type: 'DB Type',
+        database: 'DB name',
+        user: 'DB Username',
+        password: 'DB Password',
+        port: 'DB Port',
+        host: 'DB Host',
+        schema: 'Postgres Schema',
+      },
       submit: 'Submit',
       createTitle: 'Create Database Connection',
       editTitle: 'Edit Database Connection',

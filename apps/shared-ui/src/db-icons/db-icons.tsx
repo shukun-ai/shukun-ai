@@ -2,7 +2,7 @@ import { Avatar, AvatarProps } from '@mantine/core';
 import { getDbIcons } from './db-icons.svg';
 
 export type DbIconsProps = {
-  dbType: string;
+  dbType: 'postgres';
 } & AvatarProps;
 
 export const DbIcons = ({ dbType, ...avatarProps }: DbIconsProps) => {

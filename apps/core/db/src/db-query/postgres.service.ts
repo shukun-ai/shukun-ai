@@ -1,6 +1,6 @@
-import { Result, TableDefinition } from '@shukun-ai/apitype';
+import { Result, SchemaConnection, SchemaTable } from '@shukun-ai/apitype';
 import { Injectable } from '@nestjs/common';
-import { Client } from 'pg';
+import { Client, ClientConfig } from 'pg';
 import { PgResultSchema, pgResultSchema } from './postgres.type';
 import { listColumnsSql } from './postgres.columns.sql';
 import { pgColumnsSchema } from './postgres.columns.type';
@@ -10,9 +10,11 @@ import { pgColumnsConvertor } from './postgres.columns.convertor';
 export class PostgresService {
   constructor() {}
 
-  async runQuery(sql: string, dbUrl: string): Promise<Result> {
-    const client = new Client(dbUrl);
+  async runQuery(sql: string, dbConnection: SchemaConnection): Promise<Result> {
+    const client = new Client(this.getClientOptions(dbConnection));
     await client.connect();
+
+    // TODO switch schema for pg here
 
     try {
       const result = await client.query(sql);
@@ -28,23 +30,35 @@ export class PostgresService {
     }
   }
 
-  async generateSchema(dbUrl: string): Promise<TableDefinition[]> {
-    const result = pgColumnsSchema.parse(await this.listColumns(dbUrl));
+  async generateSchema(dbConnection: SchemaConnection): Promise<SchemaTable[]> {
+    const queryResult = await this.listColumns(dbConnection);
+    const result = pgColumnsSchema.parse(queryResult);
     const tables = pgColumnsConvertor(result);
     return tables;
   }
 
-  private async listColumns(dbUrl: string) {
-    const client = new Client(dbUrl);
+  private async listColumns(dbConnection: SchemaConnection) {
+    const client = new Client(this.getClientOptions(dbConnection));
     await client.connect();
+
+    // TODO switch schema for pg here
 
     try {
       const response = await client.query(listColumnsSql());
-
       return response;
     } finally {
       await client.end();
     }
+  }
+
+  private getClientOptions(dbConnection: SchemaConnection): ClientConfig {
+    return {
+      user: dbConnection.user,
+      database: dbConnection.database,
+      password: dbConnection.password,
+      port: dbConnection.port,
+      host: dbConnection.host,
+    };
   }
 }
 

@@ -39,7 +39,7 @@ export const SchemaDetail = () => {
     <>
       <Flex justify="space-between">
         <Group>
-          <DbIcons dbType={data.dbType} />
+          <DbIcons dbType={data.connection.type} />
           <Box mb={20}>
             <Title order={3}>{t('schema.detailTitle')}</Title>
             <Text>{data.name}</Text>

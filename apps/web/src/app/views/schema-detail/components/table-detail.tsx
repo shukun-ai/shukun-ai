@@ -13,11 +13,11 @@ import {
   IconChevronRight,
   IconPlus,
 } from '@tabler/icons-react';
-import { TableDefinition } from '@shukun-ai/apitype';
 import { useTranslation } from 'react-i18next';
+import { SchemaTable } from '@shukun-ai/apitype';
 
 export type TableDetailProps = {
-  table: TableDefinition;
+  table: SchemaTable;
 };
 
 export const TableDetail = ({ table }: TableDetailProps) => {
