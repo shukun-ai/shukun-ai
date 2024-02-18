@@ -11,10 +11,7 @@
     "package": "nx run-many --target=package --all --configuration=production",
     "lint": "nx run-many --target=lint --all",
     "test": "nx run-many --target=test --all",
-    "db:migrate": "is-ci || dotenv -e .env.local -e .env npx prisma migrate dev -- --schema=apps/prisma/prisma/schema.prisma",
-    "db:generate": "dotenv -e .env.local -e .env npx prisma generate -- --schema=apps/prisma/prisma/schema.prisma",
-    "db:seed": "dotenv -e .env.local -e .env ts-node apps/prisma/prisma/seed.ts",
-    "db:studio": "dotenv -e .env.local -e .env npx prisma studio -- --schema=apps/prisma/prisma/schema.prisma",
+    "db:generate": "nx run drizzle-client:generate",
     "prepare": "is-ci || husky install"
   },
   "dependencies": {
