@@ -1,4 +1,3 @@
-import { PrismaService, Prisma } from '@shukun-ai/prisma-client-basic';
 import { Injectable } from '@nestjs/common';
 import {
   CreateRequest,
@@ -18,17 +17,17 @@ import {
   schemaTableSchema,
 } from '@shukun-ai/apitype';
 import { z } from 'zod';
+import { DrizzleClientService, schemas } from 'drizzle-client';
+import { eq } from 'drizzle-orm';
 
 @Injectable()
 export class SchemaService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(private readonly drizzleClientService: DrizzleClientService) {}
 
   async retrieve(props: RetrieveRequest): Promise<RetrieveResponse> {
-    const schema = await this.prismaService.schema.findUniqueOrThrow({
-      where: {
-        schemaId: props.schemaId,
-      },
-      select: {
+    const row = await this.drizzleClientService.db.query.schemas.findFirst({
+      where: eq(schemas.schemaId, props.schemaId),
+      columns: {
         schemaId: true,
         name: true,
         connection: true,
@@ -38,18 +37,20 @@ export class SchemaService {
       },
     });
 
+    if (!row) {
+      throw new Error('Did not find schema');
+    }
+
     return {
-      ...schema,
-      connection: schema.connection as Schema['connection'],
-      tables: schema.tables as SchemaTable[],
-      createdAt: schema.createdAt.toISOString(),
-      updatedAt: schema.updatedAt.toISOString(),
+      ...row,
+      connection: row.connection as Schema['connection'],
+      tables: row.tables as SchemaTable[],
     };
   }
 
   async list(): Promise<ListResponse> {
-    const schemas = await this.prismaService.schema.findMany({
-      select: {
+    const rows = await this.drizzleClientService.db.query.schemas.findMany({
+      columns: {
         schemaId: true,
         name: true,
         connection: true,
@@ -58,72 +59,56 @@ export class SchemaService {
       },
     });
 
-    return schemas.map((schema) => ({
-      ...schema,
-      connection: schema.connection as Schema['connection'],
-      createdAt: schema.createdAt.toISOString(),
-      updatedAt: schema.updatedAt.toISOString(),
+    return rows.map((row) => ({
+      ...row,
+      connection: row.connection as Schema['connection'],
     }));
   }
 
   async create(props: CreateRequest): Promise<CreateResponse> {
-    const schema = await this.prismaService.schema.create({
-      data: {
+    const rows = await this.drizzleClientService.db
+      .insert(schemas)
+      .values({
         ...props,
-        tables: z
-          .array(schemaTableSchema)
-          .parse(props.tables) as Prisma.InputJsonValue,
-      },
-      select: {
-        schemaId: true,
-      },
-    });
+        tables: z.array(schemaTableSchema).parse(props.tables),
+        updatedAt: new Date().toISOString(),
+      })
+      .returning({ schemaId: schemas.schemaId });
 
     return {
-      schemaId: schema.schemaId,
+      schemaId: rows[0].schemaId,
     };
   }
 
   async update(props: UpdateRequest): Promise<UpdateResponse> {
-    const schema = await this.prismaService.schema.update({
-      where: {
-        schemaId: props.schemaId,
-      },
-      data: {
+    const rows = await this.drizzleClientService.db
+      .update(schemas)
+      .set({
         name: props.name,
         connection: props.connection
-          ? (schemaConnectionSchema.parse(
-              props.connection
-            ) as Prisma.InputJsonValue)
+          ? schemaConnectionSchema.parse(props.connection)
           : undefined,
         tables: props.tables
-          ? (z
-              .array(schemaTableSchema)
-              .parse(props.tables) as Prisma.InputJsonValue)
+          ? z.array(schemaTableSchema).parse(props.tables)
           : undefined,
-      },
-      select: {
-        schemaId: true,
-      },
-    });
+        updatedAt: new Date().toISOString(),
+      })
+      .where(eq(schemas.schemaId, props.schemaId))
+      .returning({ schemaId: schemas.schemaId });
 
     return {
-      schemaId: schema.schemaId,
+      schemaId: rows[0].schemaId,
     };
   }
 
   async remove(props: RemoveRequest): Promise<RemoveResponse> {
-    const schema = await this.prismaService.schema.delete({
-      where: {
-        schemaId: props.schemaId,
-      },
-      select: {
-        schemaId: true,
-      },
-    });
+    const rows = await this.drizzleClientService.db
+      .delete(schemas)
+      .where(eq(schemas.schemaId, props.schemaId))
+      .returning({ schemaId: schemas.schemaId });
 
     return {
-      schemaId: schema.schemaId,
+      schemaId: rows[0].schemaId,
     };
   }
 }

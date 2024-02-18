@@ -25,7 +25,8 @@
       ],
       "@shukun-ai/prompt": ["apps/core/prompt/src/index.ts"],
       "@shukun-ai/shared-ui": ["apps/shared-ui/src/index.ts"],
-      "@shukun-ai/utils": ["apps/utils/src/index.ts"]
+      "@shukun-ai/utils": ["apps/utils/src/index.ts"],
+      "drizzle-client": ["apps/core/drizzle-client/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
