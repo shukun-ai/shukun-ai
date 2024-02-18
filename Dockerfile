@@ -13,6 +13,7 @@ RUN npm run package
 FROM node:18-slim AS app
 WORKDIR /usr/src/app
 COPY --from=base /usr/src/app/dist/installation/app/ .
+COPY --from=base /usr/src/app/apps/core/drizzle-client/src/migration ./apps/core/drizzle-client/src/migration
 EXPOSE 3000
 WORKDIR /usr/src/app
 ENTRYPOINT ["node", "index.js"]

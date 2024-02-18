@@ -20,12 +20,10 @@
       "@shukun-ai/entities": ["apps/core/entities/src/index.ts"],
       "@shukun-ai/environment": ["apps/core/environment/src/index.ts"],
       "@shukun-ai/llm": ["apps/core/llm/src/index.ts"],
-      "@shukun-ai/prisma-client-basic": [
-        "apps/core/prisma-client-basic/src/index.ts"
-      ],
       "@shukun-ai/prompt": ["apps/core/prompt/src/index.ts"],
       "@shukun-ai/shared-ui": ["apps/shared-ui/src/index.ts"],
-      "@shukun-ai/utils": ["apps/utils/src/index.ts"]
+      "@shukun-ai/utils": ["apps/utils/src/index.ts"],
+      "drizzle-client": ["apps/core/drizzle-client/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

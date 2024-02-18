@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { PrismaClientBasicModule } from '@shukun-ai/prisma-client-basic';
 import { QueryService } from './query.service';
+import { DrizzleClientModule } from 'drizzle-client';
 
 @Module({
-  imports: [PrismaClientBasicModule],
+  imports: [DrizzleClientModule],
   controllers: [],
   providers: [QueryService],
   exports: [QueryService],

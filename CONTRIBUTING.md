@@ -14,14 +14,5 @@ docker-compose -f docker-compose.development.yml up
 # More environments please see .env file
 echo "LLM_API_KEY=<replace_your_open_ai_key>" >> .env.local
 
-# We've test in PostgreSQL 14
-npm run db:migrate
-npm run db:seed
 npm start
-```
-
-### Use Database studio to view and manage data
-
-```bash
-npm run db:studio
 ```

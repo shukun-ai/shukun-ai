@@ -5,4 +5,5 @@ export const environment = {
     : 'gpt-3.5-turbo',
   LLM_API: process.env?.['LLM_API'] ?? '',
   LLM_API_KEY: process.env?.['LLM_API_KEY'] ?? '',
+  APP_DATABASE_URL: process.env?.['APP_DATABASE_URL'] ?? '',
 };

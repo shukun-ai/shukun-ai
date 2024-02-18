@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:14
+    restart: unless-stopped
+    command: '-c full_page_writes=off -c fsync=off -c synchronous_commit=off'
+    ports:
+      - '35432:5432'
+    volumes:
+      - ./volumes/db/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=shukun_ai
+      - POSTGRES_PASSWORD=shukun_ai
+      - POSTGRES_DB=shukun_ai
+  app:
+    image: shukun-ai/app:latest
+    restart: unless-stopped
+    environment:
+      - APP_DATABASE_URL=postgresql://shukun_ai:shukun_ai@db:5432/shukun_ai
+    ports:
+      - '3000'
+    depends_on:
+      - db
+  web:
+    image: shukunai/web:master
+    restart: unless-stopped
+    ports:
+      - '3000'
+    depends_on:
+      - db
+  gateway:
+    image: nginx:1.25.4
+    restart: unless-stopped
+    ports:
+      - '8877:80'
+    volumes:
+      - ./volumes/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+      - web

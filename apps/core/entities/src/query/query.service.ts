@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '@shukun-ai/prisma-client-basic';
 import {
   RetrieveRequest,
   RetrieveResponse,
@@ -12,36 +11,31 @@ import {
   RemoveResponse,
 } from './query.type';
 import { Query, querySchema } from '@shukun-ai/apitype';
+import { DrizzleClientService, queries } from 'drizzle-client';
+import { eq } from 'drizzle-orm';
 
 @Injectable()
 export class QueryService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(private readonly drizzleClientService: DrizzleClientService) {}
 
   async retrieve(props: RetrieveRequest): Promise<RetrieveResponse> {
-    const template = await this.prismaService.query.findUniqueOrThrow({
-      where: {
-        queryId: props.queryId,
-      },
-      select: {
-        queryId: true,
-        name: true,
-        createdAt: true,
-        updatedAt: true,
-        metadata: true,
-      },
+    const row = await this.drizzleClientService.db.query.queries.findFirst({
+      where: eq(queries.queryId, props.queryId),
     });
 
+    if (!row) {
+      throw new Error('Did not find query');
+    }
+
     return {
-      ...template,
-      metadata: template.metadata as Query,
-      createdAt: template.createdAt.toISOString(),
-      updatedAt: template.updatedAt.toISOString(),
+      ...row,
+      metadata: row.metadata as Query,
     };
   }
 
   async list(): Promise<ListResponse> {
-    const queries = await this.prismaService.query.findMany({
-      select: {
+    const rows = await this.drizzleClientService.db.query.queries.findMany({
+      columns: {
         queryId: true,
         name: true,
         createdAt: true,
@@ -49,11 +43,7 @@ export class QueryService {
       },
     });
 
-    return queries.map((query) => ({
-      ...query,
-      createdAt: query.createdAt.toISOString(),
-      updatedAt: query.updatedAt.toISOString(),
-    }));
+    return rows;
   }
 
   async create(props: CreateRequest): Promise<CreateResponse> {
@@ -61,54 +51,45 @@ export class QueryService {
       inputs: [],
       steps: [],
     };
-    const template = await this.prismaService.query.create({
-      data: {
+    const rows = await this.drizzleClientService.db
+      .insert(queries)
+      .values({
         name: props.name,
         metadata: querySchema.parse(defaultMetadata),
-      },
-      select: {
-        queryId: true,
-      },
-    });
+        updatedAt: new Date().toISOString(),
+      })
+      .returning({ queryId: queries.queryId });
 
     return {
-      queryId: template.queryId,
+      queryId: rows[0].queryId,
     };
   }
 
   async update(props: UpdateRequest): Promise<UpdateResponse> {
-    const template = await this.prismaService.query.update({
-      where: {
-        queryId: props.queryId,
-      },
-      data: {
+    const rows = await this.drizzleClientService.db
+      .update(queries)
+      .set({
         name: props.name,
         metadata: props.metadata
           ? querySchema.parse(props.metadata)
           : undefined,
-      },
-      select: {
-        queryId: true,
-      },
-    });
+      })
+      .where(eq(queries.queryId, props.queryId))
+      .returning({ queryId: queries.queryId });
 
     return {
-      queryId: template.queryId,
+      queryId: rows[0].queryId,
     };
   }
 
   async remove(props: RemoveRequest): Promise<RemoveResponse> {
-    const template = await this.prismaService.query.delete({
-      where: {
-        queryId: props.queryId,
-      },
-      select: {
-        queryId: true,
-      },
-    });
+    const rows = await this.drizzleClientService.db
+      .delete(queries)
+      .where(eq(queries.queryId, props.queryId))
+      .returning({ queryId: queries.queryId });
 
     return {
-      queryId: template.queryId,
+      queryId: rows[0].queryId,
     };
   }
 }
