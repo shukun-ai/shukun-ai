@@ -26,8 +26,8 @@ Star us on GitHub, and be instantly notified for new releases!
 
 Make sure your machine meets the following minimum system requirements:
 
-* CPU >= 2 Core
-* RAM >= 4GB
+- CPU >= 2 Core
+- RAM >= 4GB
 
 ### Quick Start
 
