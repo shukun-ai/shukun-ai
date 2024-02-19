@@ -20,6 +20,29 @@ SHUKUN AI is an AI-native database search application that helps companies explo
 
 Star us on GitHub, and be instantly notified for new releases!
 
+## Install the Community Edition
+
+### System Requirements
+
+Make sure your machine meets the following minimum system requirements:
+
+* CPU >= 2 Core
+* RAM >= 4GB
+
+### Quick Start
+
+The easiest way to start the SHUKUN AI is to run our docker-compose.yml file. Before running the installation command, make sure that Docker and Docker Compose are installed on your machine:
+
+```
+git clone https://github.com/shukun-ai/shukun-ai.git
+cd shukun-ai/docker
+cp ../.env .env
+# Update LLM_TYPE, LLM_MODEL, LLM_API, LLM_API_KEY with yours
+docker-compose up -d
+```
+
+After running, you can access the SHUKUN AI in your browser at http://localhost:8877.
+
 ## Contributing
 
 For those who'd like to contribute code, see our [Contribution Guide](./CONTRIBUTING.md).

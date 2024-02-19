@@ -14,16 +14,17 @@ services:
       - POSTGRES_PASSWORD=shukun_ai
       - POSTGRES_DB=shukun_ai
   app:
-    image: shukun-ai/app:latest
+    image: shukunai/app
     restart: unless-stopped
-    environment:
-      - APP_DATABASE_URL=postgresql://shukun_ai:shukun_ai@db:5432/shukun_ai
+    env_file:
+      - path: .env
+        required: true
     ports:
       - '3000'
     depends_on:
       - db
   web:
-    image: shukunai/web:master
+    image: shukunai/web
     restart: unless-stopped
     ports:
       - '3000'
