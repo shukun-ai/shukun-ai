@@ -38,7 +38,7 @@ git clone https://github.com/shukun-ai/shukun-ai.git
 cd shukun-ai/docker
 cp ../.env .env
 # Update LLM_TYPE, LLM_MODEL, LLM_API, LLM_API_KEY with yours
-docker-compose up -d
+docker compose up -d
 ```
 
 After running, you can access the SHUKUN AI in your browser at http://localhost:8877.

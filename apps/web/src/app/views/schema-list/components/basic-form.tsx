@@ -8,31 +8,40 @@ import {
   Box,
   NumberInput,
 } from '@mantine/core';
-import { useMutation } from '@tanstack/react-query';
-import { createSchema } from '../../../../apis/schema';
 import { dbTypes } from '../../../constants';
-import { queryClient } from '../../../query-client';
 import { useTranslation } from 'react-i18next';
 import { SchemaConnection } from '@shukun-ai/apitype';
+import { useState } from 'react';
 
-export type CreateFormProps = {
-  onSubmitSuccess?: () => void;
+export type BasicFormValuesProps = {
+  schemaId?: string;
+  name: string;
+} & SchemaConnection;
+
+export type BasicFormProps = {
+  initialValues?: BasicFormValuesProps;
+  onSubmit: (values: BasicFormValuesProps) => Promise<void>;
 };
 
-export const CreateForm = ({ onSubmitSuccess }: CreateFormProps) => {
+export const BasicForm = ({
+  initialValues = {
+    name: '',
+    type: 'postgres',
+    database: '',
+    user: '',
+    password: undefined,
+    port: 5432,
+    host: '127.0.0.1',
+    schema: undefined,
+  },
+  onSubmit,
+}: BasicFormProps) => {
   const { t } = useTranslation();
 
-  const form = useForm<CreateFormValuesProps>({
-    initialValues: {
-      name: '',
-      type: 'postgres',
-      database: '',
-      user: '',
-      password: undefined,
-      port: 5432,
-      host: '127.0.0.1',
-      schema: undefined,
-    },
+  const [pending, setPending] = useState(false);
+
+  const form = useForm<BasicFormValuesProps>({
+    initialValues,
     validate: zodResolver(
       z.object({
         type: z.string().min(1),
@@ -46,36 +55,18 @@ export const CreateForm = ({ onSubmitSuccess }: CreateFormProps) => {
     ),
   });
 
-  const { isPending, mutateAsync } = useMutation({
-    mutationFn: (props: CreateFormValuesProps) => {
-      return createSchema({
-        name: props.name,
-        connection: {
-          type: props.type,
-          database: props.database,
-          user: props.user,
-          password: props.password,
-          port: props.port,
-          host: props.host,
-          schema: props.schema,
-        },
-      });
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['listSchema'],
-      });
-    },
-  });
-
-  const handleSubmit = async (values: CreateFormValuesProps) => {
-    mutateAsync(values);
-    onSubmitSuccess && onSubmitSuccess();
-  };
-
   return (
     <Box>
-      <form onSubmit={form.onSubmit(handleSubmit)}>
+      <form
+        onSubmit={form.onSubmit(async (values) => {
+          setPending(true);
+          try {
+            await onSubmit(values);
+          } finally {
+            setPending(false);
+          }
+        })}
+      >
         <TextInput
           label={t('schema.name')}
           withAsterisk
@@ -131,7 +122,7 @@ export const CreateForm = ({ onSubmitSuccess }: CreateFormProps) => {
         />
 
         <Group position="right" mt="md">
-          <Button type="submit" loading={isPending}>
+          <Button type="submit" loading={pending}>
             {t('schema.submit')}
           </Button>
         </Group>
@@ -139,8 +130,3 @@ export const CreateForm = ({ onSubmitSuccess }: CreateFormProps) => {
     </Box>
   );
 };
-
-export type CreateFormValuesProps = {
-  schemaId?: string;
-  name: string;
-} & SchemaConnection;
