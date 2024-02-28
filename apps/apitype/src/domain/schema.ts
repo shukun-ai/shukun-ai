@@ -11,9 +11,9 @@ export type SchemaColumn = Schema['tables'][number]['columns'][number];
 export const schemaConnectionSchema = z.object({
   type: z.enum(['postgres']),
   database: z.string(),
-  user: z.string(),
-  password: z.string(),
-  port: z.number().int(),
+  user: z.string().optional(),
+  password: z.string().optional(),
+  port: z.number().int().optional(),
   host: z.string(),
   schema: z.string().optional(),
 });
