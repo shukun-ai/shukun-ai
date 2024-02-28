@@ -8,7 +8,7 @@ git clone https://github.com/shukun-ai/ailake.git
 npm install
 
 # Start postgreSQL for development
-docker-compose -f docker-compose.development.yml up
+docker compose -f docker-compose.development.yml up
 
 # Change environment value here
 # More environments please see .env file
