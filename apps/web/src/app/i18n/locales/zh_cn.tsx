@@ -89,6 +89,8 @@ export default {
       addStep: '添加新的步骤',
       detailTitle: '查询组合',
       save: '保存',
+      chooseSchema: '选择被查询的数据表',
+      maxTablesTip: '一次查询最多选择五张表，可以使用多次组合查询',
     },
     sharedUi: {
       languageSwitch: {

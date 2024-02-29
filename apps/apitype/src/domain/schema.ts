@@ -21,11 +21,13 @@ export const schemaConnectionSchema = z.object({
 export const schemaTableSchema = z.object({
   tableName: z.string(),
   tableAlias: z.array(z.string()),
+  hidden: z.boolean().optional(),
   columns: z.array(
     z.object({
       columnName: z.string(),
       columnAlias: z.array(z.string()),
       columnType: z.string(),
+      hidden: z.boolean().optional(),
       characterLength: z.number().int().optional(),
       precision: z.number().int().optional(),
       scale: z.number().int().optional(),

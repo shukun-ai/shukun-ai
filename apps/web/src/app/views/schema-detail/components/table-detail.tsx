@@ -8,13 +8,10 @@ import {
   Badge,
   Table,
 } from '@mantine/core';
-import {
-  IconChevronDown,
-  IconChevronRight,
-  IconPlus,
-} from '@tabler/icons-react';
+import { IconPlus } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import { SchemaTable } from '@shukun-ai/apitype';
+import { ArrowIcon } from '@shukun-ai/shared-ui';
 
 export type TableDetailProps = {
   table: SchemaTable;
@@ -23,14 +20,13 @@ export type TableDetailProps = {
 export const TableDetail = ({ table }: TableDetailProps) => {
   const { t } = useTranslation();
   const [opened, { toggle }] = useDisclosure(true);
-  const ArrowIcon = opened ? IconChevronDown : IconChevronRight;
 
   return (
     <Box mx="auto">
       <Group position="left" mb={5}>
         <Button
           onClick={toggle}
-          leftIcon={<ArrowIcon size="1rem" />}
+          leftIcon={<ArrowIcon open={opened} size="1rem" />}
           variant="white"
         >
           {t('schema.tableName')}: {table.tableName}

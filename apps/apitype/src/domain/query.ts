@@ -26,6 +26,7 @@ export const querySchema = z.object({
   steps: z.array(
     z.object({
       schemaId: z.string().optional(),
+      tableNames: z.array(z.string()).optional(),
       promptTask: z.string(),
       generatedQuery: z
         .object({

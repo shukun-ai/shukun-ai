@@ -6,6 +6,7 @@ import { IconCaretDownFilled, IconInputAi, IconSql } from '@tabler/icons-react';
 import { useMemo } from 'react';
 import { DataVisualization } from '@shukun-ai/shared-ui';
 import { useTranslation } from 'react-i18next';
+import { SelectTables } from './select-tables';
 
 export type StepContentsProps = {
   value: QueryStep;
@@ -42,21 +43,35 @@ export const StepContents = ({
 
   return (
     <Box>
-      <Textarea
-        label={t('query.tasks')}
-        value={value.promptTask}
-        onChange={(event) =>
-          onChange({
-            ...value,
-            promptTask: event.target.value,
-          })
-        }
-        withAsterisk
-        autosize
-        minRows={3}
-        mb={20}
-        disabled={globalLoading || isGenerated}
-      />
+      <Box mb={8}>
+        <SelectTables
+          schemaId={value.schemaId}
+          value={value.tableNames}
+          onChange={(tableNames) => {
+            onChange({
+              ...value,
+              tableNames,
+            });
+          }}
+        />
+      </Box>
+      <Box>
+        <Textarea
+          label={t('query.tasks')}
+          value={value.promptTask}
+          onChange={(event) =>
+            onChange({
+              ...value,
+              promptTask: event.target.value,
+            })
+          }
+          withAsterisk
+          autosize
+          minRows={3}
+          mb={20}
+          disabled={globalLoading || isGenerated}
+        />
+      </Box>
       <Group>
         {isGenerated ? (
           <Button
