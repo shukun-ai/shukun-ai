@@ -9,10 +9,11 @@ import {
   Group,
   Modal,
   Table,
+  Text,
   UnstyledButton,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { SchemaRetrieveOutput } from '@shukun-ai/apitype';
+import { SchemaRetrieveOutput, SchemaTable } from '@shukun-ai/apitype';
 import { useQuery } from '@tanstack/react-query';
 import { retrieveSchema } from '../../../../apis/schema';
 import { ArrowIcon, ErrorCard, PageSkeleton } from '@shukun-ai/shared-ui';
@@ -34,67 +35,18 @@ export const SelectTables = ({
 
   const [opened, { open, close }] = useDisclosure(false);
 
-  return (
-    <Flex>
-      <Button variant="light" onClick={open}>
-        {t('query.chooseSchema')}
-      </Button>
-      <Box
-        style={{ flex: 1, marginLeft: 8, border: 'solid 1px #ccc', padding: 2 }}
-      >
-        {value?.map((tableName) => (
-          <Badge key={tableName} size="sm">
-            {tableName}
-          </Badge>
-        ))}
-      </Box>
-      <Modal
-        size="xl"
-        opened={opened}
-        onClose={close}
-        title={t('query.chooseSchema')}
-      >
-        {schemaId && value && (
-          <TableModal
-            schemaId={schemaId}
-            tableNames={value}
-            onSubmit={(chosenTableNames) => {
-              onChange(chosenTableNames);
-              close();
-            }}
-          />
-        )}
-      </Modal>
-    </Flex>
+  const { isPending, error, data } = useQuery<SchemaRetrieveOutput | undefined>(
+    {
+      queryKey: ['retrieveSchema', schemaId],
+      queryFn: async () => {
+        if (schemaId) {
+          return await retrieveSchema({
+            schemaId,
+          });
+        }
+      },
+    }
   );
-};
-
-type TableModalProps = {
-  schemaId: string;
-  tableNames: string[];
-  onSubmit: (tableNames: string[]) => void;
-};
-
-const TableModal = ({ schemaId, tableNames, onSubmit }: TableModalProps) => {
-  const { t } = useTranslation();
-
-  const { isPending, error, data } = useQuery<SchemaRetrieveOutput>({
-    queryKey: ['retrieveSchema', schemaId],
-    queryFn: async () => {
-      return await retrieveSchema({
-        schemaId,
-      });
-    },
-  });
-
-  const [chosenTable, setChosenTable] = useState<string>();
-
-  const [chosenTableNames, setChosenTableNames] =
-    useState<string[]>(tableNames);
-
-  const disabledChosenTableNames = useMemo(() => {
-    return chosenTableNames.length >= 5;
-  }, [chosenTableNames.length]);
 
   if (isPending) {
     return <PageSkeleton />;
@@ -109,13 +61,66 @@ const TableModal = ({ schemaId, tableNames, onSubmit }: TableModalProps) => {
   }
 
   return (
+    <Flex>
+      <Button variant="light" onClick={open}>
+        {t('query.chooseSchema')}
+      </Button>
+      <Box
+        style={{ flex: 1, marginLeft: 8, border: 'solid 1px #ccc', padding: 2 }}
+      >
+        {value?.map((tableName) => (
+          <TableBadge
+            key={tableName}
+            tables={data.tables}
+            tableName={tableName}
+          />
+        ))}
+      </Box>
+      <Modal
+        size="xl"
+        opened={opened}
+        onClose={close}
+        title={t('query.chooseSchema')}
+      >
+        <TableModal
+          tables={data.tables}
+          tableNames={value}
+          onSubmit={(chosenTableNames) => {
+            onChange(chosenTableNames);
+            close();
+          }}
+        />
+      </Modal>
+    </Flex>
+  );
+};
+
+type TableModalProps = {
+  tables: SchemaTable[];
+  tableNames: string[];
+  onSubmit: (tableNames: string[]) => void;
+};
+
+const TableModal = ({ tables, tableNames, onSubmit }: TableModalProps) => {
+  const { t } = useTranslation();
+
+  const [chosenTable, setChosenTable] = useState<string>();
+
+  const [chosenTableNames, setChosenTableNames] =
+    useState<string[]>(tableNames);
+
+  const disabledChosenTableNames = useMemo(() => {
+    return chosenTableNames.length >= 5;
+  }, [chosenTableNames.length]);
+
+  return (
     <Box>
       {disabledChosenTableNames && (
         <Box mb={20}>
           <Alert>{t('query.maxTablesTip')}</Alert>
         </Box>
       )}
-      {data.tables
+      {tables
         .filter((table) => !table.hidden)
         .map((table) => (
           <Box>
@@ -145,7 +150,12 @@ const TableModal = ({ schemaId, tableNames, onSubmit }: TableModalProps) => {
                   );
                 }}
               >
-                <Box style={{ flex: 1 }}>{table.tableName}</Box>
+                <Box style={{ flex: 1 }}>
+                  <TableLabel
+                    tableName={table.tableName}
+                    tableAlias={table.tableAlias}
+                  />
+                </Box>
                 <ArrowIcon open={chosenTable === table.tableName} size="1rem" />
               </UnstyledButton>
             </Group>
@@ -196,5 +206,53 @@ const TableModal = ({ schemaId, tableNames, onSubmit }: TableModalProps) => {
         </Button>
       </Group>
     </Box>
+  );
+};
+
+const TableLabel = ({
+  tableName,
+  tableAlias,
+}: {
+  tableName: string;
+  tableAlias: string[];
+}) => {
+  if (tableAlias.length > 0) {
+    return (
+      <Group>
+        <Text>{tableAlias[0]}</Text>
+        <Badge tt="none">({tableName})</Badge>
+      </Group>
+    );
+  } else {
+    return (
+      <Group>
+        <Text>{tableName}</Text>
+      </Group>
+    );
+  }
+};
+
+const TableBadge = ({
+  tables,
+  tableName,
+}: {
+  tables: SchemaTable[];
+  tableName: string;
+}) => {
+  const alias = useMemo(() => {
+    const table = tables.find((table) => table.tableName === tableName);
+    if (!table) {
+      return '';
+    }
+    if (table.tableAlias.length > 0) {
+      return table.tableAlias[0];
+    }
+    return table.tableName;
+  }, [tableName, tables]);
+
+  return (
+    <Badge size="sm" tt="none">
+      {alias}
+    </Badge>
   );
 };
