@@ -6,6 +6,7 @@ import {
   QueryGeneratorTextToSqlInput,
   QueryGeneratorTextToSqlOutput,
   QueryStep,
+  Schema,
 } from '@shukun-ai/apitype';
 import { SchemaService } from '@shukun-ai/entities';
 import { LlmService } from '@shukun-ai/llm';
@@ -32,13 +33,16 @@ export class QueryGeneratorController {
       throw new BadRequestException("Step doesn't exist");
     }
 
-    const { schemaId, promptTask } = currentStep;
+    const { schemaId, tableNames = [], promptTask } = currentStep;
 
     if (!schemaId) {
       throw new BadRequestException("schema Id doesn't exist");
     }
 
-    const schema = await this.schemaService.retrieve({ schemaId });
+    const schema = this.filterSchema(
+      await this.schemaService.retrieve({ schemaId }),
+      tableNames
+    );
 
     const lastResultDDL = this.getLastResultDDL(props);
 
@@ -88,6 +92,17 @@ export class QueryGeneratorController {
       .join(',\n');
 
     return `CREATE TABLE ${generatedQuery.tableName} (\n${fields}\n);`;
+  }
+
+  private filterSchema(schema: Schema, tableNames: string[]): Schema {
+    const chosenTables = schema.tables.filter((table) =>
+      tableNames.includes(table.tableName)
+    );
+
+    return {
+      ...schema,
+      tables: chosenTables,
+    };
   }
 
   @Post(apiPath.queryGenerators.sqlToResult)

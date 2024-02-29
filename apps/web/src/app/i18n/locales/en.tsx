@@ -94,6 +94,9 @@ export default {
       addStep: 'Add new step',
       detailTitle: 'Query Orchestrate',
       save: 'Save',
+      chooseSchema: 'Select the tables to be queried',
+      maxTablesTip:
+        'You can select up to five tables for each query. You can use multiple combinations of queries.',
     },
     sharedUi: {
       languageSwitch: {
