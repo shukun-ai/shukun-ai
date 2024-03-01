@@ -8,6 +8,7 @@ import { DbIcons, ErrorCard, PageSkeleton } from '@shukun-ai/shared-ui';
 import { EditButton } from './components/edit-button';
 import { Box, Flex, Group, Text, Title } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
+import { SaveButton } from './components/save-button';
 
 export const SchemaDetail = () => {
   const { t } = useTranslation();
@@ -46,11 +47,17 @@ export const SchemaDetail = () => {
           </Box>
         </Group>
         <Group mb={20}>
+          {data.tables.length > 0 && <SaveButton schema={data} />}
           <SyncButton schemaId={data.schemaId} />
           <EditButton schema={data} />
         </Group>
       </Flex>
-      <TableList tables={data.tables} />
+      <TableList
+        tables={data.tables}
+        onChange={(tables) => {
+          data.tables = tables;
+        }}
+      />
     </>
   );
 };
