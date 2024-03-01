@@ -56,6 +56,10 @@ export default {
       submit: 'Submit',
       createTitle: 'Create Database Connection',
       editTitle: 'Edit Database Connection',
+      hidden: 'Hidden',
+      saveTables: 'Save',
+      uploadMetadata: 'Upload SHUKUN Metadata',
+      prefix: 'Table Name Prefix',
     },
     template: {
       create: 'Create a new template',

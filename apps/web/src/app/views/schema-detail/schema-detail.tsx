@@ -9,6 +9,7 @@ import { EditButton } from './components/edit-button';
 import { Box, Flex, Group, Text, Title } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
 import { SaveButton } from './components/save-button';
+import { MetadataUploadButton } from './components/metadata-upload-button';
 
 export const SchemaDetail = () => {
   const { t } = useTranslation();
@@ -49,6 +50,7 @@ export const SchemaDetail = () => {
         <Group mb={20}>
           {data.tables.length > 0 && <SaveButton schema={data} />}
           <SyncButton schemaId={data.schemaId} />
+          <MetadataUploadButton schema={data} />
           <EditButton schema={data} />
         </Group>
       </Flex>

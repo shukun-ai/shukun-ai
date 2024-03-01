@@ -61,9 +61,13 @@ export const TableDetail = ({ table, onChange }: TableDetailProps) => {
                 <tr>
                   <td style={{ width: 250 }}>{column.columnName}</td>
                   <td style={{ width: 250 }}>
-                    <ActionIcon>
-                      <IconPlus size="0.75rem" />
-                    </ActionIcon>
+                    {column.columnAlias.length > 0 ? (
+                      column.columnAlias[0]
+                    ) : (
+                      <ActionIcon>
+                        <IconPlus size="0.75rem" />
+                      </ActionIcon>
+                    )}
                   </td>
                   <td>
                     <ColumnSwitch
