@@ -1,20 +1,20 @@
-import { SchemaSyncInput } from '@shukun-ai/apitype';
+import { SchemaRetrieveOutput, SchemaUpdateInput } from '@shukun-ai/apitype';
 import { Button } from '@mantine/core';
 import { useMutation } from '@tanstack/react-query';
-import { syncSchema } from '../../../../apis/schema';
+import { updateSchema } from '../../../../apis/schema';
 import { queryClient } from '../../../query-client';
 import { useTranslation } from 'react-i18next';
 
-export type SyncButtonProps = {
-  schemaId: string;
+export type SaveButtonProps = {
+  schema: SchemaRetrieveOutput;
 };
 
-export const SyncButton = ({ schemaId }: SyncButtonProps) => {
+export const SaveButton = ({ schema }: SaveButtonProps) => {
   const { t } = useTranslation();
 
   const { isPending, mutateAsync } = useMutation({
-    mutationFn: (props: SchemaSyncInput) => {
-      return syncSchema(props);
+    mutationFn: (props: SchemaUpdateInput) => {
+      return updateSchema(props);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -24,12 +24,8 @@ export const SyncButton = ({ schemaId }: SyncButtonProps) => {
   });
 
   return (
-    <Button
-      variant="light"
-      loading={isPending}
-      onClick={() => mutateAsync({ schemaId })}
-    >
-      {t('schema.syncDb')}
+    <Button loading={isPending} onClick={() => mutateAsync(schema)}>
+      {t('schema.saveTables')}
     </Button>
   );
 };
