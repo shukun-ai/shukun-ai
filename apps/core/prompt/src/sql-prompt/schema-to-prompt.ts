@@ -62,11 +62,13 @@ const buildType = (column: SchemaColumn) => {
 };
 
 const getTableName = (tableName: string) => {
-  return `${tableName}`;
+  const isAllLowercase = /^[a-z][a-z0-9]*$/.test(tableName);
+  return isAllLowercase ? tableName : `"${tableName}"`;
 };
 
 const getColumnName = (columnName: string) => {
-  return columnName;
+  const isAllLowercase = /^[a-z][a-z0-9]*$/.test(columnName);
+  return isAllLowercase ? columnName : `"${columnName}"`;
 };
 
 const buildReferences = (tables: SchemaTable[]): string => {

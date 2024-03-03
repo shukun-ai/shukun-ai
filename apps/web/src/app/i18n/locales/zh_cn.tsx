@@ -52,6 +52,10 @@ export default {
       submit: '提交',
       createTitle: '创建数据库接入信息',
       editTitle: '修改数据库接入信息',
+      hidden: '隐藏该字段',
+      saveTables: '保存编辑内容',
+      uploadMetadata: '上传数昆低代码元数据',
+      prefix: '表名称前缀',
     },
     template: {
       create: '创建一个新的功能模板',
